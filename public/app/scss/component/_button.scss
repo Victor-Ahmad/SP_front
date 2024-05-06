@@ -1,0 +1,110 @@
+@use '../abstracts/' as *;
+
+/* button 
+--------------------------------------------------*/
+.sc-button {
+    display      : inline-block;
+    background-color: $color-3;
+    box-sizing   : border-box;
+    padding         : 15px 18.5px;
+    border-radius: 10px;
+    @include transition3;
+    span {
+        color             : #fff;
+        font-weight       : 700;
+        font-size         : 15px;
+        position          : relative;
+        // text-transform    : capitalize;
+        @include transition3;
+    }
+    i {
+      @include transition3;
+    }
+    &:hover,
+    &.active {
+        border-color: transparent;
+        outline: 0 none;
+        background-color: rgb(242, 149, 0);
+        svg {
+          animation: 0.3s link-icon2 linear;
+        }
+    }
+    svg {
+      margin-right: 17px;
+      path {
+        @include transition3;
+      }
+    }
+    &.btn-svg {
+      svg {
+        margin-right: 0;
+      }
+    }
+    &.btn-1 {
+      background-color: #FFF5E0;
+      span {
+        color             : #000;
+      }
+      &:hover,
+      &.active {
+        background-color: $color-3;
+        span {
+          color : $color-1;
+        }
+        svg {
+          animation: 0.3s link-icon2 linear;
+          
+        }
+        svg,
+        path {
+          fill: $color-1;
+          stroke: $color-1;
+        }
+      }
+      &.one {
+        span {
+          color             : $color-3;
+        }
+        &:hover {
+          span {
+            color : $color-1;
+          }
+        }
+      }
+    }
+    &.btn-2 {
+      svg {
+        margin-left: 10px;
+        margin-right: 0;
+      }
+      &:hover {
+        background-color: $color-3;
+        span {
+          color: $color-1;
+        }
+        svg path {
+          stroke: $color-1;
+        }
+      }
+    }
+    &.btn-icon {
+      span::before {
+        content: "";
+        width: 1px;
+        height: 22px;
+        background-color: rgba(255, 255, 255, 0.2);
+        margin-left: -11px;
+        position: absolute;
+      }
+    }
+    &.btn-icon2 {
+      span::after {
+        content: "";
+        width: 1px;
+        height: 22px;
+        background-color: rgba(255, 255, 255, 0.2);
+        position: absolute;
+      }
+    }
+}
+
