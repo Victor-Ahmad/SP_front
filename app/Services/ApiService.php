@@ -46,4 +46,28 @@ class ApiService
 
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+
+
+    public function getSwapTypes()
+    {
+        $response = Http::get($this->baseUrl . 'get_swap_types');
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+    public function getHouseTypes()
+    {
+        $response = Http::get($this->baseUrl . 'get_houses_types');
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

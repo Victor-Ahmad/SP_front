@@ -124,14 +124,24 @@
                                                 fill="#fff" />
                                         </svg>
                                     </li>
-                                    <li class=""><a href="#" data-toggle="modal"
-                                            data-target="#popup_bid2">Register</a></li>
+                                    {{-- <li class=""><a href="{{ route('register') }}">Register</a></li>
                                     <li><span>/</span></li>
-                                    <li class=""><a href="#" data-toggle="modal" data-target="#popup_bid">
-                                            Login</a></li>
+                                    <li class=""><a href="{{ route('login') }}">
+                                            Login</a></li> --}}
+
+                                    {{-- <li class=""><a href="#" data-toggle="modal"
+                                            data-target="#popup_bid2">Register</a></li> --}}
+                                    @if (session('user_id'))
+                                        <li class=""><a href="{{ route('logout') }}">Logout</a></li>
+                                    @else
+                                        <li class=""><a href="{{ route('register') }}">Register</a></li>
+                                        <li><span>/</span></li>
+                                        <li class=""><a href="#" data-toggle="modal"
+                                                data-target="#popup_bid">Login</a></li>
+                                    @endif
                                 </ul>
                             </div>
-                            <div class="flat-bt-top sc-btn-top">
+                            {{-- <div class="flat-bt-top sc-btn-top">
                                 <a class="sc-button btn-icon " href="properties-list.html">
                                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -144,7 +154,7 @@
                                     </svg>
                                     <span>Sell Property</span>
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="mobile-nav-toggler mobile-button mobi-style"><span></span></div>

@@ -5,17 +5,26 @@ use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('Auth.register');
+    return view('landing_page');
+})->name('landing_page');
+
+Route::get('/old_otp', function () {
+    return view('auth.otp');
+});
+Route::get('/old_register', function () {
+    return view('auth.register');
 });
 
 
 Route::get('/register', [RegistrationController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegistrationController::class, 'register']);
+Route::get('/logout', [RegistrationController::class, 'logout'])->name('logout');
 Route::get('/otp', [RegistrationController::class, 'showOtpForm'])->name('otp');
 Route::post('/otp', [RegistrationController::class, 'verifyOtp'])->name('otp.verify');
 Route::get('/password', [RegistrationController::class, 'showPasswordForm'])->name('password.show');
 Route::post('/password', [RegistrationController::class, 'setPassword'])->name('password.set');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/account_completion', [RegistrationController::class, 'account_completion'])->name('account_completion');
 
 
 

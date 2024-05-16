@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('app/dist/owl.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/Favicon.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/logo/Favicon.png') }}">
+    @yield('head_css')
 </head>
 
 <body class="body">
@@ -25,6 +26,7 @@
     </div>
     @include('layouts.partial.modals')
     @include('layouts.partial.scripts')
+    @yield('additional_scripts')
     <a id="scroll-top" class="button-go"></a>
 </body>
 

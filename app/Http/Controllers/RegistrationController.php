@@ -18,7 +18,8 @@ class RegistrationController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('auth.sign_up');
+        // return view('auth.register');
     }
 
     public function register(Request $request)
@@ -63,7 +64,8 @@ class RegistrationController extends Controller
     }
     public function showOtpForm()
     {
-        return view('auth.otp');
+        return view('auth.verify_otp');
+        // return view('auth.otp');
     }
 
     public function verifyOtp(Request $request)
@@ -98,7 +100,8 @@ class RegistrationController extends Controller
     }
     public function showPasswordForm()
     {
-        return view('auth.password');
+        return view('auth.set_password');
+        // return view('auth.password');
     }
     public function setPassword(Request $request)
     {
@@ -122,13 +125,42 @@ class RegistrationController extends Controller
             $response = $this->apiService->setPassword($data);
 
             if ($response['success'] == 1) {
-                return redirect()->route('home')->with('success', 'Password set successfully!');
+                return redirect()->route('account_completion')->with('success', 'Password set successfully!');
             } else {
                 return back()->withErrors(['password' => $response['message']]);
             }
         } catch (\Exception $e) {
             return back()->withErrors(['password' => $e->getMessage()]);
         }
+    }
+    public function account_completion()
+    {
+        try {
+            // Make multiple API calls
+            $response1 = $this->apiService->getSwapTypes();
+            $response2 = $this->apiService->getHouseTypes();
+
+            // Check if the responses are successful
+            if ($response1['success'] == 1 && $response2['success'] == 1) {
+                // Pass the data to the view
+                return view('account_completion', [
+                    'swapTypes' => $response1['result'],
+                    'houseTypes' => $response2['result'],
+
+                ]);
+            } else {
+                // Handle API call failures
+                return back()->withErrors(['message' => 'Failed to fetch data from API.']);
+            }
+        } catch (\Exception $e) {
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function logout()
+    {
+        Session::forget('user_id');
+        return redirect()->route('landing_page')->with('status', 'You have been logged out successfully.');
     }
 }
 //    error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
