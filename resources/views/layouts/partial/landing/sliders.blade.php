@@ -14,7 +14,8 @@
                         <div class="row justify-content-center">
                             <div class="col-4 d-flex justify-content-center">
                                 <div class=" btn-signup-container">
-                                    <a class="sc-button d-flex justify-content-center btn-signup" href="">
+                                    <a class="sc-button d-flex justify-content-center btn-signup"
+                                        href="{{ route('register') }}">
 
                                         <h4>Sign Up</h4>
                                     </a>
