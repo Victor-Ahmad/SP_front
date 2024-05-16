@@ -18,8 +18,8 @@ class RegistrationController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.sign_up');
-        // return view('auth.register');
+        return view('Auth.sign_up');
+        // return view('Auth.register');
     }
 
     public function register(Request $request)
@@ -64,8 +64,8 @@ class RegistrationController extends Controller
     }
     public function showOtpForm()
     {
-        return view('auth.verify_otp');
-        // return view('auth.otp');
+        return view('Auth.verify_otp');
+        // return view('Auth.otp');
     }
 
     public function verifyOtp(Request $request)
@@ -100,8 +100,8 @@ class RegistrationController extends Controller
     }
     public function showPasswordForm()
     {
-        return view('auth.set_password');
-        // return view('auth.password');
+        return view('Auth.set_password');
+        // return view('Auth.password');
     }
     public function setPassword(Request $request)
     {
