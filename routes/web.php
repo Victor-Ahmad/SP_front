@@ -9,15 +9,17 @@ Route::get('/', function () {
 })->name('landing_page');
 
 Route::get('/old_otp', function () {
-    return view('auth.otp');
+    return view('Auth.otp');
 });
 Route::get('/old_register', function () {
-    return view('auth.register');
+    return view('Auth.register');
 });
 
 
 Route::get('/register', [RegistrationController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegistrationController::class, 'register']);
+Route::get('/login', [RegistrationController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [RegistrationController::class, 'login']);
 Route::get('/logout', [RegistrationController::class, 'logout'])->name('logout');
 Route::get('/otp', [RegistrationController::class, 'showOtpForm'])->name('otp');
 Route::post('/otp', [RegistrationController::class, 'verifyOtp'])->name('otp.verify');
@@ -25,6 +27,7 @@ Route::get('/password', [RegistrationController::class, 'showPasswordForm'])->na
 Route::post('/password', [RegistrationController::class, 'setPassword'])->name('password.set');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/account_completion', [RegistrationController::class, 'account_completion'])->name('account_completion');
+Route::post('/account_completion', [RegistrationController::class, 'complete_account'])->name('complete_account');
 
 
 

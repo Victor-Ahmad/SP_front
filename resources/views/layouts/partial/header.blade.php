@@ -131,13 +131,13 @@
 
                                     {{-- <li class=""><a href="#" data-toggle="modal"
                                             data-target="#popup_bid2">Register</a></li> --}}
-                                    @if (session('user_id'))
+                                    @if (session('token'))
                                         <li class=""><a href="{{ route('logout') }}">Logout</a></li>
                                     @else
                                         <li class=""><a href="{{ route('register') }}">Register</a></li>
                                         <li><span>/</span></li>
-                                        <li class=""><a href="#" data-toggle="modal"
-                                                data-target="#popup_bid">Login</a></li>
+                                        <li class=""><a href="{{ route('login') }}">Login</a>
+                                        </li>
                                     @endif
                                 </ul>
                             </div>

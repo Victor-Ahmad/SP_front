@@ -1,20 +1,15 @@
 @extends('layouts.master')
 
 @section('title', 'Home Page')
-@section('head_css')
-    <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
-        type="text/css" media="all" />
-
-@endsection
 
 @section('content')
     <div id="pagee" class="clearfix">
         <!-- Main content of the home page goes here -->
         <!-- slider -->
 
-        {{-- @include('layouts.partial.home.sliders') --}}
+        @include('layouts.partial.home.sliders')
 
-        @include('layouts.partial.home.grid_posts', ['posts' => $posts])
+        @include('layouts.partial.home.grid_posts')
 
         @include('layouts.partial.home.slide_posts_4')
 
