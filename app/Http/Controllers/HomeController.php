@@ -20,7 +20,7 @@ class HomeController extends Controller
     public function home()
     {
         if (!Session::get('token')) {
-            return route('login');
+            return redirect()->route('login');
         } else {
             error_log(Session::get('token'));
         }
