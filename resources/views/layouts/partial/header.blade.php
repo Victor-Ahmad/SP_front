@@ -18,7 +18,7 @@
                                 <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="{{ route('home') }}">Home</a></li>
-                                        <li><a href="">Messages</a></li>
+                                        <li><a href="{{ route('chats') }}">Messages</a></li>
                                         <li><a href="">Offer</a></li>
                                         <li><a href="">Feed Back</a></li>
                                     </ul>

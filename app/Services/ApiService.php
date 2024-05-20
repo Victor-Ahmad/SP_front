@@ -86,6 +86,28 @@ class ApiService
 
         throw new \Exception('API call failed: ' . $response->body());
     }
+    public function getChats()
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . 'chats');
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+    public function getChatMessages($chatId, $page = 1)
+    {
+
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "show_chats/{$chatId}?page={$page}");
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 
     public function completeAccount($data, $files)
     {

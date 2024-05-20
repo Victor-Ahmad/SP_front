@@ -256,14 +256,14 @@ class RegistrationController extends Controller
             'longitude' => 'nullable|numeric',
             'gallery.*' => 'nullable|file|mimes:jpg,jpeg,png,bmp|max:2048',
         ]);
-        $location = $request->location_name . ' ' . $request->post_code . ' ' . $request->house_number;
-        if ($request->street) {
-            $location = $request->location_name . ' ' . $request->post_code . ' ' . $request->Street . ' ' . $request->house_number;
-        }
+
         $data = [
             'swap_type_id' => 1,
             'house_type_id' => $request->house_type,
-            'location' => $location,
+            'location' => $request->location_name,
+            'post_code' => $request->post_code,
+            'street' => $request->street,
+            'house_number' => $request->house_number,
             'latitude' => $request->latitude ?? '0',
             'longitude' => $request->longitude ?? '0',
             'number_of_rooms' => $request->number_of_rooms,

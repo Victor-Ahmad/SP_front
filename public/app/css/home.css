@@ -9,7 +9,7 @@
 }
 
 .custom_header {
-    background-color: #2a81b2 !important;
+    background-color: #e6941c !important;
 }
 
 .post_image_container {
@@ -130,4 +130,61 @@
 
 .filter_btn:hover {
     background: #e6941c;
+}
+
+
+
+.no-results {
+    text-align: center;
+    font-size: 24px;
+    color: #e74c3c;
+    margin-top: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.clear-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.clear-btn:hover {
+    background-color: #c0392b;
+}
+
+
+
+.clear_filter_btn {
+    /* width: calc(100% - 20px); */
+    padding: 15px;
+    border: none;
+    background: #2a81b2;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 10px;
+}
+
+.clear_filter_btn:hover {
+    background: #14587f;
 }

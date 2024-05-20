@@ -9,7 +9,7 @@
 
                 <div class="content-inner tab-content flex-center">
                     <div class="form-sl col-md-12 form-sl-spaced">
-                        <form method="GET" action="{{ url('/home') }}" class="filter-form">
+                        <form method="GET" action="{{ route('home') }}" class="filter-form">
                             <div class="wd-find-select flex">
                                 <!-- Location Dropdown -->
                                 <div class="form-group form-style">
@@ -19,25 +19,32 @@
                                             <ul class="list">
                                                 <li data-value=""
                                                     class="option {{ request('location') == '' ? 'selected' : '' }}">
-                                                    Location</li>
+                                                    Location
+                                                </li>
                                                 <li data-value="bungalow"
                                                     class="option {{ request('location') == 'bungalow' ? 'selected' : '' }}">
-                                                    Bungalow</li>
+                                                    Bungalow
+                                                </li>
                                                 <li data-value="apartment"
                                                     class="option {{ request('location') == 'apartment' ? 'selected' : '' }}">
-                                                    Apartment</li>
+                                                    Apartment
+                                                </li>
                                                 <li data-value="house"
                                                     class="option {{ request('location') == 'house' ? 'selected' : '' }}">
-                                                    House</li>
+                                                    House
+                                                </li>
                                                 <li data-value="smart-home"
                                                     class="option {{ request('location') == 'smart-home' ? 'selected' : '' }}">
-                                                    Smart Home</li>
+                                                    Smart Home
+                                                </li>
                                                 <li data-value="office"
                                                     class="option {{ request('location') == 'office' ? 'selected' : '' }}">
-                                                    Office</li>
+                                                    Office
+                                                </li>
                                                 <li data-value="villa"
                                                     class="option {{ request('location') == 'villa' ? 'selected' : '' }}">
-                                                    Villa</li>
+                                                    Villa
+                                                </li>
                                             </ul>
                                             <input type="hidden" name="location" value="{{ request('location') }}">
                                         </div>
@@ -94,7 +101,11 @@
                                     </div><!-- /.widget_price -->
                                 </div>
                                 <!-- Apply Filter Button -->
-                                <input type="submit" class="filter_btn" value="Apply Filter">
+                                <div class="form-buttons">
+                                    <input type="submit" class="filter_btn" value="Apply Filter">
+                                    <button type="button" class="clear_filter_btn" onclick="clearFilters()">Clear All
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -110,6 +121,15 @@
                                     </a>
                                 @endforeach
                             </div>
+                            @if (empty($posts))
+                                <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
+                                    <div class="col-12">
+                                        <div class="no-results">
+                                            No matches found for your search criteria.
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,8 @@ Route::get('/account_completion', [RegistrationController::class, 'account_compl
 Route::post('/account_completion', [RegistrationController::class, 'complete_account'])->name('complete_account');
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/home/{id}', [HomeController::class, 'singlePost'])->name('singlePost');
-
+Route::get('/chats', [ChatController::class, 'chats'])->name('chats');
+Route::get('/chat_messages/{id}', [ChatController::class, 'showChatMessages'])->name('chat_messages.show');
 
 
 

@@ -53,5 +53,9 @@
                 document.getElementById('max_value').value = moneyFormat.from(values[1]);
             });
         });
+
+        function clearFilters() {
+            window.location.href = "{{ route('home') }}";
+        }
     </script>
 @endsection
