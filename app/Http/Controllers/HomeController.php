@@ -33,4 +33,7 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+    public function singlePost()
+    {
+    }
 }

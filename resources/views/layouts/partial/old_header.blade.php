@@ -7,20 +7,101 @@
                     <div class="inner-container flex justify-space align-center">
                         <!-- Logo Box -->
                         <div class="logo-box flex">
-                            <div class="logo"><a href="{{ route('landing_page') }}">
-                                    <img style="height: 50px" src="assets/images/logo/logo.png" alt=""
-                                        title="">
-                                </a></div>
+                            <div class="logo"><a href="index.html"><img src="assets/images/logo/logo2.png"
+                                        alt="" title=""></a></div>
                         </div>
                         <div class="nav-outer flex align-center">
                             <!-- Main Menu -->
                             <nav class="main-menu show navbar-expand-md">
                                 <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
-                                        <li><a href="{{ route('home') }}">Home</a></li>
-                                        <li><a href="">Messages</a></li>
-                                        <li><a href="">Offer</a></li>
-                                        <li><a href="">Feed Back</a></li>
+                                        <li class="dropdown2 current"><a href="#">Home</a>
+                                            <ul>
+                                                <li><a href="index.html">Home Page 01</a></li>
+                                                <li><a href="home02.html">Home Page 02</a></li>
+                                                <li><a href="home03.html">Home Page 03</a></li>
+                                                <li><a href="home04.html">Home Page 04</a></li>
+                                                <li class="current"><a href="home05.html">Home Page 05</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown2"><a href="#">Property</a>
+                                            <ul>
+                                                <li class="dropdown2"><a href="#">Property List</a>
+                                                    <ul>
+                                                        <li><a href="properties-list.html">Property List</a></li>
+                                                        <li><a href="properties-list-sidebar-v1.html">Property List
+                                                                Sidebar V1</a></li>
+                                                        <li><a href="properties-list-sidebar-v2.html">Property List
+                                                                Sidebar V2</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown2"><a href="#">Property Grid</a>
+                                                    <ul>
+                                                        <li><a href="properties-grid.html">Property Grid</a></li>
+                                                        <li><a href="properties-grid-sidebar-v1.html">Property Grid
+                                                                Sidebar V1</a></li>
+                                                        <li><a href="properties-grid-sidebar-v2.html">Property Grid
+                                                                Sidebar V2</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown2"><a href="#">Property Detail</a>
+                                                    <ul>
+                                                        <li><a href="property-detail-v1.html">Property Detail V1</a>
+                                                        </li>
+                                                        <li><a href="property-detail-v2.html">Property Detail V2</a>
+                                                        </li>
+                                                        <li><a href="property-detail-v3.html">Property Detail V3</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown2"><a href="#">Property Map</a>
+                                                    <ul>
+                                                        <li><a href="properties-map-v1.html">Property Half Map V1</a>
+                                                        </li>
+                                                        <li><a href="properties-map-v2.html">Property Half Map V2</a>
+                                                        </li>
+                                                        <li><a href="properties-map-v3.html">Property Half Map V3</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown2"><a href="#">Page</a>
+                                            <ul>
+                                                <li><a href="about.html">About Us</a></li>
+                                                <li><a href="faq.html">Faq's</a></li>
+                                                <li><a href="pricing.html">Pricing</a></li>
+                                                <li><a href="error.html">Error</a></li>
+                                                <li class="dropdown2"><a href="#">Agents</a>
+                                                    <ul>
+                                                        <li><a href="agents.html">Agents</a></li>
+                                                        <li><a href="agents-detail.html">Agents Details</a></li>
+                                                        <li><a href="agents-sidebar-v1.html">Agents Sidebar V1</a></li>
+                                                        <li><a href="agents-sidebar-v2.html">Agents Sidebar V2</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown2"><a href="#">Agencies</a>
+                                                    <ul>
+                                                        <li><a href="agencies.html">Agencies</a></li>
+                                                        <li><a href="agencies-detail.html">Agencies Detail</a></li>
+                                                        <li><a href="agencies-sidebar-v1.html">Agencies Sidebar V1</a>
+                                                        </li>
+                                                        <li><a href="agencies-sidebar-v2.html">Agencies Sidebar V2</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="dashboard.html">Dashboard</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown2"><a href="#">Blog</a>
+                                            <ul>
+                                                <li><a href="blog.html">Blog List</a></li>
+                                                <li><a href="blog-grid.html">Blog Grid</a></li>
+                                                <li><a href="blog-detail.html">Blog Detail</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="contact.html">Contact</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -31,7 +112,7 @@
                                 <ul class="flex align-center">
                                     <li>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                            style="color:#2a81b2" xmlns="http://www.w3.org/2000/svg">
+                                            xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M9.62501 18.5744H2.70418C2.65555 18.5744 2.60892 18.5551 2.57454 18.5207C2.54016 18.4863 2.52084 18.4397 2.52084 18.3911V17.0619C2.52084 16.3002 3.06443 15.6292 3.90226 15.059C5.39826 14.0378 7.81918 13.3943 10.5417 13.3943C10.9908 13.3943 11.4318 13.4127 11.8626 13.4466C11.9537 13.4558 12.0457 13.4466 12.1332 13.4198C12.2207 13.3929 12.3019 13.3489 12.3722 13.2902C12.4424 13.2315 12.5003 13.1594 12.5423 13.0781C12.5843 12.9968 12.6097 12.9079 12.6169 12.8166C12.6241 12.7254 12.613 12.6336 12.5842 12.5467C12.5555 12.4598 12.5097 12.3795 12.4495 12.3105C12.3893 12.2416 12.316 12.1853 12.2338 12.1451C12.1516 12.1048 12.0621 12.0814 11.9708 12.0762C11.4954 12.038 11.0186 12.0191 10.5417 12.0193C7.49651 12.0193 4.80059 12.7811 3.12676 13.9223C1.84984 14.7932 1.14584 15.8996 1.14584 17.061V18.3911C1.14609 18.8042 1.31037 19.2003 1.60259 19.4924C1.89481 19.7844 2.29104 19.9485 2.70418 19.9485L9.62501 19.9494C9.80735 19.9494 9.98221 19.877 10.1111 19.748C10.2401 19.6191 10.3125 19.4443 10.3125 19.2619C10.3125 19.0796 10.2401 18.9047 10.1111 18.7758C9.98221 18.6468 9.80735 18.5744 9.62501 18.5744ZM10.5417 1.14583C7.75868 1.14583 5.50001 3.4045 5.50001 6.1875C5.50001 8.9705 7.75868 11.2292 10.5417 11.2292C13.3247 11.2292 15.5833 8.9705 15.5833 6.1875C15.5833 3.4045 13.3247 1.14583 10.5417 1.14583ZM10.5417 2.52083C12.5657 2.52083 14.2083 4.1635 14.2083 6.1875C14.2083 8.2115 12.5657 9.85416 10.5417 9.85416C8.51768 9.85416 6.87501 8.2115 6.87501 6.1875C6.87501 4.1635 8.51768 2.52083 10.5417 2.52083Z"
                                                 fill="#fff" />
@@ -51,15 +132,11 @@
                                     {{-- <li class=""><a href="#" data-toggle="modal"
                                             data-target="#popup_bid2">Register</a></li> --}}
                                     @if (session('token'))
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('logout') }}">Logout</a>
-                                        </li>
+                                        <li class=""><a href="{{ route('logout') }}">Logout</a></li>
                                     @else
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('register') }}">Register</a></li>
+                                        <li class=""><a href="{{ route('register') }}">Register</a></li>
                                         <li><span>/</span></li>
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('login') }}">Login</a>
+                                        <li class=""><a href="{{ route('login') }}">Login</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -145,12 +222,12 @@
                                     fill="#E5E5EA"></path>
                                 <path
                                     d="M22.6771 37.2188L27.0716 34.2891L35.8398 37.2188V43.0781C35.8398 44.6961 34.549 46.0078 32.931 46.0078C16.7508 46.0078 1.46484 30.8195 1.46484 14.6394C1.46484 13.0214 2.77656 11.7305 4.39453 11.7305H10.2539L13.1836 20.4987L10.2539 24.8933C12.1247 29.5703 18 35.3479 22.6771 37.2188Z"
-                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
+                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path
                                     d="M19.1406 13.7812C19.1406 18.6354 23.0756 22.5703 27.9297 22.5703V28.4297L33.7891 22.5703H39.6484C44.5025 22.5703 48.5352 18.6354 48.5352 13.7812C48.5352 8.92715 44.5025 4.99219 39.6484 4.99219H27.9297C23.0756 4.99219 19.1406 8.92715 19.1406 13.7812Z"
-                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
+                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
                         <div class="content fs-13">

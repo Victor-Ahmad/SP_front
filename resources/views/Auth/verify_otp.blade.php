@@ -20,13 +20,13 @@
             border-radius: 4px;
             outline: none;
             transition: border-color 0.3s ease;
-            color: #6e55ff !important;
-            /* Text color set to #6e55ff */
+            color: #2981B2 !important;
+            /* Text color set to #2981B2 */
         }
 
         .otp-input:focus {
-            border-color: #6e55ff;
-            color: #6e55ff !important;
+            border-color: #2981B2;
+            color: #2981B2 !important;
             box-shadow: 0 0 8px rgba(110, 85, 255, 0.3);
         }
 
@@ -51,7 +51,7 @@
         }
 
         .main-agileinfo h1 {
-            color: #6e55ff;
+            color: #2981B2;
             font-size: 2.5em;
             margin-bottom: 20px;
             text-align: center;
@@ -61,7 +61,7 @@
             width: 100%;
             padding: 15px;
             border: none;
-            background: #6e55ff;
+            background: #2981B2;
             color: white;
             border-radius: 5px;
             font-size: 1.2em;
@@ -71,7 +71,7 @@
         }
 
         .agileits-top input[type="submit"]:hover {
-            background: #5a47e0;
+            background: #2981B2;
         }
 
         .alert {
@@ -108,7 +108,7 @@
         }
 
         .additional-links a {
-            color: #6e55ff;
+            color: #2981B2;
             text-decoration: none;
         }
 

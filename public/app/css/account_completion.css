@@ -4,7 +4,7 @@ body {
 }
 
 .wrap-contact {
-    max-width: 800px;
+    /* max-width: 800px; */
     margin: 50px auto;
     background: rgba(255, 255, 255, 1) !important;
     padding: 30px;
@@ -25,7 +25,7 @@ body {
     margin-bottom: 30px;
     padding: 0;
     list-style: none;
-    background: #6e55ff;
+    background: #2981B2;
     border-radius: 20px;
     position: relative;
 }
@@ -61,7 +61,7 @@ body {
 }
 
 .step-navigation li:hover {
-    background: #e18a00;
+    background: #FF9700;
 }
 
 /* .step-navigation::before {
@@ -77,7 +77,7 @@ body {
 
 /* .step-navigation li.active::after,
 .step-navigation li.completed::after {
-    background-color: #6e55ff;
+    background-color: #2981B2;
     position: absolute;
     bottom: -1px;
     left: 0;
@@ -102,7 +102,7 @@ body {
 }
 
 .form-navigation button {
-    background: #6e55ff;
+    background: #2981B2;
     color: #fff;
     padding: 10px 30px;
     border: none;
@@ -132,19 +132,19 @@ input[type="number"] {
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 input[type="text"]:focus,
 input[type="number"]:focus {
-    border-color: #6e55ff;
+    border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
     outline: none;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 h3 {
-    color: #6e55ff;
+    color: #2981B2;
     font-weight: bold;
 }
 
@@ -161,7 +161,7 @@ h3 {
 .explanation {
     margin-bottom: 20px;
     padding: 15px;
-    color: #e18a00;
+    color: #FF9700;
     display: none;
 }
 
@@ -171,12 +171,12 @@ h3 {
 
 .slider-label {
     font-weight: bold;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .slider-value {
     font-weight: bold;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .switch-container {
@@ -188,7 +188,7 @@ h3 {
 .switch-label {
     margin-right: 10px;
     font-weight: bold;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .switch {
@@ -229,7 +229,7 @@ h3 {
 }
 
 input:checked+.location_slider {
-    background-color: #6e55ff;
+    background-color: #2981B2;
 }
 
 input:checked+.location_slider:before {
@@ -279,16 +279,16 @@ input:checked+.location_slider:before {
 
 .houseTypeList-content li:hover,
 .roomsList-content li:hover {
-    border-color: #6e55ff;
+    border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .houseTypeList-content li.active,
 .roomsList-content li.active {
-    border-color: #6e55ff;
+    border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .form-row {
@@ -310,11 +310,11 @@ input:checked+.location_slider:before {
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .input-field:focus {
-    border-color: #6e55ff;
+    border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
     outline: none;
 }
@@ -338,11 +338,11 @@ input:checked+.location_slider:before {
     border: 1px solid #ddd;
     border-radius: 10px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .input-field:focus {
-    border-color: #6e55ff;
+    border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
     outline: none;
 }
@@ -384,7 +384,7 @@ input:checked+.location_slider:before {
 }
 
 .preview-controls button:hover {
-    color: #6e55ff;
+    color: #2981B2;
 }
 
 .preview-controls button:disabled {

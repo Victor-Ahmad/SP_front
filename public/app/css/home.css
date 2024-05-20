@@ -7,3 +7,127 @@
     margin-bottom: 5vh !important;
 
 }
+
+.custom_header {
+    background-color: #2a81b2 !important;
+}
+
+.post_image_container {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 300px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.post_image {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Scale the image to cover the container */
+    display: block;
+}
+
+.btn-chat {
+    background-color: #2a81b2;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-chat:hover {
+    background-color: #236a8a;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-chat i {
+    margin-right: 5px;
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.card-content {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.card-link:hover .card-content {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+}
+
+.card-link .btn-chat,
+.card-link .swiper-container {
+    pointer-events: auto;
+    /* Ensure these elements remain interactive */
+}
+
+.card-content:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* background-color: #f0f0f0; */
+}
+
+.btn-chat {
+    background-color: #2a81b2;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-chat:hover {
+    background-color: #236a8a;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-chat i {
+    margin-right: 5px;
+}
+
+
+.form-sl-spaced .wd-find-select {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wg-box3 {
+    width: 25vw;
+}
+
+
+
+.filter_btn {
+    /* width: calc(100% - 20px); */
+    padding: 15px;
+    border: none;
+    background: #ffa920;
+    color: white;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin: 10px 0;
+}
+
+.filter_btn:hover {
+    background: #e6941c;
+}

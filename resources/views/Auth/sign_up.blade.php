@@ -8,8 +8,8 @@
             display: flex;
             flex-wrap: wrap;
             /* Ensure wrapping on small screens */
-            max-width: 100vw;
-            margin: 50px auto;
+            max-width: 30vw;
+            margin: 50px 0;
             background: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -18,7 +18,7 @@
 
         .main-agileinfo {
             padding: 40px;
-            width: 50%;
+            /* width: 50%; */
             background: #fff;
             display: flex;
             flex-direction: column;
@@ -64,10 +64,10 @@
         .agileits-top input[type="text"]:focus,
         .agileits-top input[type="email"]:focus,
         .agileits-top input[type="tel"]:focus {
-            border-color: #6e55ff;
+            border-color: #2981B2;
             box-shadow: 0 0 8px rgba(110, 85, 255, 0.3);
-            /* Focus color set to #6e55ff */
-            color: #6e55ff;
+            /* Focus color set to #2981B2 */
+            color: #2981B2;
             /* Text color on focus */
         }
 
@@ -92,7 +92,7 @@
         }
 
         .wthree-text span {
-            color: #6e55ff;
+            color: #2981B2;
         }
 
         .agileits-top input[type="submit"] {
@@ -179,17 +179,19 @@
 
         .parent_container {
             min-height: 85vh;
+            padding: 10vh 0;
+            margin-right: 25vw;
         }
     </style>
 @endsection
 
 @section('content')
     <div id="pagee" class="clearfix">
-        <section class="slider flat-contact tf-section home5 relative">
+        <section class="slider home2 home5  signup ">
             <div class="container parent_container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="main-w3layouts wrapper">
+                        <div class="main-w3layouts wrapper ">
                             <div class="main-agileinfo">
                                 <h1>Sign Up</h1>
                                 <div class="agileits-top">
@@ -225,13 +227,13 @@
                                         <input type="submit" value="SIGN UP">
                                     </form>
                                     <div class="additional-links">
-                                        <p>Already have an Account? <a href="#">Login</a></p>
+                                        <p>Already have an Account? <a href="{{ route('login') }}">Login</a></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="image-container">
+                            {{-- <div class="image-container">
                                 <img src="path_to_your_image.jpg" alt="Registration Image">
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

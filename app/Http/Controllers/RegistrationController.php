@@ -247,23 +247,28 @@ class RegistrationController extends Controller
             'house_type' => 'required',
             'number_of_rooms' => 'required',
             'price' => 'required|numeric',
-            'area' => 'required|numeric',
+            'area' => 'numeric',
             'location_name' => 'required|string',
             'house_number' => 'required|string',
+            'post_code' => 'required|string',
+            'street' => 'string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'gallery.*' => 'nullable|file|mimes:jpg,jpeg,png,bmp|max:2048',
         ]);
-
+        $location = $request->location_name . ' ' . $request->post_code . ' ' . $request->house_number;
+        if ($request->street) {
+            $location = $request->location_name . ' ' . $request->post_code . ' ' . $request->Street . ' ' . $request->house_number;
+        }
         $data = [
             'swap_type_id' => 1,
             'house_type_id' => $request->house_type,
-            'location' => $request->location_name . ' ' . $request->house_number,
+            'location' => $location,
             'latitude' => $request->latitude ?? '0',
             'longitude' => $request->longitude ?? '0',
             'number_of_rooms' => $request->number_of_rooms,
             'price' => $request->price,
-            'area' => $request->area,
+            'area' => $request->area ?? '',
             'street_view' => $request->street_view == 'on' ? 1 : 0,
         ];
 

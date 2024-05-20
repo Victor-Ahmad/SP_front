@@ -59,10 +59,10 @@
 
         .agileits-top input[type="password"]:focus,
         {
-        border-color: #6e55ff;
+        border-color: #2981B2;
         box-shadow: 0 0 8px rgba(110, 85, 255, 0.3);
-        /* Focus color set to #6e55ff */
-        color: #6e55ff;
+        /* Focus color set to #2981B2 */
+        color: #2981B2;
         /* Text color on focus */
         }
 
@@ -77,7 +77,7 @@
 
 
         .wthree-text span {
-            color: #6e55ff;
+            color: #2981B2;
         }
 
         .agileits-top input[type="submit"] {

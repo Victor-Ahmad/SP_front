@@ -7,8 +7,8 @@
         .main-w3layouts {
             display: flex;
             flex-wrap: wrap;
-            max-width: 100vw;
-            margin: 50px auto;
+            max-width: 30vw;
+            margin: 50px 0;
             background: #f9f9f9;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -17,7 +17,7 @@
 
         .main-agileinfo {
             padding: 40px;
-            width: 50%;
+            /* width: 50%; */
             background: #fff;
             display: flex;
             flex-direction: column;
@@ -57,9 +57,9 @@
 
         .agileits-top input[type="tel"]:focus,
         .agileits-top input[type="password"]:focus {
-            border-color: #6e55ff;
+            border-color: #2981B2;
             box-shadow: 0 0 8px rgba(110, 85, 255, 0.3);
-            color: #6e55ff;
+            color: #2981B2;
         }
 
         .agileits-top input[type="submit"] {
@@ -145,13 +145,16 @@
 
         .parent_container {
             min-height: 85vh;
+            padding: 20vh 0;
+            /* padding-bottom: 30vh; */
+            margin-right: 25vw;
         }
     </style>
 @endsection
 
 @section('content')
     <div id="pagee" class="clearfix">
-        <section class="slider flat-contact tf-section home5 relative">
+        <section class="slider home2 home5  signup ">
             <div class="container parent_container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -185,9 +188,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="image-container">
-                                <img src="path_to_your_image.jpg" alt="Sign In Image">
-                            </div>
+
                         </div>
                     </div>
                 </div>

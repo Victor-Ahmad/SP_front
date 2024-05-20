@@ -14,7 +14,7 @@
 
         .btn-signup {
             width: 100%;
-            background-color: #6e55ff !important;
+            background-color: #2981B2 !important;
             /* Default background color */
             color: #fff !important;
             /* Default text color */
@@ -22,14 +22,24 @@
         }
 
         .btn-signup:hover {
-            background-color: #ffa920 !important;
-            color: #6e55ff !important;
+            /* background-color: #ffa920 !important; */
+            /* color: #ffa920 !important; */
+            transition: background-color 0.3s ease !important;
+            background-color: #18638b !important;
             /* Hover background color */
         }
 
         .btn-signup-container {
             width: 100%;
         }
+
+        .custom_h1 {
+            padding: 0 !important;
+        }
+
+        /* .custom_heading {
+                                            padding: 0 5vw !important;
+                                        } */
     </style>
 @endsection
 
@@ -44,9 +54,9 @@
 
         @include('layouts.partial.home.contact_us')
 
-        @include('layouts.partial.home.reviews')
+        {{-- @include('layouts.partial.home.reviews') --}}
 
-        @include('layouts.partial.home.slide_show')
+        {{-- @include('layouts.partial.home.slide_show') --}}
 
     </div>
 @endsection

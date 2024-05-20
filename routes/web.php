@@ -25,10 +25,10 @@ Route::get('/otp', [RegistrationController::class, 'showOtpForm'])->name('otp');
 Route::post('/otp', [RegistrationController::class, 'verifyOtp'])->name('otp.verify');
 Route::get('/password', [RegistrationController::class, 'showPasswordForm'])->name('password.show');
 Route::post('/password', [RegistrationController::class, 'setPassword'])->name('password.set');
-Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/account_completion', [RegistrationController::class, 'account_completion'])->name('account_completion');
 Route::post('/account_completion', [RegistrationController::class, 'complete_account'])->name('complete_account');
-
+Route::get('/home', [HomeController::class, 'home'])->name('home');
+Route::get('/home/{id}', [HomeController::class, 'singlePost'])->name('singlePost');
 
 
 
