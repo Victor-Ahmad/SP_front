@@ -13,8 +13,8 @@
                         <ul class="menu-bottom flex align-center fs-16 fw-6">
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('chats') }}">Messages</a></li>
-                            <li><a href="">Offer</a></li>
-                            <li><a href="">Feed Back</a></li>
+                            <li><a href="{{ route('profile.get') }}">Profile</a></li>
+                            <li><a href="{{ route('feed_back') }}">Feed Back</a></li>
                         </ul>
                     </div>
                     {{-- <div class="icon-social box-3 text-color-1">

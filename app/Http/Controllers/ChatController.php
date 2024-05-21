@@ -68,4 +68,27 @@ class ChatController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+
+
+
+    public function checkChat($userId)
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+
+            $response = $this->apiService->checkChat($userId);
+            if (isset($response['result'][0]['chat']) ?? false) {
+                return redirect()->route('chat.show', ['id' => $response['result'][0]['chat']['id']]);
+            } else {
+                return redirect()->route('chat.show', ['id' => $response['result']['id']]);
+            }
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
 }

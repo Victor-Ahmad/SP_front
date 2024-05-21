@@ -11,15 +11,15 @@
             justify-content: space-between;
             padding: 15px;
             margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            /* border: 1px solid #ddd; */
+            border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: box-shadow 0.3s ease;
             text-decoration: none;
-            color: inherit;
+            /* color: inherit; */
             width: 100%;
 
-            /* background: linear-gradient(135deg, #FF9700, #2a81b2); */
+            background: linear-gradient(135deg, #FF9700, #2a81b2);
             /* Ensure the cards take full width of the container */
             /* max-width: 600px; */
             /* Set a max width for the cards */
@@ -50,6 +50,11 @@
             min-height: 83vh;
             padding: 0 20vw;
         }
+
+        .background_color {
+            background: linear-gradient(135deg, #2a81b2, white) !important;
+            min-height: 87vh;
+        }
     </style>
 @endsection
 
@@ -57,10 +62,10 @@
 
     <div id="pagee" class="clearfix background_color">
 
-        <div class=" chat-container">
+        <div class=" chat-container ">
             @if (count($chats) > 0)
                 @foreach ($chats as $chat)
-                    <a href="{{ route('chat.show', ['id' => $chat['id']]) }}" class="chat-card">
+                    <a href="{{ route('chat.show', ['id' => $chat['id']]) }}" class="chat-card ">
                         <div class="chat-info">
                             <div class="name">{{ $chat['other_person']['first_name'] }}
                                 {{ $chat['other_person']['last_name'] }}</div>

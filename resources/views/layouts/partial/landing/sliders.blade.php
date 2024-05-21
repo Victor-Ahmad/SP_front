@@ -16,18 +16,19 @@
                             {{-- <p class="fs-16 lh-24 fw-6 text-color-1">Find and swap your home with others in the
                                 Netherlands effortlessly.</p> --}}
                         </div>
+                        @if (!Session::get('token'))
+                            <div class="row justify-content-center">
+                                <div class="col-4 d-flex justify-content-center">
+                                    <div class=" btn-signup-container">
+                                        <a class="sc-button d-flex justify-content-center btn-signup"
+                                            href="{{ route('register') }}">
 
-                        <div class="row justify-content-center">
-                            <div class="col-4 d-flex justify-content-center">
-                                <div class=" btn-signup-container">
-                                    <a class="sc-button d-flex justify-content-center btn-signup"
-                                        href="{{ route('register') }}">
-
-                                        <h4>Sign Up</h4>
-                                    </a>
+                                            <h4>Sign Up</h4>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
 

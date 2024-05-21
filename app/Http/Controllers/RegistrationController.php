@@ -45,7 +45,19 @@ class RegistrationController extends Controller
             $response = $this->apiService->signUp($data);
 
             if ($response['success'] == 1) {
-                Session::put('user_id', $response['result']['id']);
+                // if ($response['result']['id']) {
+                //     Session::put('user_id', $response['result']['id']);
+                // }
+
+                if ($response['result']['user']) {
+                    Session::put('user', $response['result']['user']);
+                    Session::put('user_id', $response['result']['user']['id']);
+                }
+                if ($response['result']['token']) {
+                    Session::put('token', $response['result']['token']);
+                    return redirect()->route('password.show');
+                }
+
                 return redirect()->route('otp');
             } else {
                 $messages = [];

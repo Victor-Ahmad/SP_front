@@ -34,10 +34,12 @@ Route::get('/chats', [ChatController::class, 'chats'])->name('chats');
 Route::get('/chat/{id}', [ChatController::class, 'showChatMessages'])->name('chat.show');
 Route::get('/feed_back', [HomeController::class, 'feedBack'])->name('feed_back');
 Route::post('/send_feedback', [HomeController::class, 'sendFeedback'])->name('send_feedback');
+Route::get('/profile', [HomeController::class, 'getProfile'])->name('profile.get');
+Route::post('/profile', [HomeController::class, 'updateProfile'])->name('profile.update');
 
 
 
-
+Route::get('/check_chat/{userId}', [ChatController::class, 'checkChat'])->name('checkChat');
 
 
 

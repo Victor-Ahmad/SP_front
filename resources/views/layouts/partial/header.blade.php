@@ -19,7 +19,7 @@
                                     <ul class="navigation clearfix">
                                         <li><a href="{{ route('home') }}">Home</a></li>
                                         <li><a href="{{ route('chats') }}">Messages</a></li>
-                                        <li><a href="">Profile</a></li>
+                                        <li><a href="{{ route('profile.get') }}">Profile</a></li>
                                         <li><a href="{{ route('feed_back') }}">Feed Back</a></li>
                                     </ul>
                                 </div>

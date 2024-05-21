@@ -23,9 +23,9 @@
         </div>
     </div>
     <div class="content">
-        <h3 class="link-style-1"><a href="">{{ $post['location'] }}</a></h3>
+        <h3 class="link-style-1"><a href="">{{ $post['location'] }}, {{ $post['street'] }}</a></h3>
         <div class="text-address">
-            <p class="p-12">{{ $post['location'] }}</p>
+            <p class="p-12">{{ $post['user']['first_name'] }} {{ $post['user']['last_name'] }}</p>
         </div>
         <div class="money fs-18 fw-6 text-color-3"><a href="">€ {{ $post['price'] }}</a></div>
         <div class=" "><span>House Type: </span><span class="fw-6">{{ $post['house_type']['type'] }}</span></div>
@@ -38,7 +38,8 @@
 
         <div class="days-box flex justify-content-between align-items-center">
             <div class="chat-button-container ml-auto">
-                <a href="#" class="btn btn-chat"><i class="fas fa-comments"></i> Chat</a>
+                <a href="{{ route('checkChat', ['userId' => $post['user']['id']]) }}" class="btn btn-chat"><i
+                        class="fas fa-comments"></i> Chat</a>
             </div>
         </div>
     </div>

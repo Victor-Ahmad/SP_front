@@ -158,4 +158,24 @@ class ApiService
 
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+    public function getProfile()
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . 'get_profile',);
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+    public function checkChat($chatId)
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "is_chat_existing/{$chatId}");
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

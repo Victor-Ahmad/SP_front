@@ -8,7 +8,7 @@
             display: flex;
             flex-wrap: wrap;
             /* Ensure wrapping on small screens */
-            max-width: 100vw;
+            max-width: 35vw;
             margin: 50px auto;
             background: #f9f9f9;
             border-radius: 10px;
@@ -18,7 +18,7 @@
 
         .main-agileinfo {
             padding: 40px;
-            width: 50%;
+            width: 100%;
             background: #fff;
             display: flex;
             flex-direction: column;
@@ -170,7 +170,7 @@
 
 @section('content')
     <div id="pagee" class="clearfix">
-        <section class="slider flat-contact tf-section home5 relative">
+        <section class="slider password_page flat-contact tf-section home5 relative">
             <div class="container parent_container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -201,9 +201,7 @@
 
                                 </div>
                             </div>
-                            <div class="image-container">
-                                <img src="path_to_your_image.jpg" alt="Registration Image">
-                            </div>
+
                         </div>
                     </div>
                 </div>

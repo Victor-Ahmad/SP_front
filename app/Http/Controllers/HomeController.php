@@ -71,4 +71,27 @@ class HomeController extends Controller
         $this->apiService->sendFeedback($data);
         return back()->with('status', 'Thank you for your feedback!');
     }
+
+
+    public function getProfile()
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+
+            $response = $this->apiService->getProfile();
+
+            return view('profile', ['profile' => $response['result']]);
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+    public function updateProfile()
+    {
+    }
 }

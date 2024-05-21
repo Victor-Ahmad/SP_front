@@ -61,15 +61,15 @@
 
 @section('content')
     <div id="pagee" class="clearfix">
-        <section class="slider flat-contact tf-section home5 relative">
+        <section class="slider account_completion flat-contact tf-section home5 relative">
             <div class="container parent_container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="wrap-contact">
                             <ul class="step-navigation">
-                                <li class="active" data-step="0">Step 1: House Information</li>
-                                <li data-step="1">Step 2: House Location</li>
-                                <li data-step="2">Step 3: House Gallery</li>
+                                <li class="active" data-step="0">Step 1: Your House Information</li>
+                                <li data-step="1">Step 2: Your House Location</li>
+                                <li data-step="2">Step 3: Your House Gallery</li>
                             </ul>
                             <form id="multiStepForm" action="{{ route('complete_account') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -167,7 +167,10 @@
                                 <!-- Step 3 -->
                                 <div class="form-step">
                                     <h3>House Gallery</h3>
-                                    <input type="file" id="gallery" name="gallery[]" multiple class="input-field">
+                                    <p style="margin-top:15px">Upload images of your house, other visitors can view those
+                                        images. (optional)</p>
+                                    <input type="file" id="gallery" name="gallery[]" multiple class="input-field"
+                                        style="margin-top:15px">
                                     <div class="preview-container">
                                         <div class="preview-slideshow" id="previewSlideshow"></div>
                                         <div class="preview-controls" id="previewControls">

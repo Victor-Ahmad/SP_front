@@ -12,11 +12,16 @@
             margin: 40px auto;
             /* Added margin on top */
             max-width: 800px;
-            border: 1px solid #ddd;
+            border: 1px solid #236a8a;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            background: #fff;
+            /* background: #fff; */
+
+        }
+
+        .background_color {
+            background: linear-gradient(135deg, #2a81b2, white) !important;
         }
 
         .chat-header {
@@ -119,10 +124,11 @@
 @endsection
 
 @section('content')
-    <div id="pagee" class="clearfix" style="padding: 10vh 0">
+    <div id="pagee" class="clearfix background_color" style="padding: 10vh 0">
         <div class="chat-window">
             <div class="chat-header">
-                Chat Messages
+                {{ $chat['chat']['other_person']['first_name'] }} {{ $chat['chat']['other_person']['last_name'] }} -
+                {{ $chat['chat']['other_person']['location'] }}, {{ $chat['chat']['other_person']['street'] }}
             </div>
             <div class="chat-messages-box" id="chatMessagesBox">
                 @foreach ($chat['messages'] as $message)
