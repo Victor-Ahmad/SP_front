@@ -21,7 +21,7 @@
         }
 
         .background_color {
-            background: linear-gradient(135deg, #2a81b2, white) !important;
+            /* background: linear-gradient(135deg, #2a81b2, white) !important; */
         }
 
         .chat-header {

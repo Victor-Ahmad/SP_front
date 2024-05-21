@@ -19,7 +19,7 @@
             /* color: inherit; */
             width: 100%;
 
-            background: linear-gradient(135deg, #FF9700, #2a81b2);
+            /* background: linear-gradient(135deg, #FF9700, #2a81b2); */
             /* Ensure the cards take full width of the container */
             /* max-width: 600px; */
             /* Set a max width for the cards */
@@ -52,7 +52,7 @@
         }
 
         .background_color {
-            background: linear-gradient(135deg, #2a81b2, white) !important;
+            /* background: linear-gradient(135deg, #2a81b2, white) !important; */
             min-height: 87vh;
         }
     </style>

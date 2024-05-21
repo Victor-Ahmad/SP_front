@@ -7449,6 +7449,14 @@
   background-position: center;
 }
 
+.menu-bottom li a {
+  color: #2a81b2 !important;
+}
+
+.menu-bottom li a:hover {
+  color: #FF9700 !important;
+}
+
 .slider.home5.account_completion {
   background: linear-gradient(135deg, #FF9700, #2a81b2);
   background-attachment: fixed;

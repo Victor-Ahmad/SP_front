@@ -6,7 +6,7 @@
         type="text/css" media="all" />
     <style>
         .background_color {
-            background: #236a8a;
+            background: white;
         }
     </style>
 @endsection

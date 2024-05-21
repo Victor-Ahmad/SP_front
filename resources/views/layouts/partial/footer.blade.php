@@ -1,4 +1,4 @@
-<div class="widget-logo-footer">
+<div class="widget-logo-footer" style="background: #ddd">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
