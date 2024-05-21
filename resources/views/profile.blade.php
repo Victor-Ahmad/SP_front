@@ -1,63 +1,98 @@
 @extends('layouts.master')
 
 @section('title', 'Profile')
+
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
     <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
         .profile-container {
             max-width: 800px;
             margin: 15vh auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .profile-container:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .profile-header {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .profile-header img {
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             margin-right: 20px;
+            border: 3px solid #3498db;
         }
 
         .profile-header .name {
-            font-size: 24px;
-            font-weight: bold;
-            color: #2a81b2;
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
         }
 
-        .profile-details {
+        .edit-button {
+            margin-left: auto;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .edit-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .profile-details,
+        .house-details {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 15px;
         }
 
-        .profile-details .detail {
+        .profile-details .detail,
+        .house-details .detail {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
         }
 
-        .profile-details .detail span {
+        .profile-details .detail span,
+        .house-details .detail span {
             font-size: 16px;
         }
 
-        .profile-details .detail .label {
-            color: #555;
+        .profile-details .detail .label,
+        .house-details .detail .label {
+            color: #7f8c8d;
+            font-weight: 500;
         }
 
-        .profile-details .detail .value {
-            font-weight: bold;
-            color: #333;
+        .profile-details .detail .value,
+        .house-details .detail .value {
+            font-weight: 600;
+            color: #2c3e50;
         }
 
         .house-details {
@@ -65,99 +100,140 @@
         }
 
         .house-details h3 {
-            font-size: 20px;
+            font-size: 24px;
             margin-bottom: 15px;
-            color: #2a81b2;
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
         }
 
-        .house-details .detail {
-            display: flex;
-            justify-content: space-between;
+        .save-button {
+            margin-top: 30px;
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .editable {
+            border: 1px solid #ecf0f1;
             padding: 10px;
-            border-bottom: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            color: black !important;
         }
 
-        .house-details .detail span {
-            font-size: 16px;
+        .editable:disabled {
+            background-color: #f4f4f9;
+            border-color: #ecf0f1;
+            color: #2a81b2 !important;
         }
 
-        .house-details .detail .label {
-            color: #555;
+        .profile-container h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
         }
-
-        .house-details .detail .value {
-            font-weight: bold;
-            color: #333;
-        }
-
-
-        /* .background_color {
-                background: linear-gradient(135deg, #2a81b2, white) !important;
-                min-height: 87vh;
-            } */
     </style>
 @endsection
 
 @section('content')
-    <div id="pagee" class="clearfix background_color">
-
+    <div id="pagee" class="clearfix">
         <div class="profile-container">
             <div class="profile-header">
-                <img src="https://via.placeholder.com/80" alt="Profile Picture">
+                <img src="https://via.placeholder.com/100" alt="Profile Picture">
                 <div class="name">{{ $profile['first_name'] }} {{ $profile['last_name'] }}</div>
+                <button class="edit-button" id="edit-button">Edit</button>
             </div>
 
-            <div class="profile-details">
-                <div class="detail">
-                    <span class="label">Email:</span>
-                    <span class="value">{{ $profile['email'] }}</span>
+            <h2>Profile Information</h2>
+            <form id="profile-form" action="{{ route('profile.update') }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <div class="profile-details">
+                    <div class="detail">
+                        <span class="label">Email:</span>
+                        <span class="value"><input type="email" name="email" value="{{ $profile['email'] }}"
+                                class="editable" disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Phone Number:</span>
+                        <span class="value"><input type="text" name="number" value="{{ $profile['number'] }}"
+                                class="editable" disabled></span>
+                    </div>
                 </div>
-                <div class="detail">
-                    <span class="label">Phone Number:</span>
-                    <span class="value">{{ $profile['number'] }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">Created At:</span>
-                    <span class="value">{{ \Carbon\Carbon::parse($profile['created_at'])->format('d M Y, h:i A') }}</span>
-                </div>
-            </div>
 
-            <div class="house-details">
-                <h3>House Details</h3>
-                <div class="detail">
-                    <span class="label">Location:</span>
-                    <span class="value">{{ $profile['one_to_one_swap_house']['location'] }}</span>
+                <h2>House Details</h2>
+                <div class="house-details">
+                    <div class="detail">
+                        <span class="label">Location:</span>
+                        <span class="value"><input type="text" name="location"
+                                value="{{ $profile['one_to_one_swap_house']['location'] }}" class="editable"
+                                disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Post Code:</span>
+                        <span class="value"><input type="text" name="post_code"
+                                value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="editable"
+                                disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Street:</span>
+                        <span class="value"><input type="text" name="street"
+                                value="{{ $profile['one_to_one_swap_house']['street'] }}" class="editable" disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">House Number:</span>
+                        <span class="value"><input type="text" name="house_number"
+                                value="{{ $profile['one_to_one_swap_house']['house_number'] }}" class="editable"
+                                disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Number of Rooms:</span>
+                        <span class="value"><input type="number" name="number_of_rooms"
+                                value="{{ $profile['one_to_one_swap_house']['number_of_rooms'] }}" class="editable"
+                                disabled></span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">Rent Price:</span>
+                        <span class="value"><input type="number" step="0.01" name="price"
+                                value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
+                    </div>
                 </div>
-                <div class="detail">
-                    <span class="label">Post Code:</span>
-                    <span class="value">{{ $profile['one_to_one_swap_house']['post_code'] }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">Street:</span>
-                    <span class="value">{{ $profile['one_to_one_swap_house']['street'] }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">House Number:</span>
-                    <span class="value">{{ $profile['one_to_one_swap_house']['house_number'] }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">Number of Rooms:</span>
-                    <span class="value">{{ $profile['one_to_one_swap_house']['number_of_rooms'] }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">Rent Price:</span>
-                    <span class="value">{{ number_format($profile['one_to_one_swap_house']['price'], 2) }}</span>
-                </div>
-                <div class="detail">
-                    <span class="label">Created At:</span>
-                    <span
-                        class="value">{{ \Carbon\Carbon::parse($profile['one_to_one_swap_house']['created_at'])->format('d M Y, h:i A') }}</span>
-                </div>
-            </div>
+                <button type="submit" class="save-button" id="save-button" style="display: none;">Save Changes</button>
+            </form>
         </div>
     </div>
+
+    <script>
+        document.getElementById('edit-button').addEventListener('click', function() {
+            var inputs = document.querySelectorAll('.editable');
+            inputs.forEach(function(input) {
+                input.disabled = !input.disabled;
+            });
+
+            var saveButton = document.getElementById('save-button');
+            if (inputs[0].disabled) {
+                saveButton.style.display = 'none';
+                this.innerText = 'Edit';
+            } else {
+                saveButton.style.display = 'block';
+                this.innerText = 'Cancel';
+            }
+        });
+    </script>
 @endsection
 
 @section('additional_scripts')
-
 @endsection
