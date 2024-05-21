@@ -128,9 +128,14 @@
                                 <!-- Step 2 -->
                                 <div class="form-step">
                                     <div class="form-row">
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <h3 class="location-label">Location</h3>
-                                            <input type="text" id="locationName" name="location_name"
+                                            <input type="text" id="autocomplete" name="location_name"
+                                                placeholder="Enter location name" class="input-field" required>
+                                        </div> --}}
+                                        <div class="form-group">
+                                            <h3 class="post-code-label">Location</h3>
+                                            <input type="text" id="autocomplete" name="location_name"
                                                 placeholder="Enter location name" class="input-field" required>
                                         </div>
                                         <div class="form-group">
@@ -412,4 +417,29 @@
 
         });
     </script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
+    </script>
+    <script>
+        function initAutocomplete() {
+            var input = document.getElementById('autocomplete');
+
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+            });
+        }
+    </script>
+
 @endsection
