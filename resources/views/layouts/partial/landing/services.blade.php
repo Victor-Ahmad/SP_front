@@ -34,12 +34,12 @@
                                 home you are looking for.
                             </p>
                         </div>
-                        <div class="meta style">
+                        {{-- <div class="meta style">
                             <a href="#" class="btn-button flex align-center fw-6 text-color-2"><span>Learn More
                                 </span>
                                 <i class="far fa-long-arrow-alt-right fs-16"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -71,12 +71,12 @@
 
                             </p>
                         </div>
-                        <div class="meta style">
+                        {{-- <div class="meta style">
                             <a href="#" class="btn-button flex align-center fw-6 text-color-2"><span>Learn
                                     More</span>
                                 <i class="far fa-long-arrow-alt-right fs-16"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -107,12 +107,12 @@
 
                             </p>
                         </div>
-                        <div class="meta style">
+                        {{-- <div class="meta style">
                             <a href="#" class="btn-button flex align-center fw-6 text-color-2"><span>Learn
                                     More</span>
                                 <i class="far fa-long-arrow-alt-right fs-16"></i>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
