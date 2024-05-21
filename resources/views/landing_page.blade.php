@@ -37,9 +37,18 @@
             padding: 0 !important;
         }
 
-        /* .custom_heading {
-                                            padding: 0 5vw !important;
-                                        } */
+        .text-outline {
+            color: white;
+            /* You can set the text color as desired */
+            text-shadow:
+                -1px -1px 0 #18638b,
+                1px -1px 0 #18638b,
+                -1px 1px 0 #18638b,
+                1px 1px 0 #18638b;
+            /* Blue outline */
+
+            /* Adjust as necessary */
+        }
     </style>
 @endsection
 
@@ -52,7 +61,7 @@
 
         @include('layouts.partial.landing.services')
 
-        @include('layouts.partial.home.contact_us')
+        @include('layouts.partial.landing.contact_us')
 
         {{-- @include('layouts.partial.home.reviews') --}}
 

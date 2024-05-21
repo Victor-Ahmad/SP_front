@@ -8,8 +8,8 @@
                         <!-- Logo Box -->
                         <div class="logo-box flex">
                             <div class="logo"><a href="{{ route('landing_page') }}">
-                                    <img style="height: 50px" src="assets/images/logo/logo.png" alt=""
-                                        title="">
+                                    <img style="height: 50px" src="{{ asset('assets/images/logo/logo.png') }}"
+                                        alt="" title="">
                                 </a></div>
                         </div>
                         <div class="nav-outer flex align-center">
@@ -19,8 +19,8 @@
                                     <ul class="navigation clearfix">
                                         <li><a href="{{ route('home') }}">Home</a></li>
                                         <li><a href="{{ route('chats') }}">Messages</a></li>
-                                        <li><a href="">Offer</a></li>
-                                        <li><a href="">Feed Back</a></li>
+                                        <li><a href="">Profile</a></li>
+                                        <li><a href="{{ route('feed_back') }}">Feed Back</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -94,8 +94,8 @@
     <div class="mobile-menu">
         <div class="menu-backdrop"></div>
         <nav class="menu-box">
-            <div class="nav-logo"><a href="index.html"><img src="assets/images/logo/logo@2x.png" alt=""
-                        width="197" height="48"></a></div>
+            <div class="nav-logo"><a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}"
+                        alt="" width="197" height="48"></a></div>
             <div class="bottom-canvas">
                 <div class="login-box flex align-center">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none"

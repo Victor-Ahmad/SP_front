@@ -146,4 +146,16 @@ class ApiService
 
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+
+    public function sendFeedback($data)
+    {
+        $response = $this->http->withToken(Session::get('token'))->post($this->baseUrl . 'store_feedback', $data);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

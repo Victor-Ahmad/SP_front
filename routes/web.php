@@ -31,8 +31,9 @@ Route::post('/account_completion', [RegistrationController::class, 'complete_acc
 Route::get('/home', [HomeController::class, 'home'])->name('home');
 Route::get('/home/{id}', [HomeController::class, 'singlePost'])->name('singlePost');
 Route::get('/chats', [ChatController::class, 'chats'])->name('chats');
-Route::get('/chat_messages/{id}', [ChatController::class, 'showChatMessages'])->name('chat_messages.show');
-
+Route::get('/chat/{id}', [ChatController::class, 'showChatMessages'])->name('chat.show');
+Route::get('/feed_back', [HomeController::class, 'feedBack'])->name('feed_back');
+Route::post('/send_feedback', [HomeController::class, 'sendFeedback'])->name('send_feedback');
 
 
 

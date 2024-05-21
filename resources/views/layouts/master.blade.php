@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="{{ asset('app/dist/owl.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo/Favicon.png') }}">
     <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/logo/Favicon.png') }}">
+    <style>
+        .navigation li a:hover {
+            color: #2a81b2 !important;
+        }
+    </style>
     @yield('head_css')
 </head>
 
@@ -24,7 +29,7 @@
         </main>
         @include('layouts.partial.footer')
     </div>
-    @include('layouts.partial.modals')
+    {{-- @include('layouts.partial.modals') --}}
     @include('layouts.partial.scripts')
     @yield('additional_scripts')
     <a id="scroll-top" class="button-go"></a>

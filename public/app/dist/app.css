@@ -7433,6 +7433,12 @@
   background-position: center;
 }
 
+.slider.home5.contact_us {
+  background-image: linear-gradient(to right, #FF9700, transparent), url(./../../assets/images/slider/contact_us_slider.png);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
 
 .slider.home5 .slider-item .content {
   padding: 257px 0 243px;

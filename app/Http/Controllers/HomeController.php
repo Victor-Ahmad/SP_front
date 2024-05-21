@@ -48,7 +48,27 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
-    public function singlePost()
+    public function feedBack()
     {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+
+        return view('feed_back');
+    }
+    public function sendFeedback(Request $request)
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        $data = [
+            'message' => $request->message,
+        ];
+        $this->apiService->sendFeedback($data);
+        return back()->with('status', 'Thank you for your feedback!');
     }
 }

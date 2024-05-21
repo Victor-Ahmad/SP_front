@@ -187,7 +187,7 @@
 
 @section('content')
     <div id="pagee" class="clearfix">
-        <section class="slider home2 home5  signup ">
+        <section class="slider home2 home5 signup ">
             <div class="container parent_container">
                 <div class="row">
                     <div class="col-lg-12">

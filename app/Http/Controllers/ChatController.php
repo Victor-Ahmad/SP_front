@@ -31,6 +31,16 @@ class ChatController extends Controller
 
             $response = $this->apiService->getChats();
             $chats =  $response['result'];
+            // $chats = [];
+            // foreach ($response['result'] as $chat) {
+            //     $chats[] = [
+            //         'id' => $chat['id'],
+            //         'name' => $chat['other_person']['first_name'] . ' ' . $chat['other_person']['last_name'],
+            //         'location' => $chat['other_person']['one_to_one_swap_house']['location'] . ', ' . $chat['other_person']['one_to_one_swap_house']['street'],
+            //         'updated_at' => $chat['updated_at'],
+            //     ];
+            // }
+
             return view('chats', ['chats' => $chats]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
@@ -50,9 +60,9 @@ class ChatController extends Controller
 
         try {
 
-            $response = $this->apiService->getChatMessages($id, $page);
+            $chat = $this->apiService->getChatMessages($id, $page);
 
-            return view('chat_messages', ['chat' =>   $response]);
+            return view('single_chat', ['chat' => $chat['result'][0]]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
