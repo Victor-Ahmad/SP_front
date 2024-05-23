@@ -31,6 +31,10 @@
             display: inline-block;
         }
 
+        .auth_btn {
+            color: #2a81b2;
+        }
+
         .menu-btn {
             background-color: transparent !important;
             color: #2a81b2;

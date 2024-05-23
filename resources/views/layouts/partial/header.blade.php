@@ -71,15 +71,13 @@
                                             data-target="#popup_bid2">Register</a></li> --}}
 
                                     @if (session('token'))
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('logout') }}">@lang('lang.logout')</a>
+                                        <li class="auth_btn"><a href="{{ route('logout') }}">@lang('lang.logout')</a>
                                         </li>
                                     @else
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('register') }}">@lang('lang.register')</a></li>
+                                        <li class="auth_btn"><a href="{{ route('register') }}">@lang('lang.register')</a>
+                                        </li>
                                         <li><span>/</span></li>
-                                        <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('login') }}">@lang('lang.login')</a>
+                                        <li class="auth_btn"><a href="{{ route('login') }}">@lang('lang.login')</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -167,8 +165,8 @@
                                     fill="#E5E5EA"></path>
                                 <path
                                     d="M22.6771 37.2188L27.0716 34.2891L35.8398 37.2188V43.0781C35.8398 44.6961 34.549 46.0078 32.931 46.0078C16.7508 46.0078 1.46484 30.8195 1.46484 14.6394C1.46484 13.0214 2.77656 11.7305 4.39453 11.7305H10.2539L13.1836 20.4987L10.2539 24.8933C12.1247 29.5703 18 35.3479 22.6771 37.2188Z"
-                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
                                 <path
                                     d="M19.1406 13.7812C19.1406 18.6354 23.0756 22.5703 27.9297 22.5703V28.4297L33.7891 22.5703H39.6484C44.5025 22.5703 48.5352 18.6354 48.5352 13.7812C48.5352 8.92715 44.5025 4.99219 39.6484 4.99219H27.9297C23.0756 4.99219 19.1406 8.92715 19.1406 13.7812Z"
                                     stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
