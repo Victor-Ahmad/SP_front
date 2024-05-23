@@ -21,6 +21,7 @@
             color: #2a81b2 !important;
         }
     </style>
+
     @yield('head_css')
 </head>
 

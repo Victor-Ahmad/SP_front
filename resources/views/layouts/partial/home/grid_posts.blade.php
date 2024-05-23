@@ -86,7 +86,8 @@
                         <div class="content-inner tab-content">
                             <div class="wrap-item flex">
                                 @foreach ($posts as $post)
-                                    <a href="" class="card-link">
+                                    <a href="javascript:openGallery('{{ json_encode($post['images']) }}');"
+                                        class="card-link">
                                         @include('layouts.partial.home.post', ['post' => $post])
                                     </a>
                                 @endforeach
@@ -107,3 +108,13 @@
         </div>
     </div>
 </section>
+<div id="galleryModal" class="modal">
+    <span class="close" onclick="closeGallery()">&times;</span>
+    <div class="modal-content">
+        <div class="modal-slide">
+            <!-- Images will be dynamically added here -->
+        </div>
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    </div>
+</div>

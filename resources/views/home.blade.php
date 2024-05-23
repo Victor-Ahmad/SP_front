@@ -19,6 +19,49 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
     <script>
+        let currentSlideIndex = 0;
+
+        function openGallery(imagesJson) {
+            const images = JSON.parse(imagesJson);
+            const modal = document.getElementById('galleryModal');
+            const modalContent = document.querySelector('.modal-slide');
+            modalContent.innerHTML = '';
+
+            if (images.length === 0) {
+                modalContent.innerHTML = '<img class="modal-image" src="assets/images/house/featured-7.jpg" alt="images">';
+            } else {
+                images.forEach((image, index) => {
+                    const img = document.createElement('img');
+                    img.src = `{{ env('MEDIA_BASE_URL') }}${image.image_path}`;
+                    img.classList.add('modal-image');
+                    if (index !== 0) img.style.display = 'none';
+                    modalContent.appendChild(img);
+                });
+            }
+
+            modal.style.display = 'block';
+            currentSlideIndex = 0;
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').style.display = 'none';
+        }
+
+        function changeSlide(n) {
+            const slides = document.querySelectorAll('.modal-image');
+            slides[currentSlideIndex].style.display = 'none';
+            currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
+            slides[currentSlideIndex].style.display = 'block';
+        }
+
+        document.addEventListener('click', function(event) {
+            const modal = document.getElementById('galleryModal');
+            if (event.target === modal) {
+                closeGallery();
+            }
+        });
+    </script>
+    <script>
         function initAutocomplete() {
             var input = document.getElementById('searchAutocompleteInput');
 
