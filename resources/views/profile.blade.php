@@ -25,7 +25,7 @@
                 <div class="profile-details">
                     <div class="detail">
                         <span class="label">Email:</span>
-                        <span class="value"><input type="email" name="email" value="{{ $profile['email'] }}"
+                        <span class="value"><input type="text" name="email" value="{{ $profile['email'] }}"
                                 class="uneditable" disabled></span>
                     </div>
                     <div class="detail">
