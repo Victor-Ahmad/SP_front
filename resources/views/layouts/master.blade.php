@@ -32,7 +32,7 @@
         }
 
         .menu-btn {
-            background-color: transparent !important;
+            background-color: #2a81b2;
             color: white;
             padding: 5px 10px;
             font-size: 14px;
