@@ -307,5 +307,6 @@ input[type="text"]:focus {
 
 
 .menu-btn {
-    background-color: transparent !important;
+    color: #2a81b2 !important;
+
 }
