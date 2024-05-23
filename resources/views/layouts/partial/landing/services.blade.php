@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="heading-section center">
-                    <h2>How It Works</h2>
-                    <p class="font-2">Woningruil presents a platform where you can do house exchanges, you can find:</p>
+                    <h2>@lang('lang.how it works')</h2>
+
                 </div>
             </div>
             <div class="col-lg-4 col-md-6">
@@ -29,9 +29,8 @@
                     </div>
                     <div class="content">
                         <div class="inner">
-                            <h3>Step 1: Create Your Profile</h3>
-                            <p class="font-2"> Sign up and create a profile with details about your home and the type of
-                                home you are looking for.
+                            <h3>@lang('lang.step 1: create your profile')</h3>
+                            <p class="font-2">@lang('lang.sign up and create a profile with details about your home and the type of home you are looking for.')
                             </p>
                         </div>
                         {{-- <div class="meta style">
@@ -65,10 +64,8 @@
                     </div>
                     <div class="content">
                         <div class="inner">
-                            <h3>Step 2: Find Matches</h3>
-                            <p class="font-2"> Search for matches based on your preferences and contact homeowners to
-                                discuss a swap.
-
+                            <h3>@lang('lang.step 2: find matches')</h3>
+                            <p class="font-2">@lang('lang.search for matches based on your preferences and contact homeowners to discuss a swap.')
                             </p>
                         </div>
                         {{-- <div class="meta style">
@@ -102,9 +99,8 @@
                     </div>
                     <div class="content">
                         <div class="inner">
-                            <h3>Step 3: Swap Homes</h3>
-                            <p class="font-2">Once you find a match, arrange the details and swap homes.
-
+                            <h3>@lang('lang.step 3: swap homes')</h3>
+                            <p class="font-2">@lang('lang.once you find a match, arrange the details and swap homes.')
                             </p>
                         </div>
                         {{-- <div class="meta style">

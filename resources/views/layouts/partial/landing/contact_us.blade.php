@@ -6,7 +6,7 @@
                 <div class="wrap-contact">
                     <div class="box-title flex justify-space">
                         <div class="inner">
-                            <div class="title-ct fs-30 fw-7">Contact us </div>
+                            <div class="title-ct fs-30 fw-7">@lang('lang.contact us')</div>
 
                         </div>
                         <div class="icon-message animate-zoom">
@@ -27,30 +27,30 @@
                             <form method="post" id="contactform" class="comment-form form-submit"
                                 action="./contact/contact-process.php" accept-charset="utf-8" novalidate="novalidate">
                                 <fieldset class="name-wrap">
-                                    <label class="font-2 fw-8 fs-16">Your name</label>
-                                    <input type="text" class="tb-my-input" name="name" placeholder="Your name"
-                                        required="">
+                                    <label class="font-2 fw-8 fs-16">@lang('lang.your name')</label>
+                                    <input type="text" class="tb-my-input" name="name"
+                                        placeholder="@lang('lang.your name')" required="">
                                     <img class="img-icon" src="assets/images/icon/contact-name.svg" alt="images">
                                 </fieldset>
                                 <div class="text-wrap flex">
                                     <fieldset class="email-wrap style-text">
-                                        <label class="font-2 fw-8 fs-16">Email</label>
-                                        <input type="email" class="tb-my-input" name="email" placeholder="Email"
-                                            required="">
+                                        <label class="font-2 fw-8 fs-16">@lang('lang.email')</label>
+                                        <input type="email" class="tb-my-input" name="email"
+                                            placeholder="@lang('lang.email')" required="">
                                         <img class="img-icon img-email" src="assets/images/icon/contact-email.svg"
                                             alt="images">
                                     </fieldset>
                                     <fieldset class="phone-wrap style-text">
-                                        <label class="font-2 fw-8 fs-16">Phone</label>
-                                        <input type="tel" class="tb-my-input" name="tel" placeholder="Phone"
-                                            required="">
+                                        <label class="font-2 fw-8 fs-16">@lang('lang.phone')</label>
+                                        <input type="tel" class="tb-my-input" name="tel"
+                                            placeholder="@lang('lang.phone')" required="">
                                         <img class="img-icon" src="assets/images/icon/contact-phone.svg" alt="images">
                                     </fieldset>
                                 </div>
 
                                 <fieldset class="message-wrap">
-                                    <label class="font-2 fw-8 fs-16">Message</label>
-                                    <textarea id="comment-message" name="message" rows="4" tabindex="4" placeholder="Your message"
+                                    <label class="font-2 fw-8 fs-16">@lang('lang.message')</label>
+                                    <textarea id="comment-message" name="message" rows="4" tabindex="4" placeholder="@lang('lang.message')"
                                         aria-required="true"></textarea>
                                 </fieldset>
                                 <div class="button-boxs">
@@ -69,7 +69,7 @@
                                                 </clipPath>
                                             </defs>
                                         </svg>
-                                        <span>Send</span>
+                                        <span>@lang('lang.send')</span>
                                     </button>
                                 </div>
                             </form>
@@ -79,9 +79,9 @@
             </div>
             <div class="col-lg-6">
                 <div class="heading-section" style="width:40vw; margin-left:5vw; margin-top:10vh">
-                    <h2 class="font-2 fw-8 text-outline">Reach out,</h2>
-                    <h2 class="font-2 fw-8 text-outline">Share your insights,</h2>
-                    <h2 class="font-2 fw-8 text-outline">They are Much Appreciated.</h2>
+                    <h2 class="font-2 fw-8 text-outline">@lang('lang.reach out'),</h2>
+                    <h2 class="font-2 fw-8 text-outline">@lang('lang.share your insights'),</h2>
+                    <h2 class="font-2 fw-8 text-outline">@lang('lang.they are much appreciated').</h2>
                 </div>
             </div>
 

@@ -193,7 +193,7 @@
                     <div class="col-lg-12">
                         <div class="main-w3layouts wrapper ">
                             <div class="main-agileinfo">
-                                <h1>Sign Up</h1>
+                                <h1>@lang('lang.sign up')</h1>
                                 <div class="agileits-top">
                                     <!-- Display Error Messages -->
                                     @if ($errors->any())
@@ -209,25 +209,25 @@
                                     @endif
                                     <form action="{{ route('register') }}" method="post">
                                         @csrf
-                                        <input class="text" type="text" name="first_name" placeholder="First Name"
-                                            required>
-                                        <input class="text email" type="text" name="last_name" placeholder="Last Name"
-                                            required>
-                                        <input class="text email" type="email" name="email" placeholder="Email"
-                                            required>
+                                        <input class="text" type="text" name="first_name"
+                                            placeholder="@lang('lang.first name')" required>
+                                        <input class="text email" type="text" name="last_name"
+                                            placeholder="@lang('lang.last name')" required>
+                                        <input class="text email" type="email" name="email"
+                                            placeholder="@lang('lang.email')" required>
                                         <input class="text email" type="tel" name="phone_number"
-                                            placeholder="Phone Number" required pattern="[0-9]{9,15}"
+                                            placeholder="@lang('lang.phone number')" required pattern="[0-9]{9,15}"
                                             title="Phone number must be between 10 to 15 digits">
                                         <div class="wthree-text">
                                             <label class="anim">
                                                 <input type="checkbox" class="checkbox" required="">
-                                                <span>I Agree To The Terms & Conditions</span>
+                                                <span>@lang('lang.I agree to the terms & conditions')</span>
                                             </label>
                                         </div>
-                                        <input type="submit" value="SIGN UP">
+                                        <input type="submit" value="@lang('lang.sign up')">
                                     </form>
                                     <div class="additional-links">
-                                        <p>Already have an Account? <a href="{{ route('login') }}">Login</a></p>
+                                        <p>@lang('lang.already have an account')? <a href="{{ route('login') }}">@lang('lang.login')</a></p>
                                     </div>
                                 </div>
                             </div>

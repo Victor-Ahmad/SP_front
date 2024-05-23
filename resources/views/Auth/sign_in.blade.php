@@ -160,7 +160,7 @@
                     <div class="col-lg-12">
                         <div class="main-w3layouts wrapper">
                             <div class="main-agileinfo">
-                                <h1>Sign In</h1>
+                                <h1>@lang('lang.sign in')</h1>
                                 <div class="agileits-top">
                                     <!-- Display Error Messages -->
                                     @if ($errors->any())
@@ -177,14 +177,15 @@
                                     <form action="{{ route('login') }}" method="post">
                                         @csrf
                                         <input class="text email" type="tel" name="phone_number"
-                                            placeholder="Phone Number" required pattern="[0-9]{9,15}"
+                                            placeholder="@lang('lang.phone number')" required pattern="[0-9]{9,15}"
                                             title="Phone number must be between 10 to 15 digits">
-                                        <input class="text" type="password" name="password" placeholder="Password"
-                                            required>
-                                        <input type="submit" value="SIGN IN">
+                                        <input class="text" type="password" name="password"
+                                            placeholder="@lang('lang.password')" required>
+                                        <input type="submit" value="@lang('lang.sign in')">
                                     </form>
                                     <div class="additional-links">
-                                        <p>Don't have an Account? <a href="{{ route('register') }}">Sign Up</a></p>
+                                        <p> @lang('lang.dont have an account')? <a href="{{ route('register') }}">@lang('lang.sign up')</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

@@ -44,11 +44,11 @@
                                         action="{{ route('send_feedback') }}" accept-charset="utf-8"
                                         novalidate="novalidate">
                                         @csrf
-                                        <p>Reach out, Share your feedback, help us do better.</p>
+                                        <p>@lang('lang.reach out, share your feedback, help us do better.')</p>
 
                                         <fieldset class="message-wrap" style="margin-top:20px ">
-                                            <label class="font-2 fw-8 fs-16">Message</label>
-                                            <textarea id="comment-message" name="message" rows="4" tabindex="4" placeholder="Your message"
+                                            <label class="font-2 fw-8 fs-16">@lang('lang.message')</label>
+                                            <textarea id="comment-message" name="message" rows="4" tabindex="4" placeholder="@lang('lang.your message')"
                                                 aria-required="true"></textarea>
                                         </fieldset>
                                         <div class="button-boxs">
@@ -68,7 +68,7 @@
                                                         </clipPath>
                                                     </defs>
                                                 </svg>
-                                                <span>Send</span>
+                                                <span>@lang('lang.send')</span>
                                             </button>
                                         </div>
                                     </form>

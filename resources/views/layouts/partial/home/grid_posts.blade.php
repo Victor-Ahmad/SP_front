@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12 background_white">
                 <div class="heading-section center">
-                    <h2 class="heading_title">Available Offers</h2>
+                    <h2 class="heading_title">@lang('lang.available houses')</h2>
                 </div>
                 <!-- Filter Form Start -->
 
@@ -15,7 +15,7 @@
                                 <div class="form-group form-style">
                                     <div class="group-select">
                                         <input type="text" id="searchAutocompleteInput" name="location"
-                                            placeholder="Enter a location to look for" class=" nice-select"
+                                            placeholder="@lang('lang.enter a location to look for')" class=" nice-select"
                                             value="{{ request('location') }}">
 
                                     </div>
@@ -24,7 +24,8 @@
                                 <div class="form-group form-style">
                                     <div class="group-select">
                                         <div class="nice-select" tabindex="0">
-                                            <span class="current">{{ request('rooms', 'Rooms: Any') }}</span>
+                                            <span
+                                                class="current">{{ request('rooms', __('lang.rooms') . ': ' . __('lang.any')) }}</span>
                                             <ul class="list">
                                                 <li data-value="1"
                                                     class="option {{ request('rooms') == '1' ? 'selected' : '' }}">1
@@ -54,7 +55,7 @@
                                     <div class="widget widget-price">
                                         <div class="caption flex-two">
                                             <div>
-                                                <span class="fw-6">Price Range </span>
+                                                <span class="fw-6">@lang('lang.price range')</span>
                                                 <span id="slider-range-value1">{{ request('min_value', 100) }}</span>
                                                 <span id="slider-range-value2">{{ request('max_value', 2000) }}</span>
                                             </div>
@@ -72,8 +73,9 @@
                                 </div>
                                 <!-- Apply Filter Button -->
                                 <div class="form-buttons">
-                                    <input type="submit" class="filter_btn" value="Apply Filter">
-                                    <button type="button" class="clear_filter_btn" onclick="clearFilters()">Clear All
+                                    <input type="submit" class="filter_btn" value="@lang('lang.apply filter')">
+                                    <button type="button" class="clear_filter_btn"
+                                        onclick="clearFilters()">@lang('lang.clear all')
                                     </button>
                                 </div>
                             </div>
@@ -96,7 +98,7 @@
                                 <div class="row justify-content-center align-items-center" style="min-height: 50vh;">
                                     <div class="col-12">
                                         <div class="no-results">
-                                            No matches found for your search criteria.
+                                            @lang('lang.no matches found for your search criteria')
                                         </div>
                                     </div>
                                 </div>

@@ -176,7 +176,7 @@
                     <div class="col-lg-12">
                         <div class="main-w3layouts wrapper">
                             <div class="main-agileinfo">
-                                <h1>Set Password</h1>
+                                <h1>@lang('lang.set password')</h1>
                                 <div class="agileits-top">
                                     <!-- Display Error Messages -->
                                     @if ($errors->any())
@@ -192,11 +192,11 @@
                                     @endif
                                     <form action="{{ route('password.set') }}" method="post">
                                         @csrf
-                                        <input class="text" type="password" name="password" placeholder="Password"
-                                            required>
+                                        <input class="text" type="password" name="password"
+                                            placeholder="@lang('lang.password')" required>
                                         <input class="text" type="password" name="password_confirmation"
-                                            placeholder="Confirm Password" required>
-                                        <input type="submit" value="Submit">
+                                            placeholder="@lang('lang.confirm password')" required>
+                                        <input type="submit" value="@lang('lang.submit')">
                                     </form>
 
                                 </div>

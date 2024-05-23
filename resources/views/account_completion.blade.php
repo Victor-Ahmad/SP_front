@@ -17,10 +17,10 @@
                     <div class="col-lg-12">
                         <div class="wrap-contact">
                             <ul class="step-navigation">
-                                <li class="active" data-step="0">Step 1: Your House Information</li>
-                                <li data-step="1">Step 2: Your House Location</li>
-                                <li data-step="2">Step 3: Your House Gallery</li>
-                                <li data-step="3">Step 4: Your Interests</li>
+                                <li class="active" data-step="0">@lang('lang.step 1: your house information')</li>
+                                <li data-step="1">@lang('lang.step 2: your house location')</li>
+                                <li data-step="2">@lang('lang.step 3: your house gallery')</li>
+                                <li data-step="3">@lang('lang.step 4: your interests')</li>
                             </ul>
                             <form id="multiStepForm" action="{{ route('complete_account') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -36,18 +36,18 @@
 
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="price-label">Rent Price (€)</h3>
-                                            <input type="number" id="price" name="price" placeholder="Enter price"
-                                                class="input-field" step="0.01" required>
+                                            <h3 class="price-label">@lang('lang.rent price') (€)</h3>
+                                            <input type="number" id="price" name="price"
+                                                placeholder="@lang('lang.enter price')" class="input-field" step="0.01" required>
 
                                         </div>
                                         <div class="form-group">
                                             <input type="hidden" id="houseType" name="house_type" value="">
 
-                                            <h3 class="house-type-label">House Type</h3>
+                                            <h3 class="house-type-label">@lang('lang.house type')</h3>
                                             <div class="dropdown">
 
-                                                <input type="text" id="dropdownInput" placeholder="Select an option"
+                                                <input type="text" id="dropdownInput" placeholder="@lang('lang.select an option')"
                                                     readonly>
                                                 <ul id="dropdownList" class="dropdown-content">
                                                     @foreach ($houseTypes as $type)
@@ -64,7 +64,7 @@
                                         </div> --}}
                                     </div>
                                     <div style="margin-top:30px "></div>
-                                    <h3 class="rooms-label">Number of rooms</h3>
+                                    <h3 class="rooms-label">@lang('lang.number of rooms')</h3>
                                     <ul id="roomsList" class="roomsList-content">
                                         @foreach ($numberOfRooms as $number)
                                             <li data-value="{{ $number['id'] }}">{{ $number['number'] }}</li>
@@ -85,25 +85,25 @@
                                                 placeholder="Enter location name" class="input-field" required>
                                         </div> --}}
                                         <div class="form-group">
-                                            <h3 class="post-code-label">Location</h3>
+                                            <h3 class="post-code-label">@lang('lang.location')</h3>
                                             <input type="text" id="autocomplete" name="location_name"
-                                                placeholder="Enter location name" class="input-field" required>
+                                                placeholder="@lang('lang.enter location name')" class="input-field" required>
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="post-code-label">Post Code</h3>
-                                            <input type="text" name="post_code" placeholder="Enter post code"
+                                            <h3 class="post-code-label">@lang('lang.post code')</h3>
+                                            <input type="text" name="post_code" placeholder="@lang('lang.enter post code')"
                                                 class="input-field" required>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="street-label">Street</h3>
-                                            <input type="text" name="street" placeholder="Enter street name"
+                                            <h3 class="street-label">@lang('lang.street')</h3>
+                                            <input type="text" name="street" placeholder="@lang('lang.enter street name')"
                                                 class="input-field">
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="house-number-label">House Number</h3>
-                                            <input type="text" name="house_number" placeholder="Enter house number"
+                                            <h3 class="house-number-label">@lang('lang.house number')</h3>
+                                            <input type="text" name="house_number" placeholder="@lang('lang.enter house number')"
                                                 class="input-field" required>
                                         </div>
                                     </div>
@@ -122,9 +122,8 @@
                                 </div>
                                 <!-- Step 3 -->
                                 <div class="form-step">
-                                    <h3>House Gallery</h3>
-                                    <p style="margin-top:15px">Upload images of your house, other visitors can view those
-                                        images. (optional)</p>
+                                    <h3>@lang('lang.house gallery')</h3>
+                                    <p style="margin-top:15px">@lang('lang.upload images of your house, other visitors can view those images'). (@lang('lang.optional'))</p>
                                     <input type="file" id="gallery" name="gallery[]" multiple class="input-field"
                                         style="margin-top:15px">
                                     <div class="preview-container">
@@ -139,9 +138,9 @@
                                 <div class="form-step">
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="post-code-label">Locations of Interest</h3>
+                                            <h3 class="post-code-label">@lang('lang.locations of interest')</h3>
                                             <input type="text" id="interestsAutocompleteInput"
-                                                placeholder="Enter a location of interest" class="input-field">
+                                                placeholder="@lang('lang.enter a location of interest')" class="input-field">
                                             <div class="tags-container" id="tagsContainer"></div>
                                             <input type="hidden" id="locationNames" name="location_names"
                                                 value="" required>
@@ -152,9 +151,10 @@
                                 </div>
                                 <!-- Navigation Buttons -->
                                 <div class="form-navigation">
-                                    <button type="button" class="previous" disabled>Previous</button>
-                                    <button type="button" class="next">Next</button>
-                                    <button type="submit" class="submit" style="display: none;">Submit</button>
+                                    <button type="button" class="previous" disabled>@lang('lang.previous')</button>
+                                    <button type="button" class="next">@lang('lang.next')</button>
+                                    <button type="submit" class="submit"
+                                        style="display: none;">@lang('lang.submit')</button>
                                 </div>
                             </form>
                         </div>

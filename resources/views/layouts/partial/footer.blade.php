@@ -11,10 +11,11 @@
                     </div>
                     <div class="box-menu box-2">
                         <ul class="menu-bottom flex align-center fs-16 fw-6">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('chats') }}">Messages</a></li>
-                            <li><a href="{{ route('profile.get') }}">Profile</a></li>
-                            <li><a href="{{ route('feed_back') }}">Feed Back</a></li>
+
+                            <li><a href="{{ route('home') }}">@lang('lang.home')</a></li>
+                            <li><a href="{{ route('chats') }}">@lang('lang.messages')</a></li>
+                            <li><a href="{{ route('profile.get') }}">@lang('lang.profile')</a></li>
+                            <li><a href="{{ route('feed_back') }}">@lang('lang.feed back')</a></li>
                         </ul>
                     </div>
                     {{-- <div class="icon-social box-3 text-color-1">

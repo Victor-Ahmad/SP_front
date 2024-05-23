@@ -20,7 +20,81 @@
         .navigation li a:hover {
             color: #2a81b2 !important;
         }
+
+        .widget-logo-footer {
+            padding: 10px 0;
+        }
+
+
+        .language-switcher {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-btn {
+            background-color: transparent !important;
+            color: white;
+            padding: 5px 10px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            text-transform: uppercase;
+            margin: 0 15px;
+        }
+
+        .menu-btn:hover,
+        .menu-btn:focus {
+            background-color: #1e6392;
+        }
+
+        .language-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 60px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 5px;
+        }
+
+        .menu-content .language-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-content .language-list li {
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .menu-content .language-list li a {
+            color: #2a81b2;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu-content .language-list li a:hover {
+            background-color: #f1f1f1;
+            color: #1e6392;
+        }
+
+        .language-menu:hover .menu-content {
+            display: block;
+        }
+
+        .language-list .selected {
+            font-weight: bold;
+            color: #ff9700;
+        }
     </style>
+
 
     @yield('head_css')
 </head>

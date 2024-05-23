@@ -77,7 +77,7 @@
                     </a>
                 @endforeach
             @else
-                <p>No chats available.</p>
+                <p>@lang('lang.no chats yet')</p>
             @endif
         </div>
     </div>

@@ -17,16 +17,35 @@
                             <nav class="main-menu show navbar-expand-md">
                                 <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
-                                        <li><a href="{{ route('home') }}">Home</a></li>
-                                        <li><a href="{{ route('chats') }}">Messages</a></li>
-                                        <li><a href="{{ route('profile.get') }}">Profile</a></li>
-                                        <li><a href="{{ route('feed_back') }}">Feed Back</a></li>
+                                        <li><a href="{{ route('home') }}">@lang('lang.home')</a></li>
+                                        <li><a href="{{ route('chats') }}">@lang('lang.messages')</a></li>
+                                        <li><a href="{{ route('profile.get') }}">@lang('lang.profile')</a></li>
+                                        <li><a href="{{ route('feed_back') }}">@lang('lang.feed back')</a></li>
                                     </ul>
                                 </div>
                             </nav>
                             <!-- Main Menu End-->
                         </div>
                         <div class="header-account flex align-center">
+                            <div class="language-switcher">
+                                <div class="language-menu">
+                                    <button class="menu-btn">{{ strtoupper(app()->getLocale()) }}</button>
+                                    <div class="menu-content">
+                                        <ul class="language-list">
+                                            <li>
+                                                <a href="{{ route('lang.switch', ['locale' => 'en']) }}"
+                                                    class="{{ app()->getLocale() == 'en' ? 'selected' : '' }}">EN</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('lang.switch', ['locale' => 'nl']) }}"
+                                                    class="{{ app()->getLocale() == 'nl' ? 'selected' : '' }}">NL</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="register">
                                 <ul class="flex align-center">
                                     <li>
@@ -50,16 +69,17 @@
 
                                     {{-- <li class=""><a href="#" data-toggle="modal"
                                             data-target="#popup_bid2">Register</a></li> --}}
+
                                     @if (session('token'))
                                         <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('logout') }}">Logout</a>
+                                                href="{{ route('logout') }}">@lang('lang.logout')</a>
                                         </li>
                                     @else
                                         <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('register') }}">Register</a></li>
+                                                href="{{ route('register') }}">@lang('lang.register')</a></li>
                                         <li><span>/</span></li>
                                         <li class=""><a style="color:#2a81b2"
-                                                href="{{ route('login') }}">Login</a>
+                                                href="{{ route('login') }}">@lang('lang.login')</a>
                                         </li>
                                     @endif
                                 </ul>
@@ -78,7 +98,9 @@
                                     <span>Sell Property</span>
                                 </a>
                             </div> --}}
+
                         </div>
+
 
                         <div class="mobile-nav-toggler mobile-button mobi-style"><span></span></div>
 
@@ -111,7 +133,7 @@
                             fill="#FF9700" />
                     </svg>
                     <a href="#" data-toggle="modal" data-target="#popup_bid"
-                        class="fw-7 font-2 text-color-2">Login</a>
+                        class="fw-7 font-2 text-color-2">@lang('lang.login')</a>
                 </div>
                 <div class="menu-outer"></div>
                 <div class="button-mobi-sell">
@@ -145,12 +167,12 @@
                                     fill="#E5E5EA"></path>
                                 <path
                                     d="M22.6771 37.2188L27.0716 34.2891L35.8398 37.2188V43.0781C35.8398 44.6961 34.549 46.0078 32.931 46.0078C16.7508 46.0078 1.46484 30.8195 1.46484 14.6394C1.46484 13.0214 2.77656 11.7305 4.39453 11.7305H10.2539L13.1836 20.4987L10.2539 24.8933C12.1247 29.5703 18 35.3479 22.6771 37.2188Z"
-                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
+                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
                                 <path
                                     d="M19.1406 13.7812C19.1406 18.6354 23.0756 22.5703 27.9297 22.5703V28.4297L33.7891 22.5703H39.6484C44.5025 22.5703 48.5352 18.6354 48.5352 13.7812C48.5352 8.92715 44.5025 4.99219 39.6484 4.99219H27.9297C23.0756 4.99219 19.1406 8.92715 19.1406 13.7812Z"
-                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
+                                    stroke="#E5E5EA" stroke-width="1.7" stroke-miterlimit="10"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
                         <div class="content fs-13">
