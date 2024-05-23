@@ -22,11 +22,13 @@ class HomeController extends Controller
     public function home()
     {
         if (!Session::get('token')) {
-            return redirect()->route('login');
+            return redirect()->route('landing_page');
         } else {
             error_log(Session::get('token'));
         }
-
+        if (!(Session::get('user')['swap_type_id'] ?? false)) {
+            return redirect()->route('account_completion')->with('success', '');
+        }
         try {
             $data = [
                 'price_min' => request()->min_value,
@@ -91,7 +93,45 @@ class HomeController extends Controller
         }
     }
 
-    public function updateProfile()
+    public function updateProfile(Request $request)
     {
+
+
+
+
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+
+        try {
+            $data = [
+                'interests' => $request->interests,
+                'delete_images' => $request->delete_images,
+                'delete_interests' => $request->delete_interests,
+                'location' => $request->location,
+                'post_code' => $request->post_code,
+                'street' => $request->street,
+                'house_number' => $request->house_number,
+                'number_of_rooms' => $request->number_of_rooms,
+            ];
+
+            $data = array_filter($data, function ($value) {
+                return !is_null($value) && $value !== '';
+            });
+            $files = $request->file('images');
+
+
+            $response = $this->apiService->updateProfile($data, $files);
+            if ($response['success'] == 1) {
+                return redirect()->route('profile.get');
+            } else {
+                return back()->withErrors(['password' => $response['message']]);
+            }
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
     }
 }

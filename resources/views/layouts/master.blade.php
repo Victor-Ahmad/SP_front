@@ -6,12 +6,16 @@
     <title>@yield('title', 'Default Title')</title>
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="{{ asset('app/dist/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('app/dist/responsive.css') }}">
-    <link rel="stylesheet" href="{{ asset('app/dist/owl.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/logo/Favicon.png') }}">
-    <link rel="apple-touch-icon-precomposed" href="{{ asset('assets/images/logo/Favicon.png') }}">
+    <link rel="stylesheet"
+        href="{{ asset('app/dist/font-awesome.css') }}?v={{ filemtime(public_path('app/dist/font-awesome.css')) }}">
+    <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}?v={{ filemtime(public_path('app/dist/app.css')) }}">
+    <link rel="stylesheet"
+        href="{{ asset('app/dist/responsive.css') }}?v={{ filemtime(public_path('app/dist/responsive.css')) }}">
+    <link rel="stylesheet" href="{{ asset('app/dist/owl.css') }}?v={{ filemtime(public_path('app/dist/owl.css')) }}">
+    <link rel="shortcut icon"
+        href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
+    <link rel="apple-touch-icon-precomposed"
+        href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
     <style>
         .navigation li a:hover {
             color: #2a81b2 !important;

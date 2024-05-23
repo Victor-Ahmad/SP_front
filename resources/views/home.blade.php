@@ -15,7 +15,35 @@
 
 
 @section('additional_scripts')
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
+    </script>
     <script>
+        function initAutocomplete() {
+            var input = document.getElementById('searchAutocompleteInput');
+
+
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+                input.value = place.name;
+            });
+
+
+
+        }
         $(document).ready(function() {
             $('.nice-select').on('click', '.option', function() {
                 var value = $(this).data('value');

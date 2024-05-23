@@ -5,147 +5,8 @@
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        .profile-container {
-            max-width: 800px;
-            margin: 15vh auto;
-            padding: 30px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-        }
-
-        .profile-container:hover {
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .profile-header img {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 3px solid #3498db;
-        }
-
-        .profile-header .name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        .edit-button {
-            margin-left: auto;
-            background-color: #3498db;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .edit-button:hover {
-            background-color: #2980b9;
-            transform: scale(1.05);
-        }
-
-        .profile-details,
-        .house-details {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .profile-details .detail,
-        .house-details .detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #ecf0f1;
-        }
-
-        .profile-details .detail span,
-        .house-details .detail span {
-            font-size: 16px;
-        }
-
-        .profile-details .detail .label,
-        .house-details .detail .label {
-            color: #7f8c8d;
-            font-weight: 500;
-        }
-
-        .profile-details .detail .value,
-        .house-details .detail .value {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .house-details {
-            margin-top: 30px;
-        }
-
-        .house-details h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #2c3e50;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-        }
-
-        .save-button {
-            margin-top: 30px;
-            background-color: #2ecc71;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .save-button:hover {
-            background-color: #27ae60;
-            transform: scale(1.05);
-        }
-
-        .editable {
-            border: 1px solid #ecf0f1;
-            padding: 10px;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-            color: black !important;
-        }
-
-        .editable:disabled {
-            background-color: #f4f4f9;
-            border-color: #ecf0f1;
-            color: #2a81b2 !important;
-        }
-
-        .profile-container h2 {
-            font-size: 24px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ecf0f1;
-            padding-bottom: 10px;
-        }
-    </style>
+    <link href="{{ asset('app/css/profile.css') }}?v={{ filemtime(public_path('app/css/profile.css')) }}" rel="stylesheet"
+        type="text/css" media="all" />
 @endsection
 
 @section('content')
@@ -158,19 +19,19 @@
             </div>
 
             <h2>Profile Information</h2>
-            <form id="profile-form" action="{{ route('profile.update') }}" method="POST">
+            <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PATCH')
+                {{-- @method('PATCH') --}}
                 <div class="profile-details">
                     <div class="detail">
                         <span class="label">Email:</span>
                         <span class="value"><input type="email" name="email" value="{{ $profile['email'] }}"
-                                class="editable" disabled></span>
+                                class="uneditable" disabled></span>
                     </div>
                     <div class="detail">
                         <span class="label">Phone Number:</span>
                         <span class="value"><input type="text" name="number" value="{{ $profile['number'] }}"
-                                class="editable" disabled></span>
+                                class="uneditable" disabled></span>
                     </div>
                 </div>
 
@@ -211,12 +72,67 @@
                                 value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
                     </div>
                 </div>
+
+                <h2>Interests</h2>
+                <div class="house-details">
+                    <input type="text" id="interestsAutocompleteInput" placeholder="Enter a location of interest"
+                        style="display:none; width:40%" class="input-field">
+                    <div class="detail">
+
+                        <div class="tags-container" id="tagsContainer">
+                            @foreach ($profile['intersts'] as $interest)
+                                <div class=tag>{{ $interest['interest'] }} <span data-city={{ $interest['id'] }}
+                                        class="remove-tag" style="display:none">&times;</span></div>
+                            @endforeach
+                        </div>
+
+                    </div>
+
+                </div>
+                <h2>House Images</h2>
+                <div class="house-images" id="house-images">
+                    @foreach ($profile['one_to_one_swap_house']['images'] as $image)
+                        <div class="image-container" id="image-container-{{ $image['id'] }}">
+                            <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="House Image">
+                            <button type="button" class="delete-button"
+                                onclick="deleteImage({{ $image['id'] }})">&times;</button>
+                        </div>
+                    @endforeach
+                </div>
+                <input type="hidden" name=delete_interests id="delete_interests" value="">
+                <input type="hidden" name=delete_images id="delete_images" value="">
+                <input type="hidden" name=interests id="interests" value="">
+                <input type="file" name="images[]" class="add-image" id="add-image" multiple>
+
                 <button type="submit" class="save-button" id="save-button" style="display: none;">Save Changes</button>
             </form>
         </div>
     </div>
 
+@endsection
+
+@section('additional_scripts')
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
+    </script>
     <script>
+        let initialImagesHTML = '';
+        let initialTagsHTML = '';
+        let delete_images = [];
+        let delete_interests = [];
+        let addedTages = [];
+        document.querySelectorAll('.remove-tag').forEach(function(removeTag) {
+            removeTag.addEventListener('click', function(event) {
+                deleteTag(removeTag.getAttribute('data-city'));
+            });
+        });
+
+        function deleteTag(tagId) {
+            if (!delete_interests.includes(tagId)) {
+                delete_interests.push(tagId);
+            }
+            document.getElementById('delete_interests').value = delete_interests;
+        }
         document.getElementById('edit-button').addEventListener('click', function() {
             var inputs = document.querySelectorAll('.editable');
             inputs.forEach(function(input) {
@@ -224,16 +140,150 @@
             });
 
             var saveButton = document.getElementById('save-button');
+            var addImageInput = document.querySelector('.add-image');
+            var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
+
             if (inputs[0].disabled) {
                 saveButton.style.display = 'none';
+                addImageInput.style.display = 'none';
+                interestsAutocompleteInput.style.display = 'none';
                 this.innerText = 'Edit';
+                delete_images = [];
+                delete_interests = [];
+                document.getElementById('delete_images').value = '';
+                document.getElementById('delete_interests').value = '';
+                document.getElementById('interests').value = '';
+                // Restore initial images and tags
+                document.getElementById('house-images').innerHTML = initialImagesHTML;
+                document.getElementById('tagsContainer').innerHTML = initialTagsHTML;
+                attachRemoveTagListeners(); // Reattach listeners to restored tags
             } else {
                 saveButton.style.display = 'block';
+                addImageInput.style.display = 'block';
+                interestsAutocompleteInput.style.display = 'block';
                 this.innerText = 'Cancel';
+
+                // Save initial images and tags HTML
+                initialImagesHTML = document.getElementById('house-images').innerHTML;
+                initialTagsHTML = document.getElementById('tagsContainer').innerHTML;
+
+                // Show delete buttons for images
+                var imageContainers = document.querySelectorAll('.image-container');
+                imageContainers.forEach(function(container) {
+                    container.classList.add('edit-mode');
+                });
+
+                // Show delete buttons for tags
+                document.querySelectorAll('.remove-tag').forEach(function(removeTag) {
+                    removeTag.style.display = 'inline';
+                });
+
+                // Attach event listeners to remove tags
+                attachRemoveTagListeners();
             }
         });
-    </script>
-@endsection
 
-@section('additional_scripts')
+        document.getElementById('add-image').addEventListener('change', function(event) {
+            var files = event.target.files;
+            var houseImagesDiv = document.getElementById('house-images');
+
+            for (var i = 0; i < files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var newImageContainer = document.createElement('div');
+                    newImageContainer.classList.add('image-container');
+
+                    var newImage = document.createElement('img');
+                    newImage.src = e.target.result;
+                    newImageContainer.appendChild(newImage);
+
+                    var deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.classList.add('delete-button');
+                    deleteButton.innerHTML = '&times;';
+                    deleteButton.onclick = function() {
+                        newImageContainer.remove();
+                    };
+                    newImageContainer.appendChild(deleteButton);
+
+                    houseImagesDiv.appendChild(newImageContainer);
+                }
+                reader.readAsDataURL(files[i]);
+            }
+        });
+
+        function deleteImage(imageId) {
+            // Remove the image container from the DOM
+            document.getElementById('image-container-' + imageId).remove();
+            if (!delete_images.includes(imageId)) {
+                delete_images.push(imageId);
+            }
+            document.getElementById('delete_images').value = delete_images;
+        }
+
+
+
+
+        function initAutocomplete() {
+            var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+
+
+            var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+            interestsAutocomplete.addListener('place_changed', function() {
+                var place = interestsAutocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+
+                const cityName = place.name;
+
+                if (!addedTages.includes(cityName)) {
+                    addedTages.push(cityName);
+                    addTag(cityName);
+                }
+
+                interestsAutocompleteInput.value = '';
+            });
+        }
+
+        function addTag(city) {
+            const tagsContainer = document.getElementById('tagsContainer');
+            const locationNamesInput = document.getElementById('interests');
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.innerHTML = `${city} <span class="remove-tag" style="display:inline">&times;</span>`;
+            tagsContainer.appendChild(tag);
+
+            tag.querySelector('.remove-tag').addEventListener('click', function(event) {
+                event.stopPropagation();
+                tag.remove();
+            });
+
+            locationNamesInput.value = addedTages.join(',');
+        }
+
+
+
+        function attachRemoveTagListeners() {
+            document.querySelectorAll('.remove-tag').forEach(removeTag => {
+                removeTag.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    const tag = this.parentElement;
+                    tag.remove();
+                    document.getElementById('locationNames').value = addedTages.join(',');
+                });
+            });
+        }
+
+        attachRemoveTagListeners();
+    </script>
 @endsection

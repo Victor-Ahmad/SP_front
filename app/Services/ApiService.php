@@ -169,6 +169,46 @@ class ApiService
         throw new \Exception('API call failed: ' . $response->body());
     }
 
+
+    public function updateProfile($data, $files)
+    {
+        // Initialize the HTTP request with token and multipart form data
+        $httpRequest = $this->http->withToken(Session::get('token'))->asMultipart();
+
+        // Attach files to the request
+        if ($files) {
+            foreach ($files as $file) {
+                if ($file->isValid()) {
+                    $httpRequest = $httpRequest->attach(
+                        'images[]',
+                        fopen($file->getPathname(), 'r'),
+                        $file->getClientOriginalName()
+                    );
+                }
+            }
+        }
+
+        // Send the API request with the data and files
+        $response = $httpRequest->post($this->baseUrl . 'update_profile', $data);
+
+        // Check the response
+        if ($response->successful()) {
+            return $response->json();
+        }
+        error_log(json_encode($response->json()));
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+
+
+
+
+
+
+
+
+
+
     public function checkChat($chatId)
     {
         $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "is_chat_existing/{$chatId}");

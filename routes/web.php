@@ -4,8 +4,12 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 Route::get('/', function () {
+    if (Session::get('token')) {
+        return redirect()->route('home');
+    }
     return view('landing_page');
 })->name('landing_page');
 

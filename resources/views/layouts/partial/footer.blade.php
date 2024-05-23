@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                 <div class="wrap-logo flex align-center justify-space">
                     <div class="logo-footer style box-1" id="logo-footer">
-                        <a href="index.html">
+                        <a href="{{ route('landing_page') }}">
                             <img src="{{ asset('assets/images/logo/logo.png') }}" alt="img" width="197"
                                 height="48">
                         </a>

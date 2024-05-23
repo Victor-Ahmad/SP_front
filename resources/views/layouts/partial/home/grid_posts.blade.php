@@ -14,40 +14,10 @@
                                 <!-- Location Dropdown -->
                                 <div class="form-group form-style">
                                     <div class="group-select">
-                                        <div class="nice-select" tabindex="0">
-                                            <span class="current">{{ request('location', 'Location') }}</span>
-                                            <ul class="list">
-                                                <li data-value=""
-                                                    class="option {{ request('location') == '' ? 'selected' : '' }}">
-                                                    Location
-                                                </li>
-                                                <li data-value="bungalow"
-                                                    class="option {{ request('location') == 'bungalow' ? 'selected' : '' }}">
-                                                    Bungalow
-                                                </li>
-                                                <li data-value="apartment"
-                                                    class="option {{ request('location') == 'apartment' ? 'selected' : '' }}">
-                                                    Apartment
-                                                </li>
-                                                <li data-value="house"
-                                                    class="option {{ request('location') == 'house' ? 'selected' : '' }}">
-                                                    House
-                                                </li>
-                                                <li data-value="smart-home"
-                                                    class="option {{ request('location') == 'smart-home' ? 'selected' : '' }}">
-                                                    Smart Home
-                                                </li>
-                                                <li data-value="office"
-                                                    class="option {{ request('location') == 'office' ? 'selected' : '' }}">
-                                                    Office
-                                                </li>
-                                                <li data-value="villa"
-                                                    class="option {{ request('location') == 'villa' ? 'selected' : '' }}">
-                                                    Villa
-                                                </li>
-                                            </ul>
-                                            <input type="hidden" name="location" value="{{ request('location') }}">
-                                        </div>
+                                        <input type="text" id="searchAutocompleteInput" name="location"
+                                            placeholder="Enter a location to look for" class=" nice-select"
+                                            value="{{ request('location') }}">
+
                                     </div>
                                 </div>
                                 <!-- Rooms Dropdown -->

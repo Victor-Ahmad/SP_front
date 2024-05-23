@@ -30,10 +30,16 @@
         <div class="money fs-18 fw-6 text-color-3"><a href="">€ {{ $post['price'] }}</a></div>
         <div class=" "><span>House Type: </span><span class="fw-6">{{ $post['house_type']['type'] }}</span></div>
 
-        <div class="icon-box flex">
+        <div class="flex">
             <div class=""><span>Rooms: </span><span class="fw-6">{{ $post['number_of_rooms'] }}</span></div>
-
-
+        </div>
+        <div class="icon-box flex">
+            <div class=""><span>Interests: </span><span class="fw-6">
+                    @foreach ($post['user']['intersts'] as $interest)
+                        {{ $interest['interest'] }},
+                    @endforeach
+                </span>
+            </div>
         </div>
 
         <div class="days-box flex justify-content-between align-items-center">

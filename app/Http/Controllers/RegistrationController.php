@@ -99,7 +99,10 @@ class RegistrationController extends Controller
             if ($response['success'] == 1) {
                 Session::put('user', $response['result']['user']);
                 Session::put('token', $response['result']['token']);
-                return redirect()->route('home');
+                if ($response['result']['user']['swap_type_id'])
+                    return redirect()->route('home');
+                else
+                    return redirect()->route('account_completion')->with('success', '');
             } else {
                 $messages = [];
                 if (is_array($response['message'])) {
@@ -194,6 +197,9 @@ class RegistrationController extends Controller
     }
     public function account_completion()
     {
+        if ((Session::get('user')['swap_type_id'] ?? false)) {
+            return redirect()->route('home')->with('success', '');
+        }
         // return view(
         //     'account_completion',
         //     [
@@ -282,6 +288,7 @@ class RegistrationController extends Controller
             'price' => $request->price,
             'area' => $request->area ?? '',
             'street_view' => $request->street_view == 'on' ? 1 : 0,
+            'interests' => $request->location_names ?? '',
         ];
 
 
@@ -290,6 +297,9 @@ class RegistrationController extends Controller
         try {
             $response = $this->apiService->completeAccount($data, $files);
             if ($response['success'] == 1) {
+
+                Session::forget('user');
+                Session::put('user', $response['result'][0]['user']);
                 return redirect()->route('home')->with('success', 'Added Successfully');
             } else {
                 return back()->withErrors(['password' => $response['message']]);

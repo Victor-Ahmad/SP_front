@@ -6,57 +6,7 @@
     <link
         href="{{ asset('app/css/account_completion.css') }}?v={{ filemtime(public_path('app/css/account_completion.css')) }}"
         rel="stylesheet" type="text/css" media="all" />
-    <style>
-        .error-border {
-            border: 1px solid red;
-        }
 
-        .error-star::after {
-            content: '*';
-            color: red;
-            margin-left: 5px;
-        }
-
-        .dropdown {
-            position: relative;
-            width: 100%;
-            /* margin: 10px 0; */
-        }
-
-        .dropdown input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            color: #2981B2;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #fff;
-            min-width: 100%;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            z-index: 1;
-            border-radius: 10px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .dropdown-content li {
-            padding: 12px 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            color: #2981B2;
-        }
-
-        .dropdown-content li:hover {
-            background-color: #f1f1f1;
-            color: #FF9700;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -70,6 +20,7 @@
                                 <li class="active" data-step="0">Step 1: Your House Information</li>
                                 <li data-step="1">Step 2: Your House Location</li>
                                 <li data-step="2">Step 3: Your House Gallery</li>
+                                <li data-step="3">Step 4: Your Interests</li>
                             </ul>
                             <form id="multiStepForm" action="{{ route('complete_account') }}" method="POST"
                                 enctype="multipart/form-data">
@@ -183,6 +134,21 @@
                                             <button type="button" id="nextSlide" disabled>&#9654;</button>
                                         </div>
                                     </div>
+                                </div>
+                                <!-- Step 4 -->
+                                <div class="form-step">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <h3 class="post-code-label">Locations of Interest</h3>
+                                            <input type="text" id="interestsAutocompleteInput"
+                                                placeholder="Enter a location of interest" class="input-field">
+                                            <div class="tags-container" id="tagsContainer"></div>
+                                            <input type="hidden" id="locationNames" name="location_names"
+                                                value="" required>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="latitude" name="latitude" value="">
+                                    <input type="hidden" id="longitude" name="longitude" value="">
                                 </div>
                                 <!-- Navigation Buttons -->
                                 <div class="form-navigation">
@@ -421,10 +387,14 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
     <script>
+        let selectedCities = [];
+
         function initAutocomplete() {
             var input = document.getElementById('autocomplete');
 
+
             var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['(cities)'],
                 componentRestrictions: {
                     country: "NL"
                 }
@@ -439,6 +409,53 @@
                     return;
                 }
             });
+
+            var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+            const locationNamesInput = document.getElementById('locationNames');
+
+            var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+            interestsAutocomplete.addListener('place_changed', function() {
+                var place = interestsAutocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+
+                cityName = place.name;
+
+                if (!selectedCities.includes(cityName)) {
+                    selectedCities.push(cityName);
+                    updateTagsContainer();
+                }
+
+                interestsAutocompleteInput.value = '';
+            });
+
+            function updateTagsContainer() {
+                tagsContainer.innerHTML = '';
+                selectedCities.forEach(city => {
+                    const tag = document.createElement('div');
+                    tag.className = 'tag';
+                    tag.innerHTML = `${city} <span class="remove-tag">&times;</span>`;
+                    tagsContainer.appendChild(tag);
+
+                    tag.querySelector('.remove-tag').addEventListener('click', () => {
+                        selectedCities = selectedCities.filter(c => c !== city);
+                        updateTagsContainer();
+                    });
+                });
+
+                locationNamesInput.value = selectedCities;
+            }
+
         }
     </script>
 

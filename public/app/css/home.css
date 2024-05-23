@@ -188,3 +188,21 @@
 .clear_filter_btn:hover {
     background: #14587f;
 }
+
+
+input[type="text"] {
+    width: 100%;
+
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #2981B2;
+}
+
+input[type="text"]:focus {
+    border-color: #2981B2;
+    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    outline: none;
+    color: #2981B2;
+}
