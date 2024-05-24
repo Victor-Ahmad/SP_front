@@ -61,7 +61,7 @@ return [
     'optional' => 'Optional',
     'locations of interest' => 'Locations of Interests',
     'enter a location of interest' => 'Enter a Location of Interest',
-    'available houses' => 'Availavle Houses',
+    'available houses' => 'Available Houses',
     'enter a location to look for' => 'Enter a Location to look for',
     'rooms' => 'Rooms',
     'any' => 'Any',
@@ -81,4 +81,6 @@ return [
     'landing_page_statement' => 'Find and swap your home with others effortlessly',
     'enter a location to look for' => 'Enter a Location to Look For',
     'no matches found for your search criteria' => 'No Matches Found For Your Search Criteria',
+    'max_value' => 'Max Price',
+    'min_value' => 'Min Price',
 ];

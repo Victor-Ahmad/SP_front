@@ -125,7 +125,7 @@
     font-size: 1.2em;
     cursor: pointer;
     transition: background 0.3s;
-    margin: 10px 0;
+    /* margin: 10px 0; */
 }
 
 .filter_btn:hover {
@@ -151,7 +151,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .clear-btn {
@@ -182,7 +182,7 @@
     font-size: 1.2em;
     cursor: pointer;
     transition: background 0.3s;
-    margin: 10px;
+    margin: 0 10px;
 }
 
 .clear_filter_btn:hover {
@@ -201,6 +201,23 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
+    border-color: #2981B2;
+    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    outline: none;
+    color: #2981B2;
+}
+
+input[type="number"] {
+    width: 100%;
+
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #2981B2;
+}
+
+input[type="number"]:focus {
     border-color: #2981B2;
     box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
     outline: none;
@@ -312,4 +329,119 @@ input[type="text"]:focus {
 
 .auth_btn {
     color: white !important;
+}
+
+
+.small_width_field {
+    width: 10vw !important;
+}
+
+
+
+
+/* Media Queries */
+
+
+
+
+
+
+/* Large Devices (laptops/desktops, 992px to 1200px) */
+@media (max-width: 1200px) {
+    .wd-find-select {
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        width: calc(33.33% - 10px);
+        margin-bottom: 10px;
+    }
+
+    /* .filter_btn,
+    .clear_filter_btn {
+        width: calc(33.33% - 10px);
+    } */
+
+    .small_width_field {
+        width: 100% !important;
+    }
+}
+
+/* Medium Devices (landscape tablets, 768px to 992px) */
+@media (max-width: 992px) {
+    .wd-find-select {
+        flex-wrap: wrap;
+    }
+
+    .form-group {
+        width: calc(33.33% - 10px);
+        margin-bottom: 10px;
+    }
+
+    .filter_btn,
+    .clear_filter_btn {
+        width: calc(50% - 10px);
+    }
+
+    .small_width_field {
+        width: 100% !important;
+    }
+
+    .clear_filter_btn {
+        margin: 0 !important;
+    }
+}
+
+/* Small Devices (portrait tablets and large phones, 600px to 768px) */
+@media (max-width: 768px) {
+    .wd-find-select {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .filter_btn,
+    .clear_filter_btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .small_width_field {
+        width: 100% !important;
+    }
+
+    .clear_filter_btn {
+        margin: 0 !important;
+    }
+}
+
+/* Extra Small Devices (phones, 600px and down) */
+@media (max-width: 600px) {
+    .wd-find-select {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .filter_btn,
+    .clear_filter_btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .small_width_field {
+        width: 100% !important;
+    }
+
+    .clear_filter_btn {
+        margin: 0 !important;
+    }
 }

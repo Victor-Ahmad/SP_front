@@ -7,6 +7,8 @@
     <style>
         .background_color {
             background: white;
+            min-height: 91vh !important;
+            margin: 5vh auto;
         }
     </style>
 @endsection

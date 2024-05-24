@@ -7412,7 +7412,7 @@
 .slider.home5 {
   background-image: url(./../../assets/images/slider/bg-slider-5.jpg);
   background-attachment: fixed;
-
+  min-height: 100vh;
 }
 
 .slider.home5.landing {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
+use Illuminate\Support\Str;
 use function Laravel\Prompts\error;
 
 class HomeController extends Controller
@@ -33,7 +33,7 @@ class HomeController extends Controller
             $data = [
                 'price_min' => request()->min_value,
                 'price_max' => request()->max_value,
-                'number_of_rooms' => request()->rooms,
+                'number_of_rooms' => request()->rooms != 'any' ? request()->rooms : null,
                 'location' => request()->location,
             ];
 
@@ -43,7 +43,20 @@ class HomeController extends Controller
 
             $response = $this->apiService->getPosts($data);
             $posts = $response['result']['filtered_houses'];
+            if (request()->interest_location) {
+                $new_posts = [];
+                foreach ($posts as  $post) {
+                    foreach ($post['user']['intersts'] as $interest) {
+                        if (Str::contains($interest['interest'], request()->interest_location)) {
+                            $new_posts[] = $post;
+                            continue;
+                        }
+                    }
+                }
+                $posts = $new_posts;
+            }
 
+            // return  $posts[1]['user']['intersts'][0]['interest'];
             return view('home', ['posts' => $posts]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());

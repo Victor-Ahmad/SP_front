@@ -20,13 +20,18 @@
 
                                     </div>
                                 </div>
+
                                 <!-- Rooms Dropdown -->
                                 <div class="form-group form-style">
-                                    <div class="group-select">
-                                        <div class="nice-select" tabindex="0">
+                                    <div class="group-select small_width_field">
+                                        <div class="nice-select small_width_field" tabindex="0">
                                             <span
                                                 class="current">{{ request('rooms', __('lang.rooms') . ': ' . __('lang.any')) }}</span>
-                                            <ul class="list">
+                                            <ul class="list small_width_field">
+                                                <li data-value="any"
+                                                    class="option {{ request('rooms') == 'any' ? 'selected' : '' }}">
+                                                    @lang('lang.any')
+                                                </li>
                                                 <li data-value="1"
                                                     class="option {{ request('rooms') == '1' ? 'selected' : '' }}">1
                                                 </li>
@@ -50,8 +55,25 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group form-style">
+                                    <div class="group-select small_width_field">
+                                        <span class="value"><input type="number" step="5"
+                                                placeholder="@lang('lang.min_value')" id="min_value" name="min_value"
+                                                value="{{ request('min_value', null) }}" class="editable"></span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group form-style">
+                                    <div class="group-select small_width_field">
+                                        <span class="value"><input type="number" step="5"
+                                                placeholder="@lang('lang.max_value')" id="max_value" name="max_value"
+                                                value="{{ request('max_value', null) }}" class="editable"></span>
+
+                                    </div>
+                                </div>
+
                                 <!-- Price Range Filter -->
-                                <div class="form-group wg-box3">
+                                {{-- <div class="form-group wg-box3">
                                     <div class="widget widget-price">
                                         <div class="caption flex-two">
                                             <div>
@@ -70,9 +92,9 @@
                                             </div>
                                         </div>
                                     </div><!-- /.widget_price -->
-                                </div>
+                                </div> --}}
                                 <!-- Apply Filter Button -->
-                                <div class="form-buttons">
+                                <div class="form-group form-style">
                                     <input type="submit" class="filter_btn" value="@lang('lang.apply filter')">
                                     <button type="button" class="clear_filter_btn"
                                         onclick="clearFilters()">@lang('lang.clear all')

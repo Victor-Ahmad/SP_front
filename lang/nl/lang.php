@@ -81,4 +81,6 @@ return [
     'landing_page_statement' => 'Vind en ruil je woning met anderen met gemak.',
     'enter a location to look for' => 'Voer een locatie in om te zoeken',
     'no matches found for your search criteria' => 'Geen matches gevonden voor uw zoekcriteria.',
+    'max_value' => 'Max Price',
+    'min_value' => 'Min Price',
 ];

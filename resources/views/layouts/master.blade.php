@@ -16,6 +16,8 @@
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
     <link rel="apple-touch-icon-precomposed"
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
+    <link rel="stylesheet"
+        href="{{ asset('app/css/responsive.css') }}?v={{ filemtime(public_path('app/css/responsive.css')) }}">
     <style>
         .navigation li a:hover {
             color: #2a81b2 !important;

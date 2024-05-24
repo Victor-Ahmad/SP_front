@@ -213,6 +213,12 @@
                     })
                     .catch(error => console.error('Error sending message:', error));
             });
+            messageInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' && messageInput.value.trim() !== "") {
+                    event.preventDefault(); // Prevent the default action (form submission)
+                    sendButton.click(); // Trigger the send button click event
+                }
+            });
         });
     </script>
 @endsection

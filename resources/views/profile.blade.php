@@ -18,62 +18,62 @@
                 <button class="edit-button" id="edit-button">Edit</button>
             </div>
 
-            <h2>Profile Information</h2>
+            <h2>@lang('lang.profile information')</h2>
             <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 {{-- @method('PATCH') --}}
                 <div class="profile-details">
                     <div class="detail">
-                        <span class="label">Email:</span>
+                        <span class="label">@lang('lang.email'):</span>
                         <span class="value"><input type="text" name="email" value="{{ $profile['email'] }}"
                                 class="uneditable" disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">Phone Number:</span>
+                        <span class="label">@lang('lang.phone number'):</span>
                         <span class="value"><input type="text" name="number" value="{{ $profile['number'] }}"
                                 class="uneditable" disabled></span>
                     </div>
                 </div>
 
-                <h2>House Details</h2>
+                <h2>@lang('lang.house details')</h2>
                 <div class="house-details">
                     <div class="detail">
-                        <span class="label">Location:</span>
+                        <span class="label">@lang('lang.location'):</span>
                         <span class="value"><input type="text" name="location"
                                 value="{{ $profile['one_to_one_swap_house']['location'] }}" class="editable"
                                 disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">Post Code:</span>
+                        <span class="label">@lang('lang.post code'):</span>
                         <span class="value"><input type="text" name="post_code"
                                 value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="editable"
                                 disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">Street:</span>
+                        <span class="label">@lang('lang.street'):</span>
                         <span class="value"><input type="text" name="street"
                                 value="{{ $profile['one_to_one_swap_house']['street'] }}" class="editable" disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">House Number:</span>
+                        <span class="label">@lang('lang.house number'):</span>
                         <span class="value"><input type="text" name="house_number"
                                 value="{{ $profile['one_to_one_swap_house']['house_number'] }}" class="editable"
                                 disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">Number of Rooms:</span>
+                        <span class="label">@lang('lang.number of rooms'):</span>
                         <span class="value"><input type="number" name="number_of_rooms"
                                 value="{{ $profile['one_to_one_swap_house']['number_of_rooms'] }}" class="editable"
                                 disabled></span>
                     </div>
                     <div class="detail">
-                        <span class="label">Rent Price:</span>
+                        <span class="label">@lang('lang.rent price'):</span>
                         <span class="value"><input type="number" step="0.01" name="price"
                                 value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
                     </div>
                 </div>
 
-                <h2>Interests</h2>
+                <h2>@lang('lang.interests')</h2>
                 <div class="house-details">
                     <input type="text" id="interestsAutocompleteInput" placeholder="Enter a location of interest"
                         style="display:none; width:40%" class="input-field">
@@ -89,7 +89,7 @@
                     </div>
 
                 </div>
-                <h2>House Images</h2>
+                <h2>@lang('lang.house images')</h2>
                 <div class="house-images" id="house-images">
                     @foreach ($profile['one_to_one_swap_house']['images'] as $image)
                         <div class="image-container" id="image-container-{{ $image['id'] }}">
@@ -104,7 +104,8 @@
                 <input type="hidden" name=interests id="interests" value="">
                 <input type="file" name="images[]" class="add-image" id="add-image" multiple>
 
-                <button type="submit" class="save-button" id="save-button" style="display: none;">Save Changes</button>
+                <button type="submit" class="save-button" id="save-button"
+                    style="display: none;">@lang('lang.save changes')</button>
             </form>
         </div>
     </div>
@@ -147,7 +148,7 @@
                 saveButton.style.display = 'none';
                 addImageInput.style.display = 'none';
                 interestsAutocompleteInput.style.display = 'none';
-                this.innerText = 'Edit';
+                this.innerText = '@lang('lang.edit')';
                 delete_images = [];
                 delete_interests = [];
                 document.getElementById('delete_images').value = '';
@@ -161,7 +162,7 @@
                 saveButton.style.display = 'block';
                 addImageInput.style.display = 'block';
                 interestsAutocompleteInput.style.display = 'block';
-                this.innerText = 'Cancel';
+                this.innerText = '@lang('lang.cancel')';
 
                 // Save initial images and tags HTML
                 initialImagesHTML = document.getElementById('house-images').innerHTML;
