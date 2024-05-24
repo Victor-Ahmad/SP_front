@@ -43,18 +43,22 @@ class HomeController extends Controller
 
             $response = $this->apiService->getPosts($data);
             $posts = $response['result']['filtered_houses'];
-            // if (request()->interest_location) {
-            //     $new_posts = [];
-            //     foreach ($posts as  $post) {
-            //         foreach ($post['user']['intersts'] as $interest) {
-            //             if (Str::contains($interest['interest'], request()->interest_location)) {
-            //                 $new_posts[] = $post;
-            //                 continue;
-            //             }
-            //         }
-            //     }
-            //     $posts = $new_posts;
-            // }
+            $first_posts = [];
+            $last_posts = [];
+            foreach ($posts as  $post) {
+                $in_interest = false;
+                foreach ($post['user']['intersts'] as $interest) {
+                    if (Str::contains($interest['interest'], request()->interest_location)) {
+                        $in_interest = true;
+                    }
+                }
+                if ($in_interest) {
+                    $first_posts[] = $post;
+                } else {
+                    $last_posts[] = $post;
+                }
+            }
+            $posts == array_merge($first_posts, $last_posts);
 
             // return  $posts[1]['user']['intersts'][0]['interest'];
             return view('home', ['posts' => $posts]);
