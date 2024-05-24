@@ -18,9 +18,6 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete2">
-    </script>
     <script>
         let currentSlideIndex = 0;
 
@@ -91,31 +88,6 @@
 
         }
 
-        function initAutocomplete2() {
-            var input = document.getElementById('searchAutocompleteInput2');
-
-
-            var autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['(cities)'],
-                componentRestrictions: {
-                    country: "NL"
-                }
-            });
-
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-                console.log(place);
-
-                if (!place.place_id) {
-                    alert("Please select a place from the dropdown list.");
-                    return;
-                }
-                input.value = place.name;
-            });
-
-
-
-        }
         $(document).ready(function() {
             $('.nice-select').on('click', '.option', function() {
                 var value = $(this).data('value');
