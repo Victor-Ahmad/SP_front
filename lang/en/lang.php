@@ -24,7 +24,7 @@ return [
     'your message' => 'Your Message',
     'send' => 'Send',
     'reach out' => 'Reach Our',
-    'share your insights' => 'Shate Your Insights',
+    'share your insights' => 'Share Your Insights',
     'they are much appreciated' => 'They are Much Appreciated',
     'first name' => 'First Name',
     'last name' => 'Last Name',

@@ -73,11 +73,13 @@
             list-style: none;
             padding: 0;
             margin: 0;
+
         }
 
         .menu-content .language-list li {
             padding: 8px 12px;
             text-align: center;
+            display: block !important;
         }
 
         .menu-content .language-list li a {
@@ -99,6 +101,19 @@
             font-weight: bold;
             color: #ff9700;
         }
+
+        /* Large Devices (laptops/desktops, 992px to 1200px) */
+        @media (max-width: 1200px) {}
+
+        /* Medium Devices (landscape tablets, 768px to 992px) */
+        @media (max-width: 992px) {}
+
+
+        /* Small Devices (portrait tablets and large phones, 600px to 768px) */
+        @media (max-width: 768px) {}
+
+        /* Extra Small Devices (phones, 600px and down) */
+        @media (max-width: 600px) {}
     </style>
 
 
