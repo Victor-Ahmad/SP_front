@@ -45,10 +45,12 @@ class HomeController extends Controller
             $posts = $response['result']['filtered_houses'];
             $first_posts = [];
             $last_posts = [];
+            $my_interest = Session::get('my_location') ?? '';
+
             foreach ($posts as  $post) {
                 $in_interest = false;
                 foreach ($post['user']['intersts'] as $interest) {
-                    if (Str::contains($interest['interest'], request()->interest_location)) {
+                    if (Str::contains($interest['interest'], $my_interest)) {
                         $in_interest = true;
                     }
                 }
@@ -58,7 +60,7 @@ class HomeController extends Controller
                     $last_posts[] = $post;
                 }
             }
-            $posts == array_merge($first_posts, $last_posts);
+            $posts = array_merge($first_posts, $last_posts);
 
             // return  $posts[1]['user']['intersts'][0]['interest'];
             return view('home', ['posts' => $posts]);
@@ -100,9 +102,7 @@ class HomeController extends Controller
             error_log(Session::get('token'));
         }
         try {
-
             $response = $this->apiService->getProfile();
-
             return view('profile', ['profile' => $response['result']]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());

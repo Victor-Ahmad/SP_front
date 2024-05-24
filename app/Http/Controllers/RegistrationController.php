@@ -96,12 +96,16 @@ class RegistrationController extends Controller
 
         try {
             $response = $this->apiService->login($data);
+
             if ($response['success'] == 1) {
                 Session::put('user', $response['result']['user']);
                 Session::put('token', $response['result']['token']);
-                if ($response['result']['user']['swap_type_id'])
+                if ($response['result']['user']['swap_type_id']) {
+                    $tmpo =  $this->apiService->getProfile();
+                    $tmp = $tmpo['result']['one_to_one_swap_house']['location'];
+                    Session::put('my_location', explode(',', $tmp)[0]);
                     return redirect()->route('home');
-                else
+                } else
                     return redirect()->route('account_completion')->with('success', '');
             } else {
                 $messages = [];
