@@ -29,7 +29,7 @@
         </div>
         <div class="money fs-18 fw-6 text-color-3"><a href="">€ {{ $post['price'] }}</a></div>
         <div class=" "><span>@lang('lang.house type'): </span><span
-                class="fw-6">{{ $post['house_type']['type'] }}</span></div>
+                class="fw-6">{{ __('lang.' . $post['house_type']['type']) }}</span></div>
 
         <div class="flex">
             <div class=""><span>@lang('lang.rooms'): </span><span

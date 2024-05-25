@@ -51,7 +51,9 @@
                                                     readonly>
                                                 <ul id="dropdownList" class="dropdown-content">
                                                     @foreach ($houseTypes as $type)
-                                                        <li data-value="{{ $type['id'] }}">{{ $type['type'] }}</li>
+                                                        <li data-value="{{ $type['id'] }}">
+                                                            {{ __('lang.' . $type['type']) }}
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             </div>
