@@ -66,7 +66,9 @@ Route::middleware([Localization::class])->group(function () {
 
 
 
-
+Route::get('/testtesttest',function(){
+    return view('testtesttest');
+})
 
 
 
