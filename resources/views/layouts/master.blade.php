@@ -132,6 +132,40 @@
     {{-- @include('layouts.partial.modals') --}}
     @include('layouts.partial.scripts')
     @yield('additional_scripts')
+    <script>
+        function createPreloader() {
+            var preloadContainer = document.createElement('div');
+            preloadContainer.className = 'preload preload-container';
+
+            var boxesContainer = document.createElement('div');
+            boxesContainer.className = 'boxes';
+
+            for (var i = 0; i < 4; i++) {
+                var box = document.createElement('div');
+                box.className = 'box';
+
+                for (var j = 0; j < 4; j++) {
+                    var innerDiv = document.createElement('div');
+                    box.appendChild(innerDiv);
+                }
+
+                boxesContainer.appendChild(box);
+            }
+
+            preloadContainer.appendChild(boxesContainer);
+
+            document.body.appendChild(preloadContainer);
+        }
+
+        function removePreloader() {
+            setTimeout(function() {
+                var preloadContainer = document.querySelector('.preload.preload-container');
+                if (preloadContainer) {
+                    preloadContainer.remove();
+                }
+            }, 400); // 400 milliseconds delay
+        }
+    </script>
     <a id="scroll-top" class="button-go"></a>
 </body>
 

@@ -100,7 +100,7 @@
                                     <div class="form-row">
                                         <div class="form-group">
                                             <h3 class="street-label">@lang('lang.street')</h3>
-                                            <input type="text" name="street" placeholder="@lang('lang.enter street name')"
+                                            <input type="text" name="street" placeholder="@lang('lang.enter street name')" required
                                                 class="input-field">
                                         </div>
                                         <div class="form-group">
@@ -459,6 +459,19 @@
             }
 
         }
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    createPreloader();
+                });
+            }
+        });
+
+        // Remove preloader after the page is fully loaded
+        window.addEventListener('load', function() {
+            removePreloader();
+        });
     </script>
 
 @endsection
