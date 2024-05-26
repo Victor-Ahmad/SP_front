@@ -103,6 +103,9 @@ class HomeController extends Controller
         }
         try {
             $response = $this->apiService->getProfile();
+            if (!$response['result']['one_to_one_swap_house']) {
+                return redirect()->route('account_completion');
+            }
             return view('profile', ['profile' => $response['result']]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
