@@ -5,18 +5,9 @@
                 <div class="col-md-7">
                     <div class="content po-content-two">
                         <div class="heading center custom_heading">
-                            <h1 class="text-color-1 wow slideInDown js-letters custom_h1" data-wow-delay="50ms"
-                                data-wow-duration="1000ms">@lang('lang.landing_page_statement')</h1>
-                            {{-- <h1 class="text-color-1 wow slideInDown js-letters custom_h1" data-wow-delay="50ms"
-                                data-wow-duration="1000ms">Find and swap your </h1>
-                            <h1 class="text-color-1 wow slideInDown js-letters custom_h1" data-wow-delay="50ms"
-                                data-wow-duration="1000ms"> home with others in</h1>
-                            <h1 class="text-color-1 wow slideInDown js-letters custom_h1" data-wow-delay="50ms"
-                                data-wow-duration="1000ms"> the Netherlands </h1>
-                            <h1 class="text-color-1 wow slideInDown js-letters custom_h1" data-wow-delay="50ms"
-                                data-wow-duration="1000ms"> effortlessly.</h1> --}}
-                            {{-- <p class="fs-16 lh-24 fw-6 text-color-1">Find and swap your home with others in the
-                                Netherlands effortlessly.</p> --}}
+                            <h1 style=" white-space: normal; word-wrap: break-word;  word-break: keep-all;"
+                                class="text-color-1   custom_h1">
+                                @lang('lang.landing_page_statement')</h1>
                         </div>
 
                         @if (!Session::get('token'))

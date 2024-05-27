@@ -40,24 +40,25 @@
                     <div class="detail">
                         <span class="label">@lang('lang.location'):</span>
                         <span class="value"><input type="text" name="location" id ="location"
-                                value="{{ $profile['one_to_one_swap_house']['location'] }}" class="editable"
+                                value="{{ $profile['one_to_one_swap_house']['location'] }}" class="uneditable"
                                 disabled></span>
                     </div>
                     <div class="detail">
                         <span class="label">@lang('lang.post code'):</span>
                         <span class="value"><input type="text" name="post_code"
-                                value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="editable"
+                                value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="uneditable"
                                 disabled></span>
                     </div>
                     <div class="detail">
                         <span class="label">@lang('lang.street'):</span>
                         <span class="value"><input type="text" name="street"
-                                value="{{ $profile['one_to_one_swap_house']['street'] }}" class="editable" disabled></span>
+                                value="{{ $profile['one_to_one_swap_house']['street'] }}" class="uneditable"
+                                disabled></span>
                     </div>
                     <div class="detail">
                         <span class="label">@lang('lang.house number'):</span>
                         <span class="value"><input type="text" name="house_number"
-                                value="{{ $profile['one_to_one_swap_house']['house_number'] }}" class="editable"
+                                value="{{ $profile['one_to_one_swap_house']['house_number'] }}" class="uneditable"
                                 disabled></span>
                     </div>
                     <div class="detail">

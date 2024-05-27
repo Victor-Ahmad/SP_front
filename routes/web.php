@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Session;
 
 
 
+Route::post('/get-place-details', [GooglePlacesController::class, 'getPlaceDetails']);
+Route::post('/get-place-details-by-coords', [GooglePlacesController::class, 'getPlaceDetailsByCoords']);
 
 Route::middleware([Localization::class])->group(function () {
 
@@ -64,8 +66,8 @@ Route::middleware([Localization::class])->group(function () {
 
     Route::get('/check_chat/{userId}', [ChatController::class, 'checkChat'])->name('checkChat');
 
-    Route::get('/google-places', [GooglePlacesController::class, 'getPlaceDetails']);
-    Route::get('/google-nearby-city', [GooglePlacesController::class, 'searchNearbyCity']);
+
+
 
     // web.php
     Route::get('/check-unread-messages', [ChatController::class, 'checkUnreadMessages'])->name('checkUnreadMessages');

@@ -3,6 +3,7 @@
 @section('title', 'Home Page')
 
 @section('head_css')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link
         href="{{ asset('app/css/account_completion.css') }}?v={{ filemtime(public_path('app/css/account_completion.css')) }}"
         rel="stylesheet" type="text/css" media="all" />
@@ -99,7 +100,6 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-
                                         <div class="form-group">
                                             <h3 class="house-number-label">@lang('lang.house number')</h3>
                                             <input type="text" id="house_number" name="house_number"
@@ -108,8 +108,10 @@
                                         <div class="form-group">
                                             <h3 class="street-label">@lang('lang.street')</h3>
                                             <input type="text" id="street" name="street"
-                                                placeholder="@lang('lang.enter street name')" readonly class="input-field">
+                                                placeholder="@lang('lang.enter street name')" class="input-field" readonly>
                                         </div>
+
+
                                     </div>
                                 </div>
 
@@ -220,24 +222,47 @@
                 }
             }
 
+
             function fetchStreetFromPostCodeAndHouseNumber() {
                 const postCode = postCodeInput.value;
                 const houseNumber = houseNumberInput.value;
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
                 if (postCode && houseNumber) {
                     const address = `${houseNumber} ${postCode}, Netherlands`;
+
+                    // Step 1: Get the Coordinates
                     fetch(
                             `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
-                        )
+                            )
                         .then(response => response.json())
                         .then(data => {
                             if (data.status === 'OK' && data.results.length > 0) {
-                                let street = '';
-                                data.results[0].address_components.forEach(component => {
-                                    if (component.types.includes('route')) {
-                                        street = component.long_name;
-                                    }
-                                });
-                                document.getElementById('street').value = street;
+                                const location = data.results[0].geometry.location;
+                                const lat = location.lat;
+                                const lng = location.lng;
+
+                                // Step 2: Use the Coordinates to get place details and extract the street name
+                                fetch('/get-place-details-by-coords', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': csrfToken
+                                        },
+                                        body: JSON.stringify({
+                                            lat: lat,
+                                            lng: lng
+                                        })
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.street) {
+                                            document.getElementById('street').value = data.street;
+                                        } else {
+                                            console.error('Failed to fetch street details:', data.error);
+                                        }
+                                    })
+                                    .catch(error => console.error('Error fetching place details:', error));
                             } else {
                                 console.error('Geocode was not successful for the following reason: ' + data
                                     .status);
