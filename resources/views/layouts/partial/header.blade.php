@@ -18,7 +18,12 @@
                                 <div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
                                     <ul class="navigation clearfix">
                                         <li><a href="{{ route('home') }}">@lang('lang.home')</a></li>
-                                        <li><a href="{{ route('chats') }}">@lang('lang.messages')</a></li>
+                                        {{-- <li><a href="{{ route('chats') }}">@lang('lang.messages')</a></li> --}}
+                                        <li>
+                                            <a href="{{ route('chats') }}" class="position-relative">@lang('lang.messages')
+                                                <span id="unread-count" class="badge" style="display: none;"></span>
+                                            </a>
+                                        </li>
                                         <li><a href="{{ route('profile.get') }}">@lang('lang.profile')</a></li>
                                         <li><a href="{{ route('feed_back') }}">@lang('lang.feed back')</a></li>
                                     </ul>
@@ -132,5 +137,4 @@
         </nav>
     </div>
     <!-- End Mobile Menu -->
-
 </header>

@@ -78,41 +78,44 @@
 
 
                                 </div>
-                                <!-- Step 2 -->
-                                <div class="form-step">
-                                    <div class="form-row">
-                                        {{-- <div class="form-group">
+                                {{-- <div class="form-group">
                                             <h3 class="location-label">Location</h3>
                                             <input type="text" id="autocomplete" name="location_name"
                                                 placeholder="Enter location name" class="input-field" required>
                                         </div> --}}
+                                <!-- Step 2 -->
+                                <div class="form-step">
+                                    <div class="form-row">
+
+                                        <div class="form-group">
+                                            <h3 class="post-code-label">@lang('lang.post code')</h3>
+                                            <input type="text" id="post_code" name="post_code"
+                                                placeholder="@lang('lang.enter post code')" class="input-field" required>
+                                        </div>
                                         <div class="form-group">
                                             <h3 class="post-code-label">@lang('lang.location')</h3>
                                             <input type="text" id="autocomplete" name="location_name"
-                                                placeholder="@lang('lang.enter location name')" class="input-field" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <h3 class="post-code-label">@lang('lang.post code')</h3>
-                                            <input type="text" name="post_code" placeholder="@lang('lang.enter post code')"
-                                                class="input-field" required>
+                                                placeholder="@lang('lang.enter location name')" class="input-field" readonly>
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group">
-                                            <h3 class="street-label">@lang('lang.street')</h3>
-                                            <input type="text" name="street" placeholder="@lang('lang.enter street name')" required
-                                                class="input-field">
-                                        </div>
+
                                         <div class="form-group">
                                             <h3 class="house-number-label">@lang('lang.house number')</h3>
-                                            <input type="text" name="house_number" placeholder="@lang('lang.enter house number')"
-                                                class="input-field" required>
+                                            <input type="text" id="house_number" name="house_number"
+                                                placeholder="@lang('lang.enter house number')" class="input-field" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <h3 class="street-label">@lang('lang.street')</h3>
+                                            <input type="text" id="street" name="street"
+                                                placeholder="@lang('lang.enter street name')" readonly class="input-field">
                                         </div>
                                     </div>
-                                    <input type="hidden" id="latitude" name="latitude" value="">
-                                    <input type="hidden" id="longitude" name="longitude" value="">
+                                </div>
 
-                                    {{-- <div class="switch-container">
+                                <input type="hidden" id="latitude" name="latitude" value="">
+                                <input type="hidden" id="longitude" name="longitude" value="">
+                                {{-- <div class="switch-container">
                                         <label class="switch-label" for="locationSwitch">Allow Street View for Google
                                             Maps?</label>
                                         <label class="switch">
@@ -121,7 +124,6 @@
                                         </label>
                                     </div>
                                     <div id="googleMap" class="google-map"></div> --}}
-                                </div>
                                 <!-- Step 3 -->
                                 <div class="form-step">
                                     <h3>@lang('lang.house gallery')</h3>
@@ -170,6 +172,84 @@
 @section('additional_scripts')
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async&callback=initMap">
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const postCodeInput = document.getElementById('post_code');
+            const houseNumberInput = document.getElementById('house_number');
+            const apiKey = '{{ env('GOOGLE_MAPS_API_KEY') }}';
+
+            function fetchCityFromPostCode() {
+                const postCode = postCodeInput.value;
+                if (postCode) {
+                    fetch(
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&key=${apiKey}`
+                        )
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'OK' && data.results.length > 0) {
+                                let city = '';
+                                let localityFound = false;
+
+                                data.results[0].address_components.forEach(component => {
+                                    if (component.types.includes('locality')) {
+                                        city = component.long_name;
+                                        localityFound = true;
+                                    } else if (component.types.includes(
+                                            'administrative_area_level_2') || component.types.includes(
+                                            'administrative_area_level_3')) {
+                                        if (!localityFound) {
+                                            city = component.long_name;
+                                        }
+                                    }
+                                });
+
+                                if (!city) {
+                                    // Use another API or method to get the city if Geocoding API didn't return it
+                                    // fetchNearbyCity(postCode);
+                                } else {
+                                    document.getElementById('autocomplete').value = city;
+                                }
+                            } else {
+                                console.error('Geocode was not successful for the following reason: ' + data
+                                    .status);
+                            }
+                        })
+                        .catch(error => console.error('Error fetching address:', error));
+                }
+            }
+
+            function fetchStreetFromPostCodeAndHouseNumber() {
+                const postCode = postCodeInput.value;
+                const houseNumber = houseNumberInput.value;
+                if (postCode && houseNumber) {
+                    const address = `${houseNumber} ${postCode}, Netherlands`;
+                    fetch(
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+                        )
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'OK' && data.results.length > 0) {
+                                let street = '';
+                                data.results[0].address_components.forEach(component => {
+                                    if (component.types.includes('route')) {
+                                        street = component.long_name;
+                                    }
+                                });
+                                document.getElementById('street').value = street;
+                            } else {
+                                console.error('Geocode was not successful for the following reason: ' + data
+                                    .status);
+                            }
+                        })
+                        .catch(error => console.error('Error fetching address:', error));
+                }
+            }
+
+            postCodeInput.addEventListener('input', fetchCityFromPostCode);
+            houseNumberInput.addEventListener('input', fetchStreetFromPostCodeAndHouseNumber);
+        });
     </script>
 
     <script>
@@ -392,25 +472,25 @@
         let selectedCities = [];
 
         function initAutocomplete() {
-            var input = document.getElementById('autocomplete');
+            // var input = document.getElementById('autocomplete');
 
 
-            var autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['(cities)'],
-                componentRestrictions: {
-                    country: "NL"
-                }
-            });
+            // var autocomplete = new google.maps.places.Autocomplete(input, {
+            //     types: ['(cities)'],
+            //     componentRestrictions: {
+            //         country: "NL"
+            //     }
+            // });
 
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-                console.log(place);
+            // autocomplete.addListener('place_changed', function() {
+            //     var place = autocomplete.getPlace();
+            //     console.log(place);
 
-                if (!place.place_id) {
-                    alert("Please select a place from the dropdown list.");
-                    return;
-                }
-            });
+            //     if (!place.place_id) {
+            //         alert("Please select a place from the dropdown list.");
+            //         return;
+            //     }
+            // });
 
             var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
             const tagsContainer = document.getElementById('tagsContainer');

@@ -204,14 +204,22 @@ class ApiService
 
 
 
-
-
-
-
-
-    public function checkChat($chatId)
+    public function checkNewMessages()
     {
-        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "is_chat_existing/{$chatId}");
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "chats_with_unread_messages");
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+
+
+
+    public function checkChat($userId)
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "is_chat_existing/{$userId}");
         if ($response->successful()) {
             return $response->json();
         }

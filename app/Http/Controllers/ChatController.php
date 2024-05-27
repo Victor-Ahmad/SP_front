@@ -31,17 +31,19 @@ class ChatController extends Controller
 
             $response = $this->apiService->getChats();
             $chats =  $response['result'];
-            // $chats = [];
-            // foreach ($response['result'] as $chat) {
-            //     $chats[] = [
-            //         'id' => $chat['id'],
-            //         'name' => $chat['other_person']['first_name'] . ' ' . $chat['other_person']['last_name'],
-            //         'location' => $chat['other_person']['one_to_one_swap_house']['location'] . ', ' . $chat['other_person']['one_to_one_swap_house']['street'],
-            //         'updated_at' => $chat['updated_at'],
-            //     ];
-            // }
+            $response2 = $this->apiService->checkNewMessages();
+            $newChats = [];
+            foreach ($chats as $chat) {
 
-            return view('chats', ['chats' => $chats]);
+                if (in_array($chat['id'], $response2['result'][0]['chat_ids'])) {
+                    $chat['unread'] = '1';
+                } else {
+                    $chat['unread'] = '0';
+                }
+                $newChats[] = $chat;
+            }
+
+            return view('chats', ['chats' => $newChats]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -73,22 +75,37 @@ class ChatController extends Controller
 
     public function checkChat($userId)
     {
+
         if (!Session::get('token')) {
             return redirect()->route('login');
         } else {
             error_log(Session::get('token'));
         }
         try {
-
             $response = $this->apiService->checkChat($userId);
-            if (isset($response['result'][0]['chat']) ?? false) {
-                return redirect()->route('chat.show', ['id' => $response['result'][0]['chat']['id']]);
-            } else {
-                return redirect()->route('chat.show', ['id' => $response['result']['id']]);
-            }
+            $chatId = isset($response['result']['id']) ? $response['result']['id'] : $response['result'][0]['chat']['id'];
+            return redirect()->route('chat.show', ['id' => $chatId]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
-            return back()->withErrors(['message' => $e->getMessage()]);
+            return response()->json(['error' => 'Failed to fetch unread messages'], 500);
+        }
+    }
+
+
+
+    public function checkUnreadMessages()
+    {
+        if (!Session::get('token')) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        try {
+            $response = $this->apiService->checkNewMessages();
+            $unreadCount = isset($response['result'][0]['count']) ? $response['result'][0]['count'] : 0;
+            return response()->json(['unreadCount' => $unreadCount]);
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch unread messages'], 500);
         }
     }
 }

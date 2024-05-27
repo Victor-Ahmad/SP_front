@@ -39,7 +39,7 @@
                 <div class="house-details">
                     <div class="detail">
                         <span class="label">@lang('lang.location'):</span>
-                        <span class="value"><input type="text" name="location"
+                        <span class="value"><input type="text" name="location" id ="location"
                                 value="{{ $profile['one_to_one_swap_house']['location'] }}" class="editable"
                                 disabled></span>
                     </div>
@@ -253,6 +253,27 @@
                 }
 
                 interestsAutocompleteInput.value = '';
+            });
+
+
+            var input = document.getElementById('location');
+
+
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
             });
         }
 

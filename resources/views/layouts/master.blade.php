@@ -16,8 +16,7 @@
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
     <link rel="apple-touch-icon-precomposed"
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
-    <link rel="stylesheet"
-        href="{{ asset('app/css/responsive.css') }}?v={{ filemtime(public_path('app/css/responsive.css')) }}">
+
     <style>
         .navigation li a:hover {
             color: #2a81b2 !important;
@@ -114,10 +113,27 @@
 
         /* Extra Small Devices (phones, 600px and down) */
         @media (max-width: 600px) {}
+
+        .position-relative {
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 7px;
+            font-size: 8px;
+            font-weight: bold;
+        }
     </style>
 
 
     @yield('head_css')
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
 </head>
 
 <body class="body">
@@ -165,6 +181,32 @@
                 }
             }, 400); // 400 milliseconds delay
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function fetchUnreadMessages() {
+                fetch('{{ route('checkUnreadMessages') }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        const unreadCountElement = document.getElementById('unread-count');
+                        if (data.unreadCount > 0) {
+                            unreadCountElement.textContent = data.unreadCount;
+                            unreadCountElement.style.display = 'inline';
+                        } else {
+                            unreadCountElement.style.display = 'none';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching unread messages:', error);
+                    });
+            }
+
+            fetchUnreadMessages();
+
+            // Optionally, refresh the count every minute
+            // setInterval(fetchUnreadMessages, 60000);
+        });
     </script>
     <a id="scroll-top" class="button-go"></a>
 </body>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\GooglePlacesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Middleware\Localization;
@@ -63,11 +64,11 @@ Route::middleware([Localization::class])->group(function () {
 
     Route::get('/check_chat/{userId}', [ChatController::class, 'checkChat'])->name('checkChat');
 
+    Route::get('/google-places', [GooglePlacesController::class, 'getPlaceDetails']);
+    Route::get('/google-nearby-city', [GooglePlacesController::class, 'searchNearbyCity']);
 
-
-
-
-
+    // web.php
+    Route::get('/check-unread-messages', [ChatController::class, 'checkUnreadMessages'])->name('checkUnreadMessages');
 
 
     // Route::get('/index', function () {
