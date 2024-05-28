@@ -256,7 +256,7 @@ class RegistrationController extends Controller
             'street' => 'string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'gallery.*' => 'nullable|file|mimes:jpg,jpeg,png,bmp|max:2048',
+            'gallery.*' => 'nullable|file|mimes:jpg,jpeg,png,bmp',
         ]);
 
         $data = [

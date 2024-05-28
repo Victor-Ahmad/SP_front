@@ -15,7 +15,7 @@ class ApiService
     public function __construct()
     {
         $this->baseUrl = rtrim(config('app.base_url'), '/') . '/';
-        $this->http = Http::timeout(120);
+        $this->http = Http::timeout(180);
     }
 
     public function signUp(array $data)
