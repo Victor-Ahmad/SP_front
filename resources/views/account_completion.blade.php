@@ -7,6 +7,18 @@
     <link
         href="{{ asset('app/css/account_completion.css') }}?v={{ filemtime(public_path('app/css/account_completion.css')) }}"
         rel="stylesheet" type="text/css" media="all" />
+    <style>
+        .error-border {
+            border: 2px solid red;
+        }
+
+        .error-star::after {
+            content: '*';
+            color: red;
+            margin-left: 5px;
+        }
+    </style>
+
 
 @endsection
 
@@ -28,87 +40,65 @@
                                 @csrf
                                 <!-- Step 1 -->
                                 <div class="form-step form-step-active">
-
-                                    {{-- <ul id="houseTypeList" class="houseTypeList-content">
-                                        @foreach ($houseTypes as $type)
-                                            <li data-value="{{ $type['id'] }}">{{ $type['type'] }}</li>
-                                        @endforeach
-                                    </ul> --}}
-
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="price-label">@lang('lang.rent price') (€)</h3>
+                                            <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
                                             <input type="number" id="price" name="price"
-                                                placeholder="@lang('lang.enter price')" class="input-field" step="0.01" required>
-
+                                                placeholder="@lang('lang.enter price')" class="input-field required" step="0.01"
+                                                required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" id="houseType" name="house_type" value="">
-
-                                            <h3 class="house-type-label">@lang('lang.house type')</h3>
+                                            <h3 class="house-type-label label">@lang('lang.house type')</h3>
                                             <div class="dropdown">
-
                                                 <input type="text" id="dropdownInput" placeholder="@lang('lang.select an option')"
                                                     readonly>
-                                                <ul id="dropdownList" class="dropdown-content">
+                                                <ul id="dropdownList" class="dropdown-content required">
                                                     @foreach ($houseTypes as $type)
-                                                        <li data-value="{{ $type['id'] }}">
-                                                            {{ __('lang.' . $type['type']) }}
-                                                        </li>
+                                                        <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-
+                                            <input type="hidden" id="houseType" name="house_type" value="">
                                         </div>
-                                        {{-- <div class="form-group">
-                                            <h3 class="area-label">Area (sqm)</h3>
-                                            <input type="number" id="area" name="area" placeholder="Enter area"
-                                                class="input-field" required>
-                                        </div> --}}
                                     </div>
                                     <div style="margin-top:30px "></div>
-                                    <h3 class="rooms-label">@lang('lang.number of rooms')</h3>
-                                    <ul id="roomsList" class="roomsList-content">
-                                        @foreach ($numberOfRooms as $number)
-                                            <li data-value="{{ $number['id'] }}">{{ $number['number'] }}</li>
-                                        @endforeach
-                                    </ul>
-                                    <input type="hidden" id="numberOfRooms" name="number_of_rooms" value="">
-
+                                    <div class="form-group">
+                                        <h3 class="rooms-label label">@lang('lang.number of rooms')</h3>
+                                        <ul id="roomsList" class="roomsList-content required">
+                                            @foreach ($numberOfRooms as $number)
+                                                <li data-value="{{ $number['id'] }}">{{ $number['number'] }}</li>
+                                            @endforeach
+                                        </ul>
+                                        <input type="hidden" id="numberOfRooms" name="number_of_rooms" value="">
+                                    </div>
                                     <div style="margin-top:30px "></div>
-
-
                                 </div>
-                                {{-- <div class="form-group">
-                                            <h3 class="location-label">Location</h3>
-                                            <input type="text" id="autocomplete" name="location_name"
-                                                placeholder="Enter location name" class="input-field" required>
-                                        </div> --}}
+
                                 <!-- Step 2 -->
                                 <div class="form-step">
                                     <div class="form-row">
 
                                         <div class="form-group">
-                                            <h3 class="post-code-label">@lang('lang.post code')</h3>
+                                            <h3 class="post-code-label label">@lang('lang.post code')</h3>
                                             <input type="text" id="post_code" name="post_code"
-                                                placeholder="@lang('lang.enter post code')" class="input-field" required>
+                                                placeholder="@lang('lang.enter post code')" class="input-field required" required>
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="post-code-label">@lang('lang.location')</h3>
+                                            <h3 class="post-code-label label">@lang('lang.location')</h3>
                                             <input type="text" id="autocomplete" name="location_name"
-                                                placeholder="@lang('lang.enter location name')" class="input-field" readonly>
+                                                placeholder="@lang('lang.enter location name')" class="input-field required" readonly>
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="house-number-label">@lang('lang.house number')</h3>
+                                            <h3 class="house-number-label label">@lang('lang.house number')</h3>
                                             <input type="text" id="house_number" name="house_number"
-                                                placeholder="@lang('lang.enter house number')" class="input-field" required>
+                                                placeholder="@lang('lang.enter house number')" class="input-field required" required>
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="street-label">@lang('lang.street')</h3>
+                                            <h3 class="street-label label">@lang('lang.street')</h3>
                                             <input type="text" id="street" name="street"
-                                                placeholder="@lang('lang.enter street name')" class="input-field" readonly>
+                                                placeholder="@lang('lang.enter street name')" class="input-field required">
                                         </div>
 
 
@@ -117,15 +107,7 @@
 
                                 <input type="hidden" id="latitude" name="latitude" value="">
                                 <input type="hidden" id="longitude" name="longitude" value="">
-                                {{-- <div class="switch-container">
-                                        <label class="switch-label" for="locationSwitch">Allow Street View for Google
-                                            Maps?</label>
-                                        <label class="switch">
-                                            <input type="checkbox" id="locationSwitch" name="street_view">
-                                            <span class="location_slider"></span>
-                                        </label>
-                                    </div>
-                                    <div id="googleMap" class="google-map"></div> --}}
+
                                 <!-- Step 3 -->
                                 <div class="form-step">
                                     <h3>@lang('lang.house gallery')</h3>
@@ -234,7 +216,7 @@
                     // Step 1: Get the Coordinates
                     fetch(
                             `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
-                            )
+                        )
                         .then(response => response.json())
                         .then(data => {
                             if (data.status === 'OK' && data.results.length > 0) {
@@ -313,34 +295,36 @@
                 let isValid = true;
 
                 activeStep.querySelectorAll('input.required').forEach(field => {
-                    const label = field.previousElementSibling;
+                    const label = field.closest('.form-group').querySelector('.label');
                     if (!field.value) {
-                        field.classList.add('error-border');
-                        label.classList.add('error-star');
+                        if (label) label.classList.add('error-star');
                         isValid = false;
                     } else {
-                        field.classList.remove('error-border');
-                        label.classList.remove('error-star');
+                        if (label) label.classList.remove('error-star');
                     }
 
                     field.addEventListener('input', () => {
                         if (field.value) {
-                            field.classList.remove('error-border');
-                            label.classList.remove('error-star');
+                            if (label) label.classList.remove('error-star');
                         }
                     });
                 });
 
+                // Validate dropdown lists
                 activeStep.querySelectorAll('ul.required').forEach(ul => {
-                    const label = ul.previousElementSibling;
+                    const label = ul.closest('.form-group').querySelector('.label');
                     if (!ul.querySelector('li.active')) {
-                        ul.classList.add('error-border');
-                        label.classList.add('error-star');
+                        if (label) label.classList.add('error-star');
                         isValid = false;
                     } else {
-                        ul.classList.remove('error-border');
-                        label.classList.remove('error-star');
+                        if (label) label.classList.remove('error-star');
                     }
+
+                    ul.addEventListener('click', () => {
+                        if (ul.querySelector('li.active')) {
+                            if (label) label.classList.remove('error-star');
+                        }
+                    });
                 });
 
                 return isValid;
@@ -497,25 +481,6 @@
         let selectedCities = [];
 
         function initAutocomplete() {
-            // var input = document.getElementById('autocomplete');
-
-
-            // var autocomplete = new google.maps.places.Autocomplete(input, {
-            //     types: ['(cities)'],
-            //     componentRestrictions: {
-            //         country: "NL"
-            //     }
-            // });
-
-            // autocomplete.addListener('place_changed', function() {
-            //     var place = autocomplete.getPlace();
-            //     console.log(place);
-
-            //     if (!place.place_id) {
-            //         alert("Please select a place from the dropdown list.");
-            //         return;
-            //     }
-            // });
 
             var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
             const tagsContainer = document.getElementById('tagsContainer');

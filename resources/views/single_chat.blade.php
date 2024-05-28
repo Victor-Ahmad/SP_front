@@ -134,7 +134,7 @@
                 @foreach ($chat['messages'] as $message)
                     <div class="chat-message {{ $message['type'] }}">
                         <p>{{ $message['message'] }}</p>
-                        <small>{{ \Carbon\Carbon::parse($message['created_at'])->format('d M Y, h:i A') }}</small>
+                        <small>{{ \Carbon\Carbon::parse($message['created_at'])->timezone('Europe/Amsterdam')->format('d M Y, h:i A') }}</small>
                     </div>
                 @endforeach
             </div>
@@ -202,9 +202,9 @@
                     .then(data => {
                         if (data.success) {
                             var newMessage = `<div class="chat-message sender">
-                                            <p>${message}</p>
-                                            <small>${new Date().toLocaleString()}</small>
-                                          </div>`;
+                                    <p>${message}</p>
+                                    <small>${formatDate(new Date())}</small>
+                                  </div>`;
                             chatMessagesBox.innerHTML = newMessage + chatMessagesBox.innerHTML;
                             messageInput.value = '';
                         } else {
@@ -213,6 +213,22 @@
                     })
                     .catch(error => console.error('Error sending message:', error));
             });
+
+            function formatDate(date) {
+                // Define options for formatting date
+                const options = {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                };
+                // Create an instance of Intl.DateTimeFormat with the options and the locale
+                const formatter = new Intl.DateTimeFormat('en-GB', options);
+                // Format the date
+                return formatter.format(date);
+            }
             messageInput.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' && messageInput.value.trim() !== "") {
                     event.preventDefault(); // Prevent the default action (form submission)

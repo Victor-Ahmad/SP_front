@@ -382,7 +382,7 @@ input:checked+.location_slider:before {
 
 
 .error-border {
-    border: 1px solid red;
+    border: 2px solid red;
 }
 
 .error-star::after {
@@ -390,6 +390,13 @@ input:checked+.location_slider:before {
     color: red;
     margin-left: 5px;
 }
+
+.required-field::before {
+    content: '*';
+    color: red;
+    margin-right: 5px;
+}
+
 
 .dropdown {
     position: relative;
