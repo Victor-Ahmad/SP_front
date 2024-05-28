@@ -26,6 +26,16 @@
     <div id="pagee" class="clearfix">
         <section class="slider account_completion flat-contact tf-section home5 relative">
             <div class="container parent_container">
+                @if ($errors->any())
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="wrap-contact">
