@@ -18,6 +18,13 @@
                             <li><a href="{{ route('feed_back') }}">@lang('lang.feed back')</a></li>
                         </ul>
                     </div>
+
+                    <span>
+                        <a style="color: #2a81b2" href="{{ route('privacy-policy') }}"
+                            target="_blank">@lang('lang.privacy_policy')</a>
+                        {{-- <a style="color: #2a81b2" href="" target="_blank">@lang('lang.terms_of_use')</a> --}}
+                    </span>
+
                     {{-- <div class="icon-social box-3 text-color-1">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>

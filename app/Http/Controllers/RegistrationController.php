@@ -26,12 +26,15 @@ class RegistrationController extends Controller
 
     public function register(Request $request)
     {
+
+
         // Validate and save user data
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'phone_number' => 'required|string|max:15',
+            'privacy_policy_and_terms_of_use' => 'required'
         ]);
 
         $data = [
@@ -39,6 +42,8 @@ class RegistrationController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'number' => $request->phone_number,
+            'agreed_pricavy_policy' => $request->privacy_policy_and_terms_of_use == "on",
+            'agreed_terms_of_use' => $request->privacy_policy_and_terms_of_use == "on",
         ];
 
         try {

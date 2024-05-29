@@ -93,4 +93,7 @@ return [
     'Studio' => 'Studio',
     'Ground floor apartment' => 'Ground floor apartment',
     'Upper floor apartment' => 'Upper floor apartment',
+    'agree_text' => 'I have read and agree to the :privacy_policy  :terms_of_use.',
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_use' => 'Terms of Use',
 ];

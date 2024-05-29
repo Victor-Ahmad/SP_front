@@ -16,9 +16,19 @@ Route::post('/get-place-details', [GooglePlacesController::class, 'getPlaceDetai
 Route::post('/get-place-details-by-coords', [GooglePlacesController::class, 'getPlaceDetailsByCoords']);
 
 Route::middleware([Localization::class])->group(function () {
+    Route::get('/privacy-policy', function () {
+        $locale = Session::get('locale', 'en');
+        if ($locale == 'nl') {
+            return view('privacy-policy-nl');
+        }
+        return view('privacy-policy-en');
+    })->name('privacy-policy');
+
+
+
 
     Route::get('lang/{locale}', function ($locale) {
-        if (in_array($locale, ['en', 'nl'])) { // Add other languages here
+        if (in_array($locale, ['en', 'nl'])) {
             Session::put('locale', $locale);
         }
         return redirect()->back();

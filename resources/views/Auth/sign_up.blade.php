@@ -241,9 +241,19 @@
                                             title="Phone number must be between 10 to 15 digits">
                                         <div class="wthree-text">
                                             <label class="anim">
-                                                <input type="checkbox" class="checkbox" required="">
-                                                <span>@lang('lang.I agree to the terms & conditions')</span>
+                                                <input name="privacy_policy_and_terms_of_use" type="checkbox"
+                                                    class="checkbox" required="">
+                                                <span>
+                                                    {!! __('lang.agree_text', [
+                                                        'privacy_policy' =>
+                                                            '<a href="' . route('privacy-policy') . '" target="_blank">' . __('lang.privacy_policy') . '</a>',
+                                                        'terms_of_use' => '',
+                                                        // 'terms_of_use' => '<a href="" target="_blank">' . __('lang.terms_of_use') . '</a>',
+                                                    ]) !!}
+                                                </span>
+
                                             </label>
+                                            {{-- privacy-policy --}}
                                         </div>
                                         <input type="submit" value="@lang('lang.sign up')">
                                     </form>

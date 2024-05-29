@@ -93,4 +93,7 @@ return [
     'Studio' => 'Studio',
     'Ground floor apartment' => 'Benedenwoning',
     'Upper floor apartment' => 'Bovenwoning',
+    'agree_text' => 'Ik heb het :privacy_policy  :terms_of_use gelezen en ga ermee akkoord.',
+    'privacy_policy' => 'privacybeleid',
+    'terms_of_use' => 'gebruiksvoorwaarden',
 ];
