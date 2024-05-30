@@ -242,7 +242,7 @@
                                         <div class="wthree-text">
                                             <label class="anim">
                                                 <input name="privacy_policy_and_terms_of_use" type="checkbox"
-                                                    class="checkbox" required="">
+                                                    class="checkbox" required>
                                                 <span>
                                                     {!! __('lang.agree_text', [
                                                         'privacy_policy' =>
