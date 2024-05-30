@@ -21,7 +21,6 @@ class ApiService
     public function signUp(array $data)
     {
         $response = $this->http->post($this->baseUrl . 'sign_up', $data);
-
         if ($response->successful()) {
             return $response->json();
         }

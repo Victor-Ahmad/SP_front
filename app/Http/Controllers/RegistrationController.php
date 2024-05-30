@@ -42,7 +42,7 @@ class RegistrationController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'number' => $request->phone_number,
-            'agreed_pricavy_policy' => $request->privacy_policy_and_terms_of_use == "on",
+            'agreed_privacy_policy' => $request->privacy_policy_and_terms_of_use == "on",
             'agreed_terms_of_use' => $request->privacy_policy_and_terms_of_use == "on",
         ];
 
