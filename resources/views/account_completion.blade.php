@@ -37,20 +37,27 @@
                     </div>
                 @endif
                 <div class="row">
+
                     <div class="col-lg-12">
                         <div class="wrap-contact">
+
                             <ul class="step-navigation">
                                 <li class="active" data-step="0">@lang('lang.step 1: your house information')</li>
                                 <li data-step="1">@lang('lang.step 2: your house location')</li>
                                 <li data-step="2">@lang('lang.step 3: your house gallery')</li>
                                 <li data-step="3">@lang('lang.step 4: your interests')</li>
                             </ul>
+                            <div class=" ml-auto mr-auto">
+                                <h2>@lang('lang.your_house')</h2>
+                            </div>
+                            <br>
+                            <br>
                             <form id="multiStepForm" action="{{ route('complete_account') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <!-- Step 1 -->
                                 <div class="form-step form-step-active">
-                                    <h3>@lang('lang.your_house')</h3>
+
                                     <div class="form-row">
                                         <div class="form-group">
                                             <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
@@ -87,7 +94,7 @@
 
                                 <!-- Step 2 -->
                                 <div class="form-step">
-                                    <h3>@lang('lang.your_house')</h3>
+
                                     <div class="form-row">
 
                                         <div class="form-group">
