@@ -40,6 +40,7 @@ return [
     'rent price' => 'Huurprijs',
     'house type' => 'Huistype',
     'number of rooms' => 'Aantal kamers',
+    'your_house' => 'Je Huis',
     'step 1: your house information' => 'Stap 1: Je huisinformatie',
     'step 2: your house location' => 'Stap 2: Je huislocatie',
     'step 3: your house gallery' => 'Stap 3: Je huisgalerij',

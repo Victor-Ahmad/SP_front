@@ -50,6 +50,7 @@
                                 @csrf
                                 <!-- Step 1 -->
                                 <div class="form-step form-step-active">
+                                    <h3>@lang('lang.your_house')</h3>
                                     <div class="form-row">
                                         <div class="form-group">
                                             <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
@@ -86,6 +87,7 @@
 
                                 <!-- Step 2 -->
                                 <div class="form-step">
+                                    <h3>@lang('lang.your_house')</h3>
                                     <div class="form-row">
 
                                         <div class="form-group">

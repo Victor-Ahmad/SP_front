@@ -78,6 +78,7 @@ class RegistrationController extends Controller
                 return back()->withErrors($messages);
             }
         } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
