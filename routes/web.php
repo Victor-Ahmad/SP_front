@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 
 
+
 Route::post('/get-place-details', [GooglePlacesController::class, 'getPlaceDetails']);
 Route::post('/get-place-details-by-coords', [GooglePlacesController::class, 'getPlaceDetailsByCoords']);
 
@@ -239,3 +240,4 @@ Route::middleware([Localization::class])->group(function () {
     //     return view('welcome');
     // })->name('welcome.view');
 });
+
