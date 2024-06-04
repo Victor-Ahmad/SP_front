@@ -4,6 +4,7 @@
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .chat-window {
             display: flex;
@@ -144,15 +145,26 @@
             }
 
             .toggle-suggestions {
-                display: block;
-                padding: 10px;
-                text-align: center;
+                width: 40px;
+                height: 40px;
+
+                display: flex;
+
+                justify-content: center;
+
+                align-items: center;
+
                 background-color: #2a81b2;
                 color: white;
                 cursor: pointer;
                 border: none;
-                border-radius: 20px;
+                border-radius: 50%;
+                /* Make it a circle */
                 margin: 10px;
+            }
+
+            .toggle-suggestions-container {
+                background-color: #f9f9f9;
             }
         }
 
@@ -172,6 +184,7 @@
                 {{ $chat['chat']['other_person']['location'] }}, {{ $chat['chat']['other_person']['street'] }}
             </div>
             <div class="chat-messages-box" id="chatMessagesBox">
+
                 @foreach ($chat['messages'] as $message)
                     <div class="chat-message {{ $message['type'] }}">
                         <p>{{ $message['message'] }}</p>
@@ -179,7 +192,10 @@
                     </div>
                 @endforeach
             </div>
-            <button class="toggle-suggestions" id="toggleSuggestionsButton">@lang('lang.show_message_suggestions')</button>
+            {{-- <button class="toggle-suggestions" id="toggleSuggestionsButton">@lang('lang.show_message_suggestions')</button> --}}
+            <div class="toggle-suggestions-container">
+                <button class="toggle-suggestions" id="toggleSuggestionsButton"><i class="fas fa-arrow-up"></i></button>
+            </div>
             <div class="chat-suggestions" id="chatSuggestions">
                 <button class="suggested-message"
                     data-message="{{ __('lang.message_suggestion_1') }}">@lang('lang.message_suggestion_1')</button>
@@ -294,15 +310,16 @@
                 }
             });
 
+
             var toggleSuggestionsButton = document.getElementById('toggleSuggestionsButton');
             var chatSuggestions = document.getElementById('chatSuggestions');
 
             toggleSuggestionsButton.addEventListener('click', function() {
                 chatSuggestions.classList.toggle('active');
                 if (chatSuggestions.classList.contains('active')) {
-                    toggleSuggestionsButton.textContent = 'Hide Suggestions';
+                    toggleSuggestionsButton.innerHTML = '<i class="fas fa-arrow-down"></i>';
                 } else {
-                    toggleSuggestionsButton.textContent = 'Show Suggestions';
+                    toggleSuggestionsButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
                 }
             });
         });
