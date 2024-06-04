@@ -10,8 +10,16 @@
                         </div>
                     @endforeach
                 @else
-                    <div class="swiper-slide post_image_container">
-                        <img class="post_image" src="assets/images/house/featured-7.jpg" alt="images">
+                    <div class="swiper-slide post_image_container"
+                        style=" display: flex;
+                    justify-content: center;
+                    align-items: center;">
+                        <img class="post_image"
+                            style="  max-width: 100%;
+                            max-height: 100%;
+                        height: auto;   
+                        object-fit: contain; "
+                            src="assets/images/house/featured-7.png" alt="images">
                     </div>
                 @endif
             </div>

@@ -83,7 +83,7 @@
             modalContent.innerHTML = '';
 
             if (images.length === 0) {
-                modalContent.innerHTML = '<img class="modal-image" src="assets/images/house/featured-7.jpg" alt="images">';
+                // modalContent.innerHTML = '<img class="modal-image" src="assets/images/house/featured-7.jpg" alt="images">';
             } else {
                 images.forEach((image, index) => {
                     const img = document.createElement('img');
@@ -92,10 +92,11 @@
                     if (index !== 0) img.style.display = 'none';
                     modalContent.appendChild(img);
                 });
+                modal.style.display = 'block';
+                currentSlideIndex = 0;
             }
 
-            modal.style.display = 'block';
-            currentSlideIndex = 0;
+
         }
 
         function closeGallery() {
