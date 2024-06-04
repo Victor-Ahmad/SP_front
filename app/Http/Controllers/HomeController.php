@@ -116,9 +116,6 @@ class HomeController extends Controller
     public function updateProfile(Request $request)
     {
 
-
-
-
         if (!Session::get('token')) {
             return redirect()->route('login');
         } else {
@@ -153,5 +150,26 @@ class HomeController extends Controller
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
         }
+    }
+
+
+
+    public function getPost($id)
+    {
+        $post = [
+            'id' => $id,
+            'title' => 'Beautiful House in the City Center',
+            'description' => 'This is a beautiful house located in the heart of the city. It features 3 bedrooms, 2 bathrooms, and a spacious living room.',
+            'location' => 'Amsterdam, NL',
+            'price' => 1200000,
+            'rooms' => 3,
+            'images' => [
+                ['image_path' => 'assets/images/house/featured-1.jpg'],
+                ['image_path' => 'assets/images/house/featured-2.jpg'],
+                ['image_path' => 'assets/images/house/featured-3.jpg'],
+            ]
+        ];
+
+        return view('single_post', compact('post'));
     }
 }

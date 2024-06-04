@@ -14,15 +14,11 @@
 
         {{-- @include('layouts.partial.home.sliders') --}}
 
-        {{-- @include('layouts.partial.home.grid_posts', ['posts' => $posts]) --}}
-
-
-        @include('layouts.partial.home.collection_posts')
-
+        @include('layouts.partial.home.grid_posts', ['posts' => $posts])
 
         {{-- @include('layouts.partial.home.slide_posts_4')
 
-
+        @include('layouts.partial.home.collection_posts')
 
         @include('layouts.partial.home.slide_posts_3')
 

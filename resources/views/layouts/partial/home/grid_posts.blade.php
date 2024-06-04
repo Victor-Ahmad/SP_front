@@ -5,9 +5,11 @@
                 <div class="heading-section center">
                     <h2 class="heading_title">@lang('lang.available houses')</h2>
                 </div>
+                <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
+
                 <!-- Filter Form Start -->
 
-                <div class="content-inner tab-content flex-center">
+                <div class="content-inner tab-content flex-center filter-form-container">
                     <div class="form-sl col-md-12 form-sl-spaced">
                         <form method="GET" action="{{ route('home') }}" class="filter-form">
                             <div class="wd-find-select flex">
@@ -72,27 +74,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Price Range Filter -->
-                                {{-- <div class="form-group wg-box3">
-                                    <div class="widget widget-price">
-                                        <div class="caption flex-two">
-                                            <div>
-                                                <span class="fw-6">@lang('lang.price range')</span>
-                                                <span id="slider-range-value1">{{ request('min_value', 100) }}</span>
-                                                <span id="slider-range-value2">{{ request('max_value', 2000) }}</span>
-                                            </div>
-                                        </div>
-                                        <div id="slider-range"></div>
-                                        <div class="slider-labels">
-                                            <div>
-                                                <input type="hidden" id="min_value" name="min_value"
-                                                    value="{{ request('min_value', 100) }}">
-                                                <input type="hidden" id="max_value" name="max_value"
-                                                    value="{{ request('max_value', 2000) }}">
-                                            </div>
-                                        </div>
-                                    </div><!-- /.widget_price -->
-                                </div> --}}
                                 <!-- Apply Filter Button -->
                                 <div class="form-group form-style">
                                     <input type="submit" class="filter_btn" value="@lang('lang.apply filter')">
@@ -110,6 +91,7 @@
                         <div class="content-inner tab-content">
                             <div class="wrap-item flex">
                                 @foreach ($posts as $post)
+                                    {{-- <a href="{{ route('getPost', $post['id']) }}" class="card-link"> --}}
                                     <a href="javascript:openGallery('{{ json_encode($post['images']) }}');"
                                         class="card-link">
                                         @include('layouts.partial.home.post', ['post' => $post])

@@ -4,6 +4,47 @@
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
+    <style>
+        .filter-toggle-btn {
+            display: none;
+            background-color: #ffa920;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 10px;
+            width: 25%;
+            text-align: center;
+        }
+
+        .filter-toggle-btn:hover {
+            background-color: #e6941c;
+        }
+
+        @media (max-width: 768px) {
+            .filter-form-container {
+                display: none;
+            }
+
+            .filter-toggle-btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .filter-toggle-btn {
+                display: none;
+            }
+
+            .filter-form-container {
+                display: flex;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -18,6 +59,20 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
+    <script>
+        function toggleFilter() {
+            const filterForm = document.querySelector('.filter-form-container');
+            filterForm.style.display = filterForm.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function clearFilters() {
+            document.querySelector('#searchAutocompleteInput').value = '';
+            document.querySelector('input[name="rooms"]').value = 'any';
+            document.querySelector('input[name="min_value"]').value = '';
+            document.querySelector('input[name="max_value"]').value = '';
+        }
+    </script>
+
     <script>
         let currentSlideIndex = 0;
 

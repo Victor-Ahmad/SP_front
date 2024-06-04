@@ -168,7 +168,6 @@ class ApiService
         throw new \Exception('API call failed: ' . $response->body());
     }
 
-
     public function updateProfile($data, $files)
     {
         // Initialize the HTTP request with token and multipart form data
@@ -198,11 +197,6 @@ class ApiService
         throw new \Exception('API call failed: ' . $response->body());
     }
 
-
-
-
-
-
     public function checkNewMessages()
     {
         $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "chats_with_unread_messages");
@@ -213,9 +207,6 @@ class ApiService
         throw new \Exception('API call failed: ' . $response->body());
     }
 
-
-
-
     public function checkChat($userId)
     {
         $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "is_chat_existing/{$userId}");
@@ -224,5 +215,10 @@ class ApiService
         }
 
         throw new \Exception('API call failed: ' . $response->body());
+    }
+
+
+    public function getPost($post_id)
+    {
     }
 }
