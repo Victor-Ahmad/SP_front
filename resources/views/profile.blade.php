@@ -336,13 +336,14 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        alert('Account deleted successfully.');
-                        window.location.href = '/'; // Redirect to home page or login page
+                        if (response.success) {
+                            window.location.href = response.redirect;
+                        } else {
+                            alert('Error: ' + response.message);
+                        }
                     },
-                    error: function(xhr) {
 
-                        alert('Failed to delete account. Please try again.');
-                    }
+
                 });
             }
         });

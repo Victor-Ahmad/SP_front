@@ -124,11 +124,15 @@ class RegistrationController extends Controller
                 } else {
                     $messages[] = $response['message'];
                 }
+
                 return back()->withErrors($messages);
             }
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
-            return back()->withErrors(['message' => $e->getMessage()]);
+
+            $messages[] = $e->getMessage();
+
+            return back()->withErrors($messages);
         }
     }
 

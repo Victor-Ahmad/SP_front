@@ -18,6 +18,14 @@ class ApiService
         $this->http = Http::timeout(180);
     }
 
+    public function revokeLogin($response)
+    {
+        if ($response->json()['message'] == "Unauthorized") {
+            Session::forget('user_id');
+            Session::forget('user');
+            Session::forget('token');
+        }
+    }
     public function signUp(array $data)
     {
         $response = $this->http->post($this->baseUrl . 'sign_up', $data);
@@ -25,6 +33,7 @@ class ApiService
             return $response->json();
         }
 
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -35,7 +44,10 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        if ($response->json()['success'] == 0) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -47,7 +59,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -58,7 +70,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -71,7 +83,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -82,7 +94,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
     public function getChats()
@@ -92,7 +104,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -104,7 +116,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -133,7 +145,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-        error_log(json_encode($response->json()));
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
     public function getPosts($data = [])
@@ -142,7 +154,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -154,7 +166,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -164,7 +176,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -193,7 +205,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-        error_log(json_encode($response->json()));
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -203,7 +215,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -213,7 +225,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 
@@ -224,7 +236,7 @@ class ApiService
         if ($response->successful()) {
             return $response->json();
         }
-
+        $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
 }

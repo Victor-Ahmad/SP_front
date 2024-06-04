@@ -162,11 +162,15 @@ class HomeController extends Controller
         try {
             $response = $this->apiService->deleteAccount();
 
-            if (!$response['success'] == 1) {
+            // return $response;
+            if ($response['success'] == 1) {
                 Session::forget('user_id');
                 Session::forget('user');
                 Session::forget('token');
-                return redirect()->route('landing_page');
+                return response()->json([
+                    'success' => true,
+                    'redirect' => route('landing_page')
+                ]);
             }
             return view('profile', ['profile' => $response['result']]);
         } catch (\Exception $e) {
