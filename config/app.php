@@ -123,4 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+    'base_url' => env('API_BASE_URL', 'https://phplaravel-1239567-4545376.cloudwaysapps.com/api/'),
+
 ];
