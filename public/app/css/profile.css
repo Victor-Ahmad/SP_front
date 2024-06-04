@@ -99,7 +99,8 @@ body {
     padding-bottom: 10px;
 }
 
-.save-button {
+.save-button,
+.delete-account-button {
     margin-top: 30px;
     background-color: #2ecc71;
     color: #fff;
@@ -110,8 +111,25 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.save-button:hover {
+.save-button:hover,
+.delete-account-button:hover {
     background-color: #27ae60;
+    transform: scale(1.05);
+}
+
+.delete-account-button {
+    margin-top: 30px;
+    background-color: red;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-account-button:hover {
+    background-color: rgb(179, 0, 0);
     transform: scale(1.05);
 }
 

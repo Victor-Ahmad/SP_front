@@ -107,6 +107,8 @@
 
                 <button type="submit" class="save-button" id="save-button"
                     style="display: none;">@lang('lang.save changes')</button>
+                <button class="delete-account-button" id="delete-account-button"
+                    style="display: none;">@lang('lang.delete account')</button>
             </form>
         </div>
     </div>
@@ -117,6 +119,7 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let initialImagesHTML = '';
         let initialTagsHTML = '';
@@ -142,11 +145,13 @@
             });
 
             var saveButton = document.getElementById('save-button');
+            var deleteAccountButton = document.getElementById('delete-account-button');
             var addImageInput = document.querySelector('.add-image');
             var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
 
             if (inputs[0].disabled) {
                 saveButton.style.display = 'none';
+                deleteAccountButton.style.display = 'none';
                 addImageInput.style.display = 'none';
                 interestsAutocompleteInput.style.display = 'none';
                 this.innerText = '@lang('lang.edit')';
@@ -161,6 +166,7 @@
                 attachRemoveTagListeners(); // Reattach listeners to restored tags
             } else {
                 saveButton.style.display = 'block';
+                deleteAccountButton.style.display = 'block';
                 addImageInput.style.display = 'block';
                 interestsAutocompleteInput.style.display = 'block';
                 this.innerText = '@lang('lang.cancel')';
@@ -321,5 +327,25 @@
         window.addEventListener('load', function() {
             removePreloader();
         });
+        document.getElementById('delete-account-button').addEventListener('click', function() {
+            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                $.ajax({
+                    url: '{{ route('deleteAccount') }}', // Ensure you have a route for this
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert('Account deleted successfully.');
+                        window.location.href = '/'; // Redirect to home page or login page
+                    },
+                    error: function(xhr) {
+
+                        alert('Failed to delete account. Please try again.');
+                    }
+                });
+            }
+        });
     </script>
+
 @endsection

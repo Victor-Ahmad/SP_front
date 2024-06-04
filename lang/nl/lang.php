@@ -102,4 +102,5 @@ return [
     'message_suggestion_2' => 'Ik ben geïnteresseerd. Kun je me meer informatie geven?',
     'message_suggestion_3' => 'Kun je me meer vertellen over de omgeving?',
     'show_message_suggestions' => 'Berichtsuggesties weergeven',
+    'delete account' => 'Account Verwijderen',
 ];

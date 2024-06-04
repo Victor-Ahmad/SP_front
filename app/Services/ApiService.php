@@ -218,7 +218,13 @@ class ApiService
     }
 
 
-    public function getPost($post_id)
+    public function deleteAccount()
     {
+        $response = $this->http->withToken(Session::get('token'))->delete($this->baseUrl . "deleteUser");
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        throw new \Exception('API call failed: ' . $response->body());
     }
 }

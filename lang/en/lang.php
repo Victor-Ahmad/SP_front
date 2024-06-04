@@ -102,4 +102,5 @@ return [
     'message_suggestion_2' => "I'm interested. Can you give me more information?",
     'message_suggestion_3' => 'Can you tell me more about the area?',
     'show_message_suggestions' => 'Show Message Suggestions',
+    'delete account' => 'Delete Account',
 ];

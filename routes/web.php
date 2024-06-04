@@ -70,6 +70,7 @@ Route::middleware([Localization::class])->group(function () {
     Route::get('/feed_back', [HomeController::class, 'feedBack'])->name('feed_back');
     Route::post('/send_feedback', [HomeController::class, 'sendFeedback'])->name('send_feedback');
     Route::get('/profile', [HomeController::class, 'getProfile'])->name('profile.get');
+    Route::delete('/delete_account', [HomeController::class, 'deleteAccount'])->name('deleteAccount');
     Route::post('/profile', [HomeController::class, 'updateProfile'])->name('profile.update');
 
 

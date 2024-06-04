@@ -152,6 +152,28 @@ class HomeController extends Controller
         }
     }
 
+    public function deleteAccount()
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+            $response = $this->apiService->deleteAccount();
+
+            if (!$response['success'] == 1) {
+                Session::forget('user_id');
+                Session::forget('user');
+                Session::forget('token');
+                return redirect()->route('landing_page');
+            }
+            return view('profile', ['profile' => $response['result']]);
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
 
 
     public function getPost($id)
