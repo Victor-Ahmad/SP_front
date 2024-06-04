@@ -10,24 +10,18 @@
             flex-direction: column;
             height: 80vh;
             margin: 40px auto;
-            /* Added margin on top */
             max-width: 800px;
             border: 1px solid #236a8a;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            /* background: #fff; */
-
         }
 
-        .background_color {
-            /* background: linear-gradient(135deg, #2a81b2, white) !important; */
-        }
+        .background_color {}
 
         .chat-header {
             padding: 15px;
             background: #2a81b2;
-            /* Updated color */
             color: white;
             font-size: 18px;
             text-align: center;
@@ -55,14 +49,12 @@
         .chat-message.sender {
             align-self: flex-end;
             background-color: #d1f7d1;
-            /* Updated color */
             border-bottom-right-radius: 0;
         }
 
         .chat-message.receiver {
             align-self: flex-start;
             background-color: #f1f1f1;
-            /* Updated color */
             border-bottom-left-radius: 0;
         }
 
@@ -70,16 +62,13 @@
             margin: 0;
             padding: 0;
             color: #333;
-            /* Updated color */
         }
 
         .chat-message small {
             display: block;
             margin-top: 5px;
             font-size: 12px;
-            /* Smaller font size */
             color: #888;
-            /* Updated color */
         }
 
         .chat-input-box {
@@ -110,7 +99,6 @@
             border: none;
             border-radius: 20px;
             background-color: #2a81b2;
-            /* Updated color */
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -118,7 +106,60 @@
 
         .chat-input-box button:hover {
             background-color: #236a8a;
-            /* Updated color */
+        }
+
+        .chat-suggestions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background: #f1f1f1;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            gap: 10px;
+        }
+
+        .suggested-message {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background-color: #2a81b2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+
+        .suggested-message:hover {
+            background-color: #236a8a;
+        }
+
+        .toggle-suggestions {
+            display: none;
+        }
+
+        /* Add media query for mobile screens */
+        @media (max-width: 600px) {
+            .chat-suggestions {
+                display: none;
+            }
+
+            .toggle-suggestions {
+                display: block;
+                padding: 10px;
+                text-align: center;
+                background-color: #2a81b2;
+                color: white;
+                cursor: pointer;
+                border: none;
+                border-radius: 20px;
+                margin: 10px;
+            }
+        }
+
+        /* Show suggestions when toggled */
+        .chat-suggestions.active {
+            display: flex;
+            flex-direction: column;
         }
     </style>
 @endsection
@@ -138,6 +179,15 @@
                     </div>
                 @endforeach
             </div>
+            <button class="toggle-suggestions" id="toggleSuggestionsButton">@lang('lang.show_message_suggestions')</button>
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="suggested-message"
+                    data-message="{{ __('lang.message_suggestion_1') }}">@lang('lang.message_suggestion_1')</button>
+                <button class="suggested-message"
+                    data-message="{{ __('lang.message_suggestion_2') }}">@lang('lang.message_suggestion_2')</button>
+                <button class="suggested-message"
+                    data-message="{{ __('lang.message_suggestion_3') }}">@lang('lang.message_suggestion_3')</button>
+            </div>
             <div class="chat-input-box">
                 <input type="text" id="messageInput" placeholder="Type a message...">
                 <button id="sendButton">Send</button>
@@ -149,6 +199,15 @@
 @section('additional_scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var suggestedMessages = document.querySelectorAll('.suggested-message');
+            var messageInput = document.getElementById('messageInput');
+
+            suggestedMessages.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    messageInput.value = this.getAttribute('data-message');
+                });
+            });
+
             var chatMessagesBox = document.getElementById('chatMessagesBox');
             var page = 1;
             var chatId = {{ $chat['chat']['id'] }};
@@ -182,6 +241,7 @@
             }
 
             document.getElementById('sendButton').addEventListener('click', function() {
+                const apiBaseUrl = "{{ env('API_BASE_URL') }}";
                 var messageInput = document.getElementById('messageInput');
                 var message = messageInput.value;
 
@@ -191,7 +251,7 @@
                 formData.append('message', message);
                 formData.append('receiver_user_id', receiverUserId);
 
-                fetch('https://phplaravel-1239567-4545376.cloudwaysapps.com/api/send_message', {
+                fetch(apiBaseUrl + 'send_message', {
                         method: 'POST',
                         headers: {
                             'Authorization': 'Bearer ' + '{{ Session::get('token') }}',
@@ -215,7 +275,6 @@
             });
 
             function formatDate(date) {
-                // Define options for formatting date
                 const options = {
                     day: '2-digit',
                     month: 'short',
@@ -224,15 +283,26 @@
                     minute: '2-digit',
                     hour12: true
                 };
-                // Create an instance of Intl.DateTimeFormat with the options and the locale
                 const formatter = new Intl.DateTimeFormat('en-GB', options);
-                // Format the date
                 return formatter.format(date);
             }
+
             messageInput.addEventListener('keydown', function(event) {
                 if (event.key === 'Enter' && messageInput.value.trim() !== "") {
-                    event.preventDefault(); // Prevent the default action (form submission)
-                    sendButton.click(); // Trigger the send button click event
+                    event.preventDefault();
+                    sendButton.click();
+                }
+            });
+
+            var toggleSuggestionsButton = document.getElementById('toggleSuggestionsButton');
+            var chatSuggestions = document.getElementById('chatSuggestions');
+
+            toggleSuggestionsButton.addEventListener('click', function() {
+                chatSuggestions.classList.toggle('active');
+                if (chatSuggestions.classList.contains('active')) {
+                    toggleSuggestionsButton.textContent = 'Hide Suggestions';
+                } else {
+                    toggleSuggestionsButton.textContent = 'Show Suggestions';
                 }
             });
         });

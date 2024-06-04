@@ -97,4 +97,9 @@ return [
     'agree_text' => 'I have read and agree to the :privacy_policy  :terms_of_use.',
     'privacy_policy' => 'Privacy Policy',
     'terms_of_use' => 'Terms of Use',
+    'you want to go to' => 'you want to go to',
+    'message_suggestion_1' => 'Are you still available for exchange?',
+    'message_suggestion_2' => "I'm interested. Can you give me more information?",
+    'message_suggestion_3' => 'Can you tell me more about the area?',
+    'show_message_suggestions' => 'Show Message Suggestions',
 ];

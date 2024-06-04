@@ -97,4 +97,9 @@ return [
     'agree_text' => 'Ik heb het :privacy_policy  :terms_of_use gelezen en ga ermee akkoord.',
     'privacy_policy' => 'privacybeleid',
     'terms_of_use' => 'gebruiksvoorwaarden',
+    'you want to go to' => 'waar je heen wilt',
+    'message_suggestion_1' => 'Ben je nog beschikbaar voor ruilen?',
+    'message_suggestion_2' => 'Ik ben geïnteresseerd. Kun je me meer informatie geven?',
+    'message_suggestion_3' => 'Kun je me meer vertellen over de omgeving?',
+    'show_message_suggestions' => 'Berichtsuggesties weergeven',
 ];

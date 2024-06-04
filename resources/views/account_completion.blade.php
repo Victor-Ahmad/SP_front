@@ -145,7 +145,7 @@
                                 <div class="form-step">
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="post-code-label">@lang('lang.locations of interest')</h3>
+                                            <h3 class="post-code-label">@lang('lang.you want to go to')</h3>
                                             <input type="text" id="interestsAutocompleteInput"
                                                 placeholder="@lang('lang.enter a location of interest')" class="input-field">
                                             <div class="tags-container" id="tagsContainer"></div>
@@ -176,7 +176,35 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async&callback=initMap">
     </script>
+    <script>
+        document.getElementById('post_code').addEventListener('input', function(e) {
+            // Define a regular expression to match Arabic letters
+            var arabicLetters = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/g;
 
+            // Remove any Arabic letters from the input value
+            if (arabicLetters.test(e.target.value)) {
+                e.target.value = e.target.value.replace(arabicLetters, '');
+            }
+        });
+        document.getElementById('house_number').addEventListener('input', function(e) {
+            // Define a regular expression to match Arabic letters
+            var arabicLetters = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/g;
+
+            // Remove any Arabic letters from the input value
+            if (arabicLetters.test(e.target.value)) {
+                e.target.value = e.target.value.replace(arabicLetters, '');
+            }
+        });
+        document.getElementById('street').addEventListener('input', function(e) {
+            // Define a regular expression to match Arabic letters
+            var arabicLetters = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/g;
+
+            // Remove any Arabic letters from the input value
+            if (arabicLetters.test(e.target.value)) {
+                e.target.value = e.target.value.replace(arabicLetters, '');
+            }
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const postCodeInput = document.getElementById('post_code');
