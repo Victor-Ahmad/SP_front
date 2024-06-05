@@ -195,7 +195,6 @@ class HomeController extends Controller
                 $post = $response['result']['house'];
                 $post['intersts'] = $response['result']['house_owner']['intersts'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
-
                 return view('single_post', compact('post'));
             } else {
                 return back()->withErrors(['password' => $response['message']]);

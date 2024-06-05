@@ -204,7 +204,7 @@
                                             <div class="box-icon">
                                                 <div class="inner flex">
                                                     <div class="content">
-                                                        <div class="font-2 fw-7">{{ $interst }}
+                                                        <div class="font-2 fw-7">{{ $interst['interest'] }}
                                                         </div>
                                                     </div>
                                                 </div>
