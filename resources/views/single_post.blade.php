@@ -134,7 +134,7 @@
                             </div> --}}
                             <div class="wrap-overview wrap-style">
                                 <div class="titles">
-                                    <h3>Location</h3>
+                                    <h3>@lang('lang.location')</h3>
                                 </div>
                                 <div class="icon-wrap flex">
                                     <div class="box-icon">
@@ -166,7 +166,7 @@
                             </div>
                             <div class="wrap-property wrap-style">
                                 <div class="titles">
-                                    <h3>House details</h3>
+                                    <h3>@lang('lang.house details')</h3>
                                 </div>
                                 <div class="box flex">
                                     <ul>
@@ -197,7 +197,7 @@
                             @if (!empty($post['intersts']))
                                 <div class="wrap-overview wrap-style">
                                     <div class="titles">
-                                        <h3>Intersts</h3>
+                                        <h3>@lang('lang.interests')</h3>
                                     </div>
                                     <div class="icon-wrap flex">
                                         @foreach ($post['intersts'] as $interst)
