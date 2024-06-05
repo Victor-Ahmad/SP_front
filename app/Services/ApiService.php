@@ -239,4 +239,15 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+
+    public function getPost($id)
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "get_house_by_id/{$id}");
+        if ($response->successful()) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

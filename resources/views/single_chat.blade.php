@@ -179,10 +179,12 @@
 @section('content')
     <div id="pagee" class="clearfix background_color" style="padding: 10vh 0">
         <div class="chat-window">
-            <div class="chat-header">
-                {{ $chat['chat']['other_person']['first_name'] }} {{ $chat['chat']['other_person']['last_name'] }} -
-                {{ $chat['chat']['other_person']['location'] }}, {{ $chat['chat']['other_person']['street'] }}
-            </div>
+            <a href="{{ route('getPost', $chat['chat']['other_person']['house_id']) }}">
+                <div class="chat-header">
+                    {{ $chat['chat']['other_person']['first_name'] }} {{ $chat['chat']['other_person']['last_name'] }} -
+                    {{ $chat['chat']['other_person']['location'] }}, {{ $chat['chat']['other_person']['street'] }}
+                </div>
+            </a>
             <div class="chat-messages-box" id="chatMessagesBox">
 
                 @foreach ($chat['messages'] as $message)

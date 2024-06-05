@@ -4,6 +4,7 @@ use App\Http\Controllers\ChatController;
 use App\Http\Controllers\GooglePlacesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Middleware\CacheImages;
 use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Session;
 Route::post('/get-place-details', [GooglePlacesController::class, 'getPlaceDetails']);
 Route::post('/get-place-details-by-coords', [GooglePlacesController::class, 'getPlaceDetailsByCoords']);
 
-Route::middleware([Localization::class])->group(function () {
+Route::middleware([Localization::class, CacheImages::class])->group(function () {
     Route::get('/privacy-policy', function () {
         $locale = Session::get('locale', 'en');
         if ($locale == 'nl') {
@@ -168,9 +169,9 @@ Route::middleware([Localization::class])->group(function () {
     //     return view('property-detail-v2');
     // })->name('property-detail-v2.view');
 
-    // Route::get('/property-detail-v3', function () {
-    //     return view('property-detail-v3');
-    // })->name('property-detail-v3.view');
+    Route::get('/property-detail-v3', function () {
+        return view('property-detail-v3');
+    })->name('property-detail-v3.view');
 
     // // Properties Grid with Sidebar Views
     // Route::get('/properties-grid-sidebar-v1', function () {
@@ -240,4 +241,3 @@ Route::middleware([Localization::class])->group(function () {
     //     return view('welcome');
     // })->name('welcome.view');
 });
-

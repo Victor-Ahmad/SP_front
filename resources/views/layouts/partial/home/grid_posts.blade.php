@@ -92,8 +92,12 @@
                             <div class="wrap-item flex">
                                 @foreach ($posts as $post)
                                     {{-- <a href="{{ route('getPost', $post['id']) }}" class="card-link"> --}}
-                                    <a href="javascript:openGallery('{{ json_encode($post['images']) }}');"
-                                        class="card-link">
+                                    {{-- <a href="javascript:openGallery('{{ json_encode($post['images']) }}');"
+                                        class="card-link"> --}}
+
+
+                                    <a href="{{ route('getPost', $post['id']) }}" class="card-link">
+
                                         @include('layouts.partial.home.post', ['post' => $post])
                                     </a>
                                 @endforeach

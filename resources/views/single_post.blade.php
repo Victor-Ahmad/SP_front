@@ -1,182 +1,307 @@
 @extends('layouts.master')
 
-@section('title', 'Offer Details')
-
+@section('title', 'Chat Messages')
 @section('head_css')
+    <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
+        type="text/css" media="all" />
     <style>
-        /* Full-width hero section */
-        .hero-section {
+        #slider-wrap {
             position: relative;
-            width: 80%;
-            height: 60vh;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero-section img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            overflow: hidden;
+            height: 50vh;
             display: flex;
-            justify-content: center;
             align-items: center;
         }
 
-        .carousel-indicators span {
-            width: 12px;
-            height: 12px;
-            margin: 0 5px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            cursor: pointer;
+        #slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            will-change: transform;
         }
 
-        .carousel-indicators span.active {
-            background-color: #fff;
+        #slider img {
+            height: 50vh;
+            margin-right: 10px;
+            /* Adjust gap between images */
+            display: block;
         }
 
-        .prev,
-        .next {
-            cursor: pointer;
+        .btns {
             position: absolute;
             top: 50%;
-            width: auto;
-            margin-top: -22px;
-            padding: 16px;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
             color: white;
-            font-weight: bold;
-            font-size: 2em;
-            transition: 0.3s;
+            padding: 10px;
+            cursor: pointer;
             user-select: none;
+            z-index: 1;
         }
 
-        .prev {
-            left: 10px;
-            border-radius: 3px 0 0 3px;
+        #previous {
+            left: 0;
         }
 
-        .next {
-            right: 10px;
-            border-radius: 0 3px 3px 0;
+        #next {
+            right: 0;
         }
 
-        .prev:hover,
-        .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
+        @media (max-width: 768px) {
+            #slider img {
+                height: 30vh;
+            }
+
+            .btns {
+                padding: 5px;
+            }
         }
 
-        .offer-details {
-            margin-top: 5vh;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            margin: 5vh auto;
-        }
-
-        .offer-details h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .offer-details p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .offer-details .btn-chat {
-            background-color: #2a81b2;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
+        .btn.btn-chat.center-text {
             display: flex;
             align-items: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
+            justify-content: center;
+            text-align: center;
         }
 
-        .offer-details .btn-chat:hover {
-            background-color: #236a8a;
-            text-decoration: none;
-            color: #fff;
-        }
-
-        .offer-details .btn-chat i {
+        .btn.btn-chat.center-text i {
             margin-right: 5px;
-        }
-
-        .details-list {
-            list-style-type: none;
-            padding: 0;
-            margin-bottom: 20px;
-        }
-
-        .details-list li {
-            margin-bottom: 10px;
+            /* Adjust spacing between icon and text */
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="hero-section">
-        @foreach ($post['images'] as $index => $image)
-            <img src="{{ asset($image['image_path']) }}" alt="Offer Image" class="{{ $loop->first ? 'active' : '' }}"
-                style="display: {{ $loop->first ? 'block' : 'none' }};">
-        @endforeach
-        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-        <a class="next" onclick="changeSlide(1)">&#10095;</a>
-        <div class="carousel-indicators">
-            @foreach ($post['images'] as $index => $image)
-                <span class="{{ $loop->first ? 'active' : '' }}" onclick="currentSlide({{ $index }})"></span>
-            @endforeach
-        </div>
-    </div>
+    <div id="unique_page" class="clearfix background_color" style="padding: 10vh 0">
+        <section class="unique_flat_slider style">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="slider-wrap">
+                            <div id="slider">
+                                @foreach ($post['images'] as $image)
+                                    <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
+                                @endforeach
+                            </div>
+                            <div id="previous" class="btns">❮</div>
+                            <div id="next" class="btns">❯</div>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="offer-details">
-        <h2>{{ $post['title'] }}</h2>
-        <ul class="details-list">
-            <li><strong>Location:</strong> {{ $post['location'] }}</li>
-            <li><strong>Price:</strong> €{{ number_format($post['price'], 0, ',', '.') }}</li>
-            <li><strong>Rooms:</strong> {{ $post['rooms'] }}</li>
-        </ul>
-        <p>{{ $post['description'] }}</p>
-        <a href="mailto:info@example.com" class="btn-chat"><i class="fa fa-envelope"></i> Contact Us</a>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+
+        <section class="flat-property-detail property-detail2 style2">
+            <br>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="post">
+                            {{-- <div class="wrap-overview wrap-style">
+                                <div class="titles">
+                                    <h3>Overview</h3>
+                                </div>
+                                <div class="icon-wrap flex">
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2">@lang('lang.house type'):</div>
+                                                <div class="font-2 fw-7">{{ __('lang.' . $post['house_type']['type']) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2 ">@lang('lang.number of rooms'):</div>
+                                                <div class="font-2 fw-7">{{ $post['number_of_rooms'] }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2">@lang('lang.rent price'):</div>
+                                                <div class="font-2 fw-7">{{ $post['price'] }} (€)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="wrap-overview wrap-style">
+                                <div class="titles">
+                                    <h3>Location</h3>
+                                </div>
+                                <div class="icon-wrap flex">
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2 ">@lang('lang.location'):</div>
+                                                <div class="font-2 fw-7">{{ $post['location'] }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2">@lang('lang.post code'):</div>
+                                                <div class="font-2 fw-7">{{ $post['post_code'] }} </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-icon">
+                                        <div class="inner flex">
+                                            <div class="content">
+                                                <div class="font-2">@lang('lang.street'):</div>
+                                                <div class="font-2 fw-7">{{ $post['street'] }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-property wrap-style">
+                                <div class="titles">
+                                    <h3>House details</h3>
+                                </div>
+                                <div class="box flex">
+                                    <ul>
+                                        <li class="flex"><span class="one fw-6">@lang('lang.house type'):</span><span
+                                                class="two">{{ __('lang.' . $post['house_type']['type']) }}</span>
+                                        </li>
+                                        <li class="flex"><span class="one fw-6">@lang('lang.rooms'):</span><span
+                                                class="two">{{ $post['number_of_rooms'] }}</span></li>
+                                        <li class="flex"><span class="one fw-6">@lang('lang.rent price'):</span><span
+                                                class="two">{{ $post['price'] }} (€)
+                                            </span></li>
+
+                                    </ul>
+                                    {{-- <ul>
+                                        <li class="flex"><span class="one fw-6">Beds</span><span
+                                                class="two">7.328</span></li>
+                                        <li class="flex"><span class="one fw-6">Year buit</span><span
+                                                class="two">2022</span></li>
+                                        <li class="flex"><span class="one fw-6">Type</span><span
+                                                class="two">Villa</span></li>
+                                        <li class="flex"><span class="one fw-6">Status</span><span class="two">For
+                                                sale</span></li>
+                                        <li class="flex"><span class="one fw-6">Garage</span><span class="two">1</span>
+                                        </li>
+                                    </ul> --}}
+                                </div>
+                            </div>
+                            @if (!empty($post['intersts']))
+                                <div class="wrap-overview wrap-style">
+                                    <div class="titles">
+                                        <h3>Intersts</h3>
+                                    </div>
+                                    <div class="icon-wrap flex">
+                                        @foreach ($post['intersts'] as $interst)
+                                            <div class="box-icon">
+                                                <div class="inner flex">
+                                                    <div class="content">
+                                                        <div class="font-2 fw-7">{{ $interst }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="chat-button-container ">
+                                <a href="{{ route('checkChat', ['userId' => $post['user_id']]) }}"
+                                    class="btn btn-chat center-text"><i class="fas fa-comments"></i> @lang('lang.chat') -
+                                    {{ $post['owner_name'] }}</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
     </div>
 @endsection
 
 @section('additional_scripts')
     <script>
-        let currentSlideIndex = 0;
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let pos = 0;
+            const slider = document.getElementById('slider');
+            const sliderImages = slider.querySelectorAll('img');
+            const totalImages = sliderImages.length;
 
-        function changeSlide(n) {
-            const slides = document.querySelectorAll('.hero-section img');
-            const indicators = document.querySelectorAll('.carousel-indicators span');
-            slides[currentSlideIndex].style.display = 'none';
-            indicators[currentSlideIndex].classList.remove('active');
-            currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
-            slides[currentSlideIndex].style.display = 'block';
-            indicators[currentSlideIndex].classList.add('active');
-        }
+            function getImageWidths() {
+                return Array.from(sliderImages).map(img => {
+                    const style = window.getComputedStyle(img);
+                    const marginRight = parseInt(style.marginRight);
+                    return img.clientWidth + marginRight;
+                });
+            }
 
-        function currentSlide(index) {
-            const slides = document.querySelectorAll('.hero-section img');
-            const indicators = document.querySelectorAll('.carousel-indicators span');
-            slides[currentSlideIndex].style.display = 'none';
-            indicators[currentSlideIndex].classList.remove('active');
-            currentSlideIndex = index;
-            slides[currentSlideIndex].style.display = 'block';
-            indicators[currentSlideIndex].classList.add('active');
-        }
+            let imageWidths = getImageWidths();
+            let totalWidth = imageWidths.reduce((acc, width) => acc + width, 0);
+            slider.style.width = `${totalWidth}px`;
+
+            function moveSlider() {
+                const offset = imageWidths.slice(0, pos).reduce((acc, width) => acc + width, 0);
+                slider.style.transform = `translateX(-${offset}px)`;
+            }
+
+            function updateWidths() {
+                imageWidths = getImageWidths();
+                totalWidth = imageWidths.reduce((acc, width) => acc + width, 0);
+                slider.style.width = `${totalWidth}px`;
+                moveSlider();
+            }
+
+            document.getElementById('next').addEventListener('click', () => {
+                if (pos < totalImages - 1) {
+                    pos++;
+                } else {
+                    pos = 0;
+                }
+                moveSlider();
+            });
+
+            document.getElementById('previous').addEventListener('click', () => {
+                if (pos > 0) {
+                    pos--;
+                } else {
+                    pos = totalImages - 1;
+                }
+                moveSlider();
+            });
+
+            // Handle window resize
+            window.addEventListener('resize', updateWidths);
+
+            // Touch swipe support for mobile devices
+            let startX = 0;
+            let endX = 0;
+
+            slider.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+
+            slider.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+
+            slider.addEventListener('touchend', () => {
+                if (startX - endX > 50) {
+                    pos = (pos + 1) % totalImages;
+                } else if (endX - startX > 50) {
+                    pos = (pos - 1 + totalImages) % totalImages;
+                }
+                moveSlider();
+            });
+        });
     </script>
 @endsection
