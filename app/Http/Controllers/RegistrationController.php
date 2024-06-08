@@ -59,7 +59,7 @@ class RegistrationController extends Controller
 
             $messages[] = $e->getMessage();
 
-            return back()->withErrors($messages);
+            return $messages;
         }
     }
 
