@@ -154,6 +154,7 @@ class ApiService
     public function getSwapTypes()
     {
         $response = $this->http->get($this->baseUrl . 'get_swap_types');
+        return $response->json();
 
         if ($response->successful()) {
             return $response->json();
