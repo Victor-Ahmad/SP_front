@@ -21,6 +21,7 @@ class RegistrationController extends Controller
     public function showRegistrationForm()
     {
         try {
+            return $this->apiService->getSwapTypes();
             $response1 = $this->apiService->getSwapTypes();
             $response2 = $this->apiService->getHouseTypes();
             $response3 = $this->apiService->getHouseProperties();
