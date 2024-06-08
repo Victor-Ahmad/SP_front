@@ -18,14 +18,14 @@ class ApiService
         $this->http = Http::timeout(180);
     }
 
-    // public function revokeLogin($response)
-    // {
-    //     if ($response->json()['message'] == "Unauthorized") {
-    //         Session::forget('user_id');
-    //         Session::forget('user');
-    //         Session::forget('token');
-    //     }
-    // }
+    public function revokeLogin($response)
+    {
+        if ($response->json()['message'] == "Unauthorized") {
+            Session::forget('user_id');
+            Session::forget('user');
+            Session::forget('token');
+        }
+    }
 
 
     public function signUp($data, $files)
