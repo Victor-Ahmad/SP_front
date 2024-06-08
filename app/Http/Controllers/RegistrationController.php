@@ -59,7 +59,7 @@ class RegistrationController extends Controller
 
             $messages[] = $e->getMessage();
 
-            return $messages;
+            return 'File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage();
         }
     }
 
