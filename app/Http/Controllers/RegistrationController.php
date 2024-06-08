@@ -20,43 +20,47 @@ class RegistrationController extends Controller
 
     public function showRegistrationForm()
     {
+        try {
+            $response1 = $this->apiService->getSwapTypes();
+            $response2 = $this->apiService->getHouseTypes();
+            $response3 = $this->apiService->getHouseProperties();
 
-        $response1 = $this->apiService->getSwapTypes();
-        $response2 = $this->apiService->getHouseTypes();
-        $response3 = $this->apiService->getHouseProperties();
 
-        // $response1 = ['result' => []];
-        // $response2 = ['result' => []];
-        // $response3 = ['result' => []];
+            return view('Auth.registeration', [
+                'swapTypes' => $response1['result'],
+                'houseTypes' => $response2['result'],
+                'features' => $response3['result'],
+                'numberOfRooms' => [
+                    ["id" => 1, "number" => "1"],
+                    ["id" => 2, "number" => "2"],
+                    ["id" => 3, "number" => "3"],
+                    ["id" => 4, "number" => "4"],
+                    ["id" => 5, "number" => "5"],
+                    ["id" => 6, "number" => "6"],
+                ],
+                'areas' => [
+                    '60',
+                    '65',
+                    '70',
+                    '75',
+                    '80',
+                    '85',
+                    '90',
+                    '95',
+                    '100',
+                    '105',
+                    '110',
+                    '115',
+                    '120',
+                ],
+            ]);
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
 
-        return view('Auth.registeration', [
-            'swapTypes' => $response1['result'],
-            'houseTypes' => $response2['result'],
-            'features' => $response3['result'],
-            'numberOfRooms' => [
-                ["id" => 1, "number" => "1"],
-                ["id" => 2, "number" => "2"],
-                ["id" => 3, "number" => "3"],
-                ["id" => 4, "number" => "4"],
-                ["id" => 5, "number" => "5"],
-                ["id" => 6, "number" => "6"],
-            ],
-            'areas' => [
-                '60',
-                '65',
-                '70',
-                '75',
-                '80',
-                '85',
-                '90',
-                '95',
-                '100',
-                '105',
-                '110',
-                '115',
-                '120',
-            ],
-        ]);
+            $messages[] = $e->getMessage();
+
+            return back()->withErrors($messages);
+        }
     }
 
     public function register(Request $request)
