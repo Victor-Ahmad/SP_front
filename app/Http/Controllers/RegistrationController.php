@@ -21,7 +21,6 @@ class RegistrationController extends Controller
     public function showRegistrationForm()
     {
         try {
-            return $this->apiService->getSwapTypes();
             $response1 = $this->apiService->getSwapTypes();
             $response2 = $this->apiService->getHouseTypes();
             $response3 = $this->apiService->getHouseProperties();
@@ -60,7 +59,7 @@ class RegistrationController extends Controller
 
             $messages[] = $e->getMessage();
 
-            return 'File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage();
+            return back()->withErrors($messages);
         }
     }
 
