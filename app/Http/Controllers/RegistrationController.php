@@ -20,22 +20,50 @@ class RegistrationController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('Auth.sign_up');
-        // return view('Auth.register');
+
+        $response1 = $this->apiService->getSwapTypes();
+        $response2 = $this->apiService->getHouseTypes();
+        $response3 = $this->apiService->getHouseProperties();
+
+        // $response1 = ['result' => []];
+        // $response2 = ['result' => []];
+        // $response3 = ['result' => []];
+
+        return view('Auth.registeration', [
+            'swapTypes' => $response1['result'],
+            'houseTypes' => $response2['result'],
+            'features' => $response3['result'],
+            'numberOfRooms' => [
+                ["id" => 1, "number" => "1"],
+                ["id" => 2, "number" => "2"],
+                ["id" => 3, "number" => "3"],
+                ["id" => 4, "number" => "4"],
+                ["id" => 5, "number" => "5"],
+                ["id" => 6, "number" => "6"],
+            ],
+            'areas' => [
+                '60',
+                '65',
+                '70',
+                '75',
+                '80',
+                '85',
+                '90',
+                '95',
+                '100',
+                '105',
+                '110',
+                '115',
+                '120',
+            ],
+        ]);
     }
 
     public function register(Request $request)
     {
 
-
-        // Validate and save user data
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'phone_number' => 'required|string|max:15',
-            'privacy_policy_and_terms_of_use' => 'required'
-        ]);
+        $features_wish =  array_map('trim', explode(',', $request->features_wish));
+        $features =  array_map('trim', explode(',', $request->features));
 
         $data = [
             'first_name' => $request->first_name,
@@ -44,43 +72,51 @@ class RegistrationController extends Controller
             'number' => $request->phone_number,
             'agreed_privacy_policy' => $request->privacy_policy_and_terms_of_use == "on",
             'agreed_terms_of_use' => $request->privacy_policy_and_terms_of_use == "on",
+            'password' => $request->password,
+            'wish' => [
+                'house_type_id' => $request->house_type_wish,
+                'number_of_rooms' => $request->number_of_rooms_wish,
+                'price' => $request->price_wish,
+                'area' => $request->area_wish,
+                'locations' => [
+                    '0', '0'
+                ],
+                'property_ids' => $features_wish,
+
+            ],
+            'house' => [
+                'house_type_id' => $request->house_type,
+                'number_of_rooms' => $request->number_of_rooms,
+                'price' => $request->price,
+                'area' => $request->area,
+                'locations' => [
+                    '0', '0'
+                ],
+                'property_ids' => $features,
+                'description' => $request->house_description,
+                'street' => $request->street,
+                'location' => $request->location_name,
+                'post_code' => $request->post_code,
+                'house_number' => $request->house_number,
+            ],
         ];
+        $files = $request->file('gallery');
 
         try {
-            $response = $this->apiService->signUp($data);
-
+            $response = $this->apiService->signUp($data, $files);
             if ($response['success'] == 1) {
-                // if ($response['result']['id']) {
-                //     Session::put('user_id', $response['result']['id']);
-                // }
-
-                if ($response['result']['user']) {
-                    Session::put('user', $response['result']['user']);
-                    Session::put('user_id', $response['result']['user']['id']);
-                }
-                if ($response['result']['token']) {
-                    Session::put('token', $response['result']['token']);
-                    return redirect()->route('password.show');
-                }
-
-                return redirect()->route('otp');
+                Session::put('user', $response['result'][0]['user']);
+                Session::put('token', $response['result'][0]['token']);
+                return redirect()->route('home')->with('success', 'Added Successfully');
             } else {
-                $messages = [];
-                if (is_array($response['message'])) {
-                    foreach ($response['message'] as $fieldErrors) {
-                        foreach ($fieldErrors as $error) {
-                            $messages[] = $error;
-                        }
-                    }
-                } else {
-                    $messages[] = $response['message'];
-                }
-                return back()->withErrors($messages);
+                return back()->withErrors(['password' => $response['message']]);
             }
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
         }
+
+        return response()->json($response);
     }
 
     public function showLoginForm()
@@ -211,6 +247,8 @@ class RegistrationController extends Controller
     }
     public function account_completion()
     {
+
+
         if ((Session::get('user')['swap_type_id'] ?? false)) {
             return redirect()->route('home')->with('success', '');
         }
@@ -218,6 +256,7 @@ class RegistrationController extends Controller
             // Make multiple API calls
             $response1 = $this->apiService->getSwapTypes();
             $response2 = $this->apiService->getHouseTypes();
+            $response3 = $this->apiService->getHouseProperties();
             // Check if the responses are successful
             if ($response1['success'] == 1 && $response2['success'] == 1) {
                 // Pass the data to the view
@@ -254,6 +293,8 @@ class RegistrationController extends Controller
 
     public function complete_account(Request $request)
     {
+        // return $request->all();
+
 
         $request->validate([
             'house_type' => 'required',

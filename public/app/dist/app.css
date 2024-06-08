@@ -7458,7 +7458,8 @@
 }
 
 .slider.home5.account_completion {
-  background: linear-gradient(135deg, #FF9700, #2a81b2);
+  /* background: linear-gradient(135deg, #FF9700, #2a81b2); */
+  background: #fff;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;

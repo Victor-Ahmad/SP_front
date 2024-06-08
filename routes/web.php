@@ -27,6 +27,10 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     })->name('privacy-policy');
 
 
+    Route::get(
+        '/registeration',
+        [RegistrationController::class, 'showRegistrationForm']
+    );
 
 
     Route::get('lang/{locale}', function ($locale) {
@@ -55,7 +59,7 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
 
 
     Route::get('/register', [RegistrationController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegistrationController::class, 'register']);
+    Route::post('/register', [RegistrationController::class, 'register'])->name('post.register');
     Route::get('/login', [RegistrationController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [RegistrationController::class, 'login']);
     Route::get('/logout', [RegistrationController::class, 'logout'])->name('logout');

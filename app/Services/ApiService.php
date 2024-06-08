@@ -4,8 +4,8 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Http\UploadedFile;
 
-use function Laravel\Prompts\error;
 
 class ApiService
 {
@@ -26,9 +26,48 @@ class ApiService
             Session::forget('token');
         }
     }
-    public function signUp(array $data)
+
+
+    public function signUp($data, $files)
     {
-        $response = $this->http->post($this->baseUrl . 'sign_up', $data);
+        $multipartData = [];
+
+        // Helper function to handle nested arrays
+        function addMultipartData(&$multipartData, $key, $value)
+        {
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    addMultipartData($multipartData, "{$key}[{$subKey}]", $subValue);
+                }
+            } else {
+                $multipartData[] = [
+                    'name' => $key,
+                    'contents' => (string) $value
+                ];
+            }
+        }
+
+        // Add form data to multipart
+        foreach ($data as $key => $value) {
+            addMultipartData($multipartData, $key, $value);
+        }
+
+        // Add files to multipart
+        if ($files) {
+            foreach ($files as $file) {
+                if ($file instanceof UploadedFile && $file->isValid()) {
+                    $multipartData[] = [
+                        'name' => 'house[images][]',
+                        'contents' => fopen($file->getPathname(), 'r'),
+                        'filename' => $file->getClientOriginalName()
+                    ];
+                }
+            }
+        }
+
+        // Make the HTTP request
+        $response = $this->http->asMultipart()->post($this->baseUrl . 'sign_up', $multipartData);
+
         if ($response->successful()) {
             return $response->json();
         }
@@ -37,10 +76,46 @@ class ApiService
         throw new \Exception('API call failed: ' . $response->body());
     }
 
+
+
+
+
+
+
+
+
+
+
+
+    // public function signUp($data, $files)
+    // {
+
+    //     $httpRequest = $this->http->asMultipart();
+
+    //     if ($files) {
+    //         foreach ($files as $file) {
+    //             if ($file->isValid()) {
+    //                 $httpRequest = $httpRequest->attach(
+    //                     "house['images'][]",
+    //                     fopen($file->getPathname(), 'r'),
+    //                     $file->getClientOriginalName()
+    //                 );
+    //             }
+    //         }
+    //     }
+
+    //     $response = $this->http->post($this->baseUrl . 'sign_up', $data);
+    //     if ($response->successful()) {
+    //         return $response->json();
+    //     }
+
+    //     $this->revokeLogin($response);
+    //     throw new \Exception('API call failed: ' . $response->body());
+    // }
+
     public function login(array $data)
     {
         $response = $this->http->post($this->baseUrl . 'login', $data);
-
         if ($response->successful()) {
             return $response->json();
         }
@@ -78,7 +153,7 @@ class ApiService
 
     public function getSwapTypes()
     {
-        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . 'get_swap_types');
+        $response = $this->http->get($this->baseUrl . 'get_swap_types');
 
         if ($response->successful()) {
             return $response->json();
@@ -89,7 +164,7 @@ class ApiService
 
     public function getHouseTypes()
     {
-        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . 'get_houses_types');
+        $response = $this->http->get($this->baseUrl . 'get_houses_types');
 
         if ($response->successful()) {
             return $response->json();
@@ -97,6 +172,17 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+    public function getHouseProperties()
+    {
+        $response = $this->http->get($this->baseUrl . 'get_specific_properties');
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
     public function getChats()
     {
         $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . 'chats');

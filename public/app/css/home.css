@@ -9,7 +9,9 @@
 }
 
 .custom_header {
-    background-color: #e6941c !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+
 }
 
 .post_image_container {
@@ -323,13 +325,13 @@ input[type="number"]:focus {
 
 
 
-.menu-btn {
+/* .menu-btn {
     color: white !important;
-}
+} */
 
-.auth_btn {
+/* .auth_btn {
     color: white !important;
-}
+} */
 
 
 .small_width_field {

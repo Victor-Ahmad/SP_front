@@ -5,18 +5,18 @@ body {
 
 .wrap-contact {
     /* max-width: 800px; */
-    margin: 50px auto;
-    background: rgba(255, 255, 255, 1) !important;
+    margin: 10px auto;
+    /* background: rgba(255, 255, 255, 1) !important; */
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+    /* transition: all 0.3s ease; */
 
 }
 
 
 .wrap-contact:hover {
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 30px rgba(0, 0, 0, 0.2); */
 }
 
 .step-navigation {
@@ -120,12 +120,16 @@ body {
 }
 
 .form-navigation button:hover:not([disabled]) {
-    background: #5935ff;
+    background: #FF9700;
     transform: scale(1.05);
 }
 
 input[type="text"],
-input[type="number"] {
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
@@ -136,9 +140,13 @@ input[type="number"] {
 }
 
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus,
+textarea {
     border-color: #2981B2;
-    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    box-shadow: 0 0 5px rgb(41, 129, 178);
     outline: none;
     color: #2981B2;
 }
@@ -280,14 +288,14 @@ input:checked+.location_slider:before {
 .houseTypeList-content li:hover,
 .roomsList-content li:hover {
     border-color: #2981B2;
-    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    box-shadow: 0 0 5px rgb(41, 129, 178);
     color: #2981B2;
 }
 
 .houseTypeList-content li.active,
 .roomsList-content li.active {
     border-color: #2981B2;
-    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    box-shadow: 0 0 5px rgb(41, 129, 178);
     color: #2981B2;
 }
 
@@ -330,7 +338,7 @@ input:checked+.location_slider:before {
 
 .input-field:focus {
     border-color: #2981B2;
-    box-shadow: 0 0 5px rgba(110, 85, 255, 0.5);
+    box-shadow: 0 0 5px rgb(41, 129, 178);
     outline: none;
 }
 
@@ -380,6 +388,11 @@ input:checked+.location_slider:before {
 }
 
 
+.custom_header {
+    background-color: #fff !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1) !important;
+
+}
 
 .error-border {
     border: 2px solid red;

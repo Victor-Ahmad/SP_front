@@ -18,8 +18,12 @@
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
 
     <style>
-        .navigation li a:hover {
+        .navigation li a {
             color: #2a81b2 !important;
+        }
+
+        .navigation li a:hover {
+            color: #ff9700 !important;
         }
 
         .widget-logo-footer {
