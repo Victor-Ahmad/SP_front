@@ -189,6 +189,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const sessionToken = '{{ session('token') }}';
+
             function fetchUnreadMessages() {
                 fetch('{{ route('checkUnreadMessages') }}')
                     .then(response => response.json())
@@ -206,7 +208,9 @@
                     });
             }
 
-            fetchUnreadMessages();
+            if (sessionToken) {
+                fetchUnreadMessages();
+            }
 
             // Optionally, refresh the count every minute
             // setInterval(fetchUnreadMessages, 60000);
