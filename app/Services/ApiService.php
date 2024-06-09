@@ -336,4 +336,24 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+    public function getProfileProgress()
+    {
+        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "profile_progress");
+        if ($response->successful()) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
+
+    public function getLandingPosts()
+    {
+        $response = $this->http->get($this->baseUrl . "landing_page_houses");
+        if ($response->successful()) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

@@ -43,12 +43,8 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
 
 
 
-    Route::get('/', function () {
-        if (Session::get('token')) {
-            return redirect()->route('home');
-        }
-        return view('landing_page');
-    })->name('landing_page');
+    Route::get('/', [HomeController::class, 'landing'])->name('landing_page');
+    Route::get('/progress', [HomeController::class, 'progress'])->name('progress');
 
     Route::get('/old_otp', function () {
         return view('Auth.otp');
@@ -173,9 +169,9 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     //     return view('property-detail-v2');
     // })->name('property-detail-v2.view');
 
-    Route::get('/property-detail-v3', function () {
-        return view('property-detail-v3');
-    })->name('property-detail-v3.view');
+    // Route::get('/property-detail-v3', function () {
+    //     return view('property-detail-v3');
+    // })->name('property-detail-v3.view');
 
     // // Properties Grid with Sidebar Views
     // Route::get('/properties-grid-sidebar-v1', function () {

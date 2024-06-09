@@ -3,6 +3,8 @@
 @section('title', 'Woningruil')
 
 @section('head_css')
+    <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
+        type="text/css" media="all" />
     <style>
         .d-flex {
             display: flex;
@@ -60,6 +62,8 @@
         @include('layouts.partial.landing.sliders')
 
         @include('layouts.partial.landing.services')
+
+        @include('layouts.partial.landing.grid_posts', ['posts' => $posts])
 
         @include('layouts.partial.landing.contact_us')
 

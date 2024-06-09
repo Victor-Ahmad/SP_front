@@ -7416,12 +7416,11 @@
 }
 
 .slider.home5.landing {
-  /* background-image: url(./../../assets/images/slider/bg-slider-5.jpg);
-  background-attachment: fixed; */
   background-image: linear-gradient(to right, #FF9700, transparent), url(./../../assets/images/slider/bg-slider-5.png);
   background-attachment: fixed;
   background-size: cover;
-  background-position: center;
+  background-position: center 70px;
+  ;
 }
 
 .slider.home5.signup {

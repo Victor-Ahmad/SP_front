@@ -363,10 +363,22 @@
                                     </div>
                                     <div style="margin-top:30px "></div>
                                     <div class="form-row">
+                                        {{-- <div class="form-group">
+                                            <h3 class="label">@lang('lang.password')</h3>
+                                            <input class="text required input-field" type="password" name="password"
+                                                placeholder="@lang('lang.password')" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.confirm password')</h3>
+                                            <input class="text required input-field" type="password"
+                                                name="password_confirmation" placeholder="@lang('lang.confirm password')" required>
+                                        </div> --}}
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.password')</h3>
                                             <input class="text required input-field" type="password" name="password"
                                                 placeholder="@lang('lang.password')" required>
+                                            <div class="invalid-feedback" id="passwordError"
+                                                style="display: none; color: red;">Passwords do not match</div>
                                         </div>
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.confirm password')</h3>
@@ -1051,24 +1063,6 @@
                     });
                 });
 
-                // Validate multi-select lists
-                activeStep.querySelectorAll('.multi-select-content').forEach(multiSelect => {
-                    const input = multiSelect.previousElementSibling;
-                    const label = input.closest('.form-group').querySelector('.label');
-                    if (!input.value) {
-                        if (label) label.classList.add('error-star');
-                        isValid = false;
-                    } else {
-                        if (label) label.classList.remove('error-star');
-                    }
-
-                    multiSelect.addEventListener('click', () => {
-                        if (input.value) {
-                            if (label) label.classList.remove('error-star');
-                        }
-                    });
-                });
-
                 // Validate room list
                 activeStep.querySelectorAll('.roomsList-content.required').forEach(roomList => {
                     const input = roomList.nextElementSibling;
@@ -1094,6 +1088,27 @@
                     isValid = false;
                 } else {
                     privacyPolicyError.style.display = 'none';
+                }
+
+                if (currentStep === 1) {
+                    const password = document.querySelector('input[name="password"]');
+                    const confirmPassword = document.querySelector('input[name="password_confirmation"]');
+                    const passwordError = document.getElementById('passwordError');
+
+                    if (password.value && confirmPassword.value) {
+                        if (password.value !== confirmPassword.value) {
+                            password.closest('.form-group').querySelector('.label').classList.add('error-star');
+                            confirmPassword.closest('.form-group').querySelector('.label').classList.add(
+                                'error-star');
+                            passwordError.style.display = 'block';
+                            isValid = false;
+                        } else {
+                            password.closest('.form-group').querySelector('.label').classList.remove('error-star');
+                            confirmPassword.closest('.form-group').querySelector('.label').classList.remove(
+                                'error-star');
+                            passwordError.style.display = 'none';
+                        }
+                    }
                 }
                 return isValid;
             }

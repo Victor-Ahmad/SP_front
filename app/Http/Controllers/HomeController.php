@@ -17,6 +17,16 @@ class HomeController extends Controller
         $this->apiService = $apiService;
     }
 
+    function landing()
+    {
+        if (Session::get('token')) {
+            return redirect()->route('home');
+        }
+        $response = $this->apiService->getLandingPosts();
+        $posts = $response['result'];
+        $posts = array_slice($posts, 0, 8);
+        return view('landing_page', ['posts' => $posts]);
+    }
 
 
     public function home()
@@ -61,9 +71,9 @@ class HomeController extends Controller
                 }
             }
             $posts = array_merge($first_posts, $last_posts);
-
+            $progress =    $this->apiService->getProfileProgress()['result'];
             // return  $posts[1]['user']['intersts'][0]['interest'];
-            return view('home', ['posts' => $posts]);
+            return view('home', ['posts' => $posts, 'progress' => $progress]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -196,6 +206,29 @@ class HomeController extends Controller
                 $post['intersts'] = $response['result']['house_owner']['intersts'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
                 return view('single_post', compact('post'));
+            } else {
+                return back()->withErrors(['password' => $response['message']]);
+            }
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function progress()
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+            $response = $this->apiService->getProfileProgress();
+            return  $response;
+
+            if ($response['success'] == 1) {
+                return view('single_post');
             } else {
                 return back()->withErrors(['password' => $response['message']]);
             }

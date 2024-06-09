@@ -3,6 +3,8 @@
 @section('title', 'Sign In')
 
 @section('head_css')
+    <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
+        type="text/css" media="all" />
     <style>
         .main-w3layouts {
             display: flex;
