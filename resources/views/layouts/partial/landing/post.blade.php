@@ -3,10 +3,16 @@
         <div class="swiper-container noo carousel-2 img-style">
             <div class="swiper-wrapper">
                 @if (!empty($post['images']))
-                    @foreach ($post['images'] as $image)
+                    @foreach ($post['images'] as $index => $image)
                         <div class="swiper-slide post_image_container">
-                            <img class="post_image" src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}"
-                                alt="images">
+                            <img class="post_image @if ($index !== 0) blurred @endif"
+                                src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
+                            @if ($index !== 0)
+                                <div class="overlay-container">
+                                    <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
+                                    <p class="overlay-text">@lang('lang.log in to view images')</p> <!-- Overlay text -->
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 @else

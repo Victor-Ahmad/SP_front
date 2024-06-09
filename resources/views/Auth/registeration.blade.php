@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Home Page')
+@section('title', 'Registration')
 
 @section('head_css')
     <meta name="csrf-token" content="{{ csrf_token() }}">

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Chat Messages')
+@section('title', $post['owner_name'])
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />

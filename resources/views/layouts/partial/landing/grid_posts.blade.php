@@ -7,7 +7,7 @@
                         <div class="content-inner tab-content">
                             <div class="wrap-item flex">
                                 @foreach ($posts as $post)
-                                    <a href="{{ route('register') }}" class="card-link">
+                                    <a href="{{ route('login') }}" class="card-link">
                                         @include('layouts.partial.landing.post', ['post' => $post])
                                     </a>
                                 @endforeach

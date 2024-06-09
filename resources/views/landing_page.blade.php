@@ -51,6 +51,43 @@
 
             /* Adjust as necessary */
         }
+
+        .image-group {
+            position: relative;
+        }
+
+        .post_image_container {
+            position: relative;
+        }
+
+        .blurred {
+            filter: blur(10px);
+            /* Adjust the blur intensity */
+            width: 100%;
+            /* Adjust the size as needed */
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .overlay-icon {
+            font-size: 50px;
+            /* Adjust the icon size */
+            margin-bottom: 10px;
+            /* Space between the icon and text */
+        }
+
+        .overlay-text {
+            font-size: 16px;
+            color: #fff !important;
+            /* Adjust the text size */
+        }
     </style>
 @endsection
 

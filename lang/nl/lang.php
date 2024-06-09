@@ -112,4 +112,5 @@ return [
     'describe_your_house' => 'Beschrijf Uw Huis',
     'house_description' => 'Huisbeschrijving',
     'add_house_picture' => "Het uploaden van foto's van je huis vergroot je kans om de perfecte ruilpartner te vinden. Door je huis te laten zien, kunnen anderen de potentie ervan zien, waardoor de kans groter wordt dat je de ideale match vindt!",
+    'log in to view images' => 'Log in om afbeeldingen te bekijken',
 ];
