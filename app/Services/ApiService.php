@@ -356,4 +356,14 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+    public function checkEmailAvailability($data)
+    {
+        $response = $this->http->post($this->baseUrl . "validate_email_number", $data);
+        if ($response->successful()) {
+            return $response->json();
+        }
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

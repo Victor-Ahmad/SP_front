@@ -86,6 +86,9 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     Route::get('/check-unread-messages', [ChatController::class, 'checkUnreadMessages'])->name('checkUnreadMessages');
 
 
+    Route::post('/check-email-phone', [RegistrationController::class, 'checkEmailAvailability'])->name('check.email.phone');
+
+
     // Route::get('/index', function () {
     //     return view('index');
     // })->name('index.view');

@@ -44,10 +44,105 @@
                 display: flex;
             }
         }
+
+        .image-group {
+            position: relative;
+        }
+
+        .post_image_container {
+            position: relative;
+        }
+
+        .blurred {
+            filter: blur(10px);
+            /* Adjust the blur intensity */
+            width: 100%;
+            /* Adjust the size as needed */
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .overlay-icon {
+            font-size: 50px;
+            /* Adjust the icon size */
+            margin-bottom: 10px;
+            /* Space between the icon and text */
+        }
+
+        .overlay-text {
+            font-size: 16px;
+            color: #fff !important;
+            /* Adjust the text size */
+        }
+
+        /* Enhanced Progress Bar CSS */
+        #profile-progress-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background-color: #ffa920;
+            /* Color for remaining part */
+            border-radius: 25px;
+            position: relative;
+            margin: 15px 0;
+            height: 30px;
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            /* Add some inner shadow */
+        }
+
+        .progress {
+            background: linear-gradient(135deg, #2a81b2 25%, #3ba1d0 75%);
+            /* Gradient color */
+            height: 100%;
+            text-align: center;
+            color: white;
+            line-height: 30px;
+            transition: width 1.5s ease-in-out;
+            /* Smooth transition */
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 25px 0 0 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress-label {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .progress-details {
+            margin-top: 10px;
+            font-size: 16px;
+        }
     </style>
 @endsection
 
 @section('content')
+
+
     <div id="pagee" class="clearfix">
         @include('layouts.partial.home.grid_posts', ['posts' => $posts])
     </div>
@@ -60,6 +155,13 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const progressFill = document.getElementById('progress-fill');
+                progressFill.style.width = '{{ explode(' ', $progress['progress'])[0] }}%';
+            }, 500); // Delay to ensure the page is fully loaded
+        });
+
         function toggleFilter() {
             const filterForm = document.querySelector('.filter-form-container');
             filterForm.style.display = filterForm.style.display === 'flex' ? 'none' : 'flex';

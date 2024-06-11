@@ -114,4 +114,10 @@ return [
     'house description' => 'House Description',
     'add_house_picture' => "Uploading photos of your house significantly increases your chances of finding the perfect swap partner. Showcasing your home helps others see its potential, making it more likely you'll find the ideal match!",
     'log in to view images' => 'Log in to view images',
+    'complete profile first to view the images' => 'Complete your profile in order to view the images',
+    'agree_to_privacy_policy' => 'Please agree to the privacy policy to proceed. Thank you for your understanding.',
+    'account completion' => 'Account Completion',
+    'completed' => 'Completed',
+    'remaining_steps' => 'Remaining Steps',
+
 ];

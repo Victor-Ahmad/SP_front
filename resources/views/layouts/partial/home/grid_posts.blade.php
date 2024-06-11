@@ -5,6 +5,22 @@
                 <div class="heading-section center">
                     <h2 class="heading_title">@lang('lang.available houses')</h2>
                 </div>
+                @if ($progress['progress'] != '100 %')
+                    <div id="profile-progress-container">
+                        <h4>@lang('lang.account completion')</h4>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 0%;" id="progress-fill">
+                                <span class="progress-label" id="progress-label">{{ $progress['progress'] }}
+                                    @lang('lang.completed')</span>
+                            </div>
+                        </div>
+                        <div class="progress-details">
+                            @if (!empty($progress['missing_steps']))
+                                <span>@lang('lang.remaining_steps') {{ implode(', ', $progress['missing_steps']) }}</span>
+                            @endif
+                        </div>
+                    </div>
+                @endif
                 <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
 
                 <!-- Filter Form Start -->
@@ -47,10 +63,12 @@
                                                     class="option {{ request('rooms') == '4' ? 'selected' : '' }}">4
                                                 </li>
                                                 <li data-value="5"
-                                                    class="option {{ request('rooms') == '5' ? 'selected' : '' }}">5
+                                                    class="option {{ request('rooms') == '5' ? 'selected' : '' }}">
+                                                    5
                                                 </li>
                                                 <li data-value="6"
-                                                    class="option {{ request('rooms') == '6' ? 'selected' : '' }}">6
+                                                    class="option {{ request('rooms') == '6' ? 'selected' : '' }}">
+                                                    6
                                                 </li>
                                             </ul>
                                             <input type="hidden" name="rooms" value="{{ request('rooms') }}">

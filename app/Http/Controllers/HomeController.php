@@ -59,11 +59,14 @@ class HomeController extends Controller
 
             foreach ($posts as  $post) {
                 $in_interest = false;
-                foreach ($post['user']['intersts'] as $interest) {
-                    if (Str::contains($interest['interest'], $my_interest)) {
-                        $in_interest = true;
+                if (isset($post['user']['intersts']) && !empty($post['user']['intersts'])) {
+                    foreach ($post['user']['intersts'] as $interest) {
+                        if (Str::contains($interest['interest'], $my_interest)) {
+                            $in_interest = true;
+                        }
                     }
                 }
+
                 if ($in_interest) {
                     $first_posts[] = $post;
                 } else {
@@ -72,8 +75,8 @@ class HomeController extends Controller
             }
             $posts = array_merge($first_posts, $last_posts);
             $progress =    $this->apiService->getProfileProgress()['result'];
-            // return  $posts[1]['user']['intersts'][0]['interest'];
-            return view('home', ['posts' => $posts, 'progress' => $progress]);
+            $showAll = $response['result']['has_more_than_two_images'];
+            return view('home', ['posts' => $posts, 'progress' => $progress, 'showAll' => $showAll]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);

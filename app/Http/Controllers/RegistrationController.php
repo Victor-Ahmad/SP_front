@@ -63,6 +63,19 @@ class RegistrationController extends Controller
         }
     }
 
+    public function checkEmailAvailability(Request $request)
+    {
+        $response = $this->apiService->checkEmailAvailability([
+            'number' => $request->phone_number,
+            'email' => $request->email,
+        ]);
+        if ($response['success'] == 1) {
+            return response()->json(['success' => 1, 'message' => 'Valid']);
+        } else {
+            return response()->json(['success' => 0, 'message' => $response['message']]);
+        }
+    }
+
     public function register(Request $request)
     {
 
@@ -113,11 +126,11 @@ class RegistrationController extends Controller
                 Session::put('token', $response['result'][0]['token']);
                 return redirect()->route('home')->with('success', 'Added Successfully');
             } else {
-                return back()->withErrors(['password' => $response['message']]);
+                return back()->withInput()->withErrors(['message' => $response['message']]);
             }
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
-            return back()->withErrors(['message' => $e->getMessage()]);
+            return back()->withInput()->withErrors(['message' => $e->getMessage()]);
         }
 
         return response()->json($response);

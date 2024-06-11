@@ -193,6 +193,34 @@
             color: #ffa920;
             margin-right: 5px;
         }
+
+        .preview-slideshow img {
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .multi-select-content li.selected,
+        .dropdown-content li.selected {
+            background-color: #ffa920;
+            color: white;
+        }
     </style>
     <link
         href="{{ asset('app/css/account_completion.css') }}?v={{ filemtime(public_path('app/css/account_completion.css')) }}"
@@ -249,10 +277,11 @@
                                         <div class="form-group">
                                             <h3>@lang('lang.you want to go to')</h3>
                                             <input type="text" id="interestsAutocompleteInput"
-                                                placeholder="@lang('lang.enter a location of interest')" class="input-field">
+                                                placeholder="@lang('lang.enter a location of interest')" value="{{ old('location_names', '') }}"
+                                                class="input-field">
                                             <div class="tags-container" id="tagsContainer"></div>
-                                            <input type="hidden" id="locationNames" name="location_names" value="" re
-                                                quired>
+                                            <input type="hidden" id="locationNames" name="location_names"
+                                                value="{{ old('location_names', '') }}" required>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -262,20 +291,22 @@
                                             <h3 class="house-type-label label">@lang('lang.house type')</h3>
                                             <div class="dropdown">
                                                 <input type="text" id="dropdownInput_wish"
-                                                    placeholder="@lang('lang.select an option')" readonly>
+                                                    placeholder="@lang('lang.select an option')" readonly
+                                                    value="{{ old('house_type_wish') }}">
                                                 <ul id="dropdownList_wish" class="dropdown-content required">
                                                     @foreach ($houseTypes as $type)
                                                         <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" id="houseType_wish" name="house_type_wish" value="">
+                                            <input type="hidden" id="houseType_wish" name="house_type_wish"
+                                                value="{{ old('house_type_wish') }}">
                                         </div>
                                         <div class="form-group">
                                             <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
                                             <input type="number" id="price_wish" name="price_wish"
                                                 placeholder="@lang('lang.enter price')" class="input-field required" step="0.01"
-                                                required>
+                                                value="{{ old('price_wish') }}" required>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -284,11 +315,13 @@
                                             <h3 class="rooms-label label">@lang('lang.number of rooms')</h3>
                                             <ul id="roomsList_wish" class="roomsList-content required">
                                                 @foreach ($numberOfRooms as $number)
-                                                    <li data-value="{{ $number['id'] }}">{{ $number['number'] }}</li>
+                                                    <li data-value="{{ $number['id'] }}"
+                                                        class="{{ old('number_of_rooms_wish') == $number['id'] ? 'active' : '' }}">
+                                                        {{ $number['number'] }}</li>
                                                 @endforeach
                                             </ul>
                                             <input type="hidden" id="numberOfRooms_wish" name="number_of_rooms_wish"
-                                                value="">
+                                                value="{{ old('number_of_rooms_wish') }}">
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -298,31 +331,42 @@
                                             <h3 class="area-label label">@lang('lang.area') (m²)</h3>
                                             <div class="dropdown">
                                                 <input type="text" id="areaDropdownInput_wish"
-                                                    placeholder="@lang('lang.select an option')" readonly>
+                                                    placeholder="@lang('lang.select an option')" readonly
+                                                    value="{{ old('area_wish') }}">
                                                 <ul id="areaDropdownList_wish" class="dropdown-content required">
                                                     @foreach ($areas as $area)
                                                         <li data-value="{{ $area }}">{{ $area }}</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" id="area_wish" name="area_wish" value="">
+                                            <input type="hidden" id="area_wish" name="area_wish"
+                                                value="{{ old('area_wish') }}">
                                         </div>
-
+                                        @php
+                                            $oldFeaturesWish = old('features_wish', '');
+                                            if (!is_array($oldFeaturesWish)) {
+                                                $oldFeaturesWish = array_map('trim', explode(',', $oldFeaturesWish));
+                                            }
+                                        @endphp
                                         <!-- New multi-select for house features -->
                                         <div class="form-group">
                                             <h3 class="features-label label">@lang('lang.house features')</h3>
                                             <div class="multi-select">
                                                 <input type="text" id="featuresInput_wish"
-                                                    placeholder="@lang('lang.specify house features')" readonly>
+                                                    placeholder="@lang('lang.specify house features')" value="{{ old('features_wish') }}"
+                                                    readonly>
                                                 <ul id="featuresList_wish" class="multi-select-content">
                                                     @foreach ($features as $feature)
                                                         <li data-name="{{ $feature['name'] }}"
-                                                            data-value="{{ $feature['id'] }}">{{ $feature['name'] }}</li>
+                                                            data-value="{{ $feature['id'] }}"
+                                                            class="{{ in_array($feature['id'], $oldFeaturesWish) ? 'selected' : '' }}">
+                                                            {{ $feature['name'] }}
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             </div>
                                             <input type="hidden" id="features_wish" name="features_wish"
-                                                value="">
+                                                value="{{ old('features_wish') }}">
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -338,12 +382,14 @@
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.first name')</h3>
                                             <input class="text required input-field" type="text" name="first_name"
-                                                placeholder="@lang('lang.first name')" required>
+                                                placeholder="@lang('lang.first name')" value="{{ old('first_name') }}"
+                                                required>
                                         </div>
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.last name')</h3>
                                             <input class="text email required input-field" type="text"
-                                                name="last_name" placeholder="@lang('lang.last name')" required>
+                                                name="last_name" placeholder="@lang('lang.last name')"
+                                                value="{{ old('last_name') }}" required>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -351,28 +397,23 @@
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.email')</h3>
                                             <input class="text email required input-field" type="email" name="email"
-                                                placeholder="@lang('lang.email')" required>
+                                                value="{{ old('email') }}" placeholder="@lang('lang.email')" required>
+                                            <div class="invalid-feedback" id="emailError"
+                                                style="display: none; color: red;">Email is already taken</div>
                                         </div>
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.phone number')</h3>
                                             <input class="text email required input-field" type="tel"
                                                 name="phone_number" placeholder="@lang('lang.phone number')" required
-                                                pattern="[0-9]{9,15}"
+                                                pattern="[0-9]{9,15}" value="{{ old('phone_number') }}"
                                                 title="Phone number must be between 10 to 15 digits">
+                                            <div class="invalid-feedback" id="phoneError"
+                                                style="display: none; color: red;">Phone number is already taken</div>
                                         </div>
+
                                     </div>
                                     <div style="margin-top:30px "></div>
                                     <div class="form-row">
-                                        {{-- <div class="form-group">
-                                            <h3 class="label">@lang('lang.password')</h3>
-                                            <input class="text required input-field" type="password" name="password"
-                                                placeholder="@lang('lang.password')" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.confirm password')</h3>
-                                            <input class="text required input-field" type="password"
-                                                name="password_confirmation" placeholder="@lang('lang.confirm password')" required>
-                                        </div> --}}
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.password')</h3>
                                             <input class="text required input-field" type="password" name="password"
@@ -428,7 +469,8 @@
                                         <div class="form-group">
                                             <h3 class="post-code-label label">@lang('lang.post code')</h3>
                                             <input type="text" id="post_code" name="post_code"
-                                                placeholder="@lang('lang.enter post code')" class="input-field required" required>
+                                                value="{{ old('post_code') }}" placeholder="@lang('lang.enter post code')"
+                                                class="input-field required" required>
                                             <div id="post_code_hint" class="invalid-feedback" style="display: none;">
                                                 @lang('lang.post_code_validation')
                                             </div>
@@ -436,7 +478,8 @@
                                         <div class="form-group">
                                             <h3 class="house-number-label label">@lang('lang.house number')</h3>
                                             <input type="text" id="house_number" name="house_number"
-                                                placeholder="@lang('lang.enter house number')" class="input-field required" required>
+                                                value="{{ old('house_number') }}" placeholder="@lang('lang.enter house number')"
+                                                class="input-field required" required>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -445,12 +488,14 @@
                                         <div class="form-group">
                                             <h3 class="post-code-label label">@lang('lang.location')</h3>
                                             <input type="text" id="autocomplete" name="location_name"
-                                                placeholder="@lang('lang.enter location name')" class="input-field required" readonly>
+                                                value="{{ old('location_name') }}" placeholder="@lang('lang.enter location name')"
+                                                class="input-field required" readonly>
                                         </div>
                                         <div class="form-group">
                                             <h3 class="street-label label">@lang('lang.street')</h3>
                                             <input type="text" id="street" name="street"
-                                                placeholder="@lang('lang.enter street name')" class="input-field required">
+                                                value="{{ old('street') }}" placeholder="@lang('lang.enter street name')"
+                                                class="input-field required">
                                         </div>
 
 
@@ -462,20 +507,21 @@
                                             <h3 class="house-type-label label">@lang('lang.house type')</h3>
                                             <div class="dropdown">
                                                 <input type="text" id="dropdownInput" placeholder="@lang('lang.select an option')"
-                                                    readonly>
+                                                    readonly value="{{ old('house_type') }}">
                                                 <ul id="dropdownList" class="dropdown-content required">
                                                     @foreach ($houseTypes as $type)
                                                         <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" id="houseType" name="house_type" value="">
+                                            <input type="hidden" id="houseType" name="house_type"
+                                                value="{{ old('house_type') }}">
                                         </div>
                                         <div class="form-group">
                                             <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
                                             <input type="number" id="price" name="price"
                                                 placeholder="@lang('lang.enter price')" class="input-field required"
-                                                step="0.01" required>
+                                                step="0.01" value="{{ old('price') }}" required>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -484,11 +530,13 @@
                                             <h3 class="rooms-label label">@lang('lang.number of rooms')</h3>
                                             <ul id="roomsList" class="roomsList-content required">
                                                 @foreach ($numberOfRooms as $number)
-                                                    <li data-value="{{ $number['id'] }}">{{ $number['number'] }}</li>
+                                                    <li data-value="{{ $number['id'] }}"
+                                                        class="{{ old('number_of_rooms') == $number['id'] ? 'active' : '' }}">
+                                                        {{ $number['number'] }}</li>
                                                 @endforeach
                                             </ul>
                                             <input type="hidden" id="numberOfRooms" name="number_of_rooms"
-                                                value="">
+                                                value="{{ old('number_of_rooms') }}">
                                         </div>
                                     </div>
                                     <div style="margin-top:30px "></div>
@@ -498,31 +546,42 @@
                                             <h3 class="area-label label">@lang('lang.area') (m²)</h3>
                                             <div class="dropdown">
                                                 <input type="text" id="areaDropdownInput"
-                                                    placeholder="@lang('lang.select an option')" readonly>
+                                                    placeholder="@lang('lang.select an option')" value="{{ old('area') }}"
+                                                    readonly>
                                                 <ul id="areaDropdownList" class="dropdown-content required">
                                                     @foreach ($areas as $area)
                                                         <li data-value="{{ $area }}">{{ $area }}</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" id="area" name="area" value="">
+                                            <input type="hidden" id="area" name="area"
+                                                value="{{ old('area') }}">
                                         </div>
-
+                                        @php
+                                            $oldFeatures = old('features', '');
+                                            if (!is_array($oldFeatures)) {
+                                                $oldFeatures = array_map('trim', explode(',', $oldFeatures));
+                                            }
+                                        @endphp
                                         <!-- New multi-select for house features -->
                                         <div class="form-group">
                                             <h3 class="features-label label">@lang('lang.house features')</h3>
                                             <div class="multi-select">
                                                 <input type="text" id="featuresInput" placeholder="@lang('lang.specify house features')"
-                                                    readonly>
+                                                    value="{{ old('features') }}" readonly>
                                                 <ul id="featuresList" class="multi-select-content">
                                                     @foreach ($features as $feature)
                                                         <li data-name="{{ $feature['name'] }}"
-                                                            data-value="{{ $feature['id'] }}">{{ $feature['name'] }}</li>
+                                                            data-value="{{ $feature['id'] }}"
+                                                            class="{{ in_array($feature['id'], $oldFeatures) ? 'selected' : '' }}">
+                                                            {{ $feature['name'] }}</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <input type="hidden" id="features" name="features" value="">
+                                            <input type="hidden" id="features" name="features"
+                                                value="{{ old('features') }}">
                                         </div>
+
                                     </div>
                                     <div style="margin-top:30px"></div>
                                 </div>
@@ -537,7 +596,7 @@
                                         <div class="form-group">
                                             <h3 class="description-label label">@lang('lang.house description')</h3>
                                             <textarea id="house_description" name="house_description" placeholder="@lang('lang.describe your house')"
-                                                class="input-field required" rows="4" style="resize: none;"></textarea>
+                                                class="input-field required" rows="4" style="resize: none;">{{ old('house_description') }}</textarea>
                                         </div>
                                     </div>
                                     <div style="margin-top:30px"></div>
@@ -546,8 +605,8 @@
                                         <div class="form-group">
                                             <h3>@lang('lang.house gallery')</h3>
                                             <p style="margin-top:15px">@lang('lang.add_house_picture')</p>
-                                            <input type="file" id="gallery" name="gallery[]" multiple required
-                                                class="input-field required" style="margin-top:15px">
+                                            <input type="file" id="gallery" name="gallery[]" multiple
+                                                class="input-field" style="margin-top:15px">
                                             <div class="preview-container">
                                                 <div class="preview-slideshow" id="previewSlideshow"></div>
                                                 <div class="preview-controls" id="previewControls">
@@ -871,35 +930,60 @@
             });
 
             // Multi-select functionality
-            const featuresInput_wish = document.getElementById('featuresInput_wish');
-            const featuresList_wish = document.getElementById('featuresList_wish');
-            const featuresItems_wish = featuresList_wish.querySelectorAll('li');
-            let selectedFeatures_wish = [];
-            let selectedFeaturesNames_wish = [];
+            const featuresInputWish = document.getElementById('featuresInput_wish');
+            const featuresListWish = document.getElementById('featuresList_wish');
+            const featuresItemsWish = featuresListWish.querySelectorAll('li');
+            let selectedFeaturesWish = [];
+            let selectedFeaturesNamesWish = [];
 
-            featuresInput_wish.addEventListener('click', (e) => {
+            // Initialize selected features from old values
+            @if (is_array($oldFeaturesWish))
+                selectedFeaturesWish = {!! json_encode($oldFeaturesWish) !!};
+                selectedFeaturesNamesWish = selectedFeaturesWish.map(value => {
+                    const item = featuresListWish.querySelector(`li[data-value="${value}"]`);
+                    if (item) {
+                        item.classList.add('selected');
+                        return item.getAttribute('data-name');
+                    }
+                    return '';
+                }).filter(name => name !== '');
+                featuresInputWish.value = selectedFeaturesNamesWish.join(', ');
+            @endif
+
+            featuresInputWish.addEventListener('click', (e) => {
                 e.stopPropagation();
-                featuresList_wish.style.display = featuresList_wish.style.display === 'block' ? 'none' :
+                featuresListWish.style.display = featuresListWish.style.display === 'block' ? 'none' :
                     'block';
             });
-            featuresItems_wish.forEach(item => {
+
+            featuresItemsWish.forEach(item => {
                 item.addEventListener('click', (e) => {
                     const value = e.target.getAttribute('data-value');
                     const name = e.target.getAttribute('data-name');
-                    if (selectedFeatures_wish.includes(value)) {
-                        selectedFeatures_wish = selectedFeatures_wish.filter(feature => feature !==
+                    if (selectedFeaturesWish.includes(value)) {
+                        selectedFeaturesWish = selectedFeaturesWish.filter(feature => feature !==
                             value);
-                        e.target.style.backgroundColor = ''; // Reset background color if unselected
+                        selectedFeaturesNamesWish = selectedFeaturesNamesWish.filter(featureName =>
+                            featureName !== name);
+                        e.target.classList.remove('selected');
                     } else {
-                        selectedFeatures_wish.push(value);
-                        selectedFeaturesNames_wish.push(name);
-                        e.target.style.backgroundColor = '#ffa920'; // Highlight selected items
+                        selectedFeaturesWish.push(value);
+                        selectedFeaturesNamesWish.push(name);
+                        e.target.classList.add('selected');
                     }
-                    featuresInput_wish.value = selectedFeaturesNames_wish.join(', ');
-                    document.getElementById('features_wish').value = selectedFeatures_wish.join(
+                    featuresInputWish.value = selectedFeaturesNamesWish.join(', ');
+                    document.getElementById('features_wish').value = selectedFeaturesWish.join(
                         ', ');
                 });
             });
+
+
+            document.addEventListener('click', (e) => {
+                featuresListWish.style.display = 'none';
+            });
+
+
+
 
             // Dropdown functionality
             const dropdownInput = document.getElementById('dropdownInput');
@@ -945,21 +1029,38 @@
             let selectedFeatures = [];
             let selectedFeaturesNames = [];
 
+            // Initialize selected features from old values
+            @if (is_array($oldFeatures))
+                selectedFeatures = {!! json_encode($oldFeatures) !!};
+                selectedFeaturesNames = selectedFeatures.map(value => {
+                    const item = featuresList.querySelector(`li[data-value="${value}"]`);
+                    if (item) {
+                        item.classList.add('selected');
+                        return item.getAttribute('data-name');
+                    }
+                    return '';
+                }).filter(name => name !== '');
+                featuresInput.value = selectedFeaturesNames.join(', ');
+            @endif
+
             featuresInput.addEventListener('click', (e) => {
                 e.stopPropagation();
                 featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
             });
+
             featuresItems.forEach(item => {
                 item.addEventListener('click', (e) => {
                     const value = e.target.getAttribute('data-value');
                     const name = e.target.getAttribute('data-name');
                     if (selectedFeatures.includes(value)) {
                         selectedFeatures = selectedFeatures.filter(feature => feature !== value);
-                        e.target.style.backgroundColor = ''; // Reset background color if unselected
+                        selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
+                            featureName !== name);
+                        e.target.classList.remove('selected');
                     } else {
                         selectedFeatures.push(value);
                         selectedFeaturesNames.push(name);
-                        e.target.style.backgroundColor = '#ffa920'; // Highlight selected items
+                        e.target.classList.add('selected');
                     }
                     featuresInput.value = selectedFeaturesNames.join(', ');
                     document.getElementById('features').value = selectedFeatures.join(', ');
@@ -967,233 +1068,331 @@
             });
 
             document.addEventListener('click', (e) => {
-                // Close all dropdowns and multi-selects
-                dropdownList.style.display = 'none';
-                areaDropdownList.style.display = 'none';
                 featuresList.style.display = 'none';
+            });
+        });
 
-                dropdownList_wish.style.display = 'none';
-                areaDropdownList_wish.style.display = 'none';
-                featuresList_wish.style.display = 'none';
+        document.addEventListener('click', (e) => {
+            // Close all dropdowns and multi-selects
+            dropdownList.style.display = 'none';
+            areaDropdownList.style.display = 'none';
+            featuresList.style.display = 'none';
+
+            dropdownList_wish.style.display = 'none';
+            areaDropdownList_wish.style.display = 'none';
+            featuresList_wish.style.display = 'none';
+        });
+
+        const steps = document.querySelectorAll('.stepper-item');
+        const nextButton = document.querySelector('.next');
+        const prevButton = document.querySelector('.previous');
+        const submitButton = document.querySelector('.submit');
+        const formSteps = document.querySelectorAll('.form-step');
+        let currentStep = 0;
+
+        function updateStepProgress() {
+            steps.forEach((step, index) => {
+                if (index < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (index === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+            formSteps.forEach((step, index) => {
+                if (index === currentStep) {
+                    step.classList.add('form-step-active');
+                } else {
+                    step.classList.remove('form-step-active');
+                }
             });
 
-            const steps = document.querySelectorAll('.stepper-item');
-            const nextButton = document.querySelector('.next');
-            const prevButton = document.querySelector('.previous');
-            const submitButton = document.querySelector('.submit');
-            const formSteps = document.querySelectorAll('.form-step');
-            let currentStep = 0;
+            prevButton.disabled = currentStep === 0;
+            nextButton.style.display = currentStep === steps.length - 1 ? 'none' : 'inline-block';
+            submitButton.style.display = currentStep === steps.length - 1 ? 'inline-block' : 'none';
+        }
 
-            function updateStepProgress() {
-                steps.forEach((step, index) => {
-                    if (index < currentStep) {
-                        step.classList.add('completed');
-                        step.classList.remove('active');
-                    } else if (index === currentStep) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                    } else {
-                        step.classList.remove('active', 'completed');
-                    }
-                });
-                formSteps.forEach((step, index) => {
-                    if (index === currentStep) {
-                        step.classList.add('form-step-active');
-                    } else {
-                        step.classList.remove('form-step-active');
-                    }
-                });
-
-                prevButton.disabled = currentStep === 0;
-                nextButton.style.display = currentStep === steps.length - 1 ? 'none' : 'inline-block';
-                submitButton.style.display = currentStep === steps.length - 1 ? 'inline-block' : 'none';
-            }
-
-            nextButton.addEventListener('click', () => {
-                if (currentStep < steps.length - 1 && validateStep(currentStep)) {
+        nextButton.addEventListener('click', () => {
+            if (currentStep < steps.length - 1 && validateStep(currentStep)) {
+                if (currentStep === 1) {
+                    const email = document.querySelector('input[name="email"]').value;
+                    const phoneNumber = document.querySelector('input[name="phone_number"]').value;
+                    createPreloader();
+                    fetch('{{ route('check.email.phone') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                    .getAttribute('content')
+                            },
+                            body: JSON.stringify({
+                                email: email,
+                                phone_number: phoneNumber
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success === 1) {
+                                removePreloader();
+                                currentStep++;
+                                updateStepProgress();
+                            } else {
+                                removePreloader();
+                                // Display error message under the respective field
+                                if (data.message.includes('email')) {
+                                    const emailError = document.getElementById('emailError');
+                                    const emailField = document.querySelector(
+                                        'input[name="email"]');
+                                    emailError.textContent = data.message;
+                                    emailError.style.display = 'block';
+                                    emailField.closest('.form-group').querySelector('.label')
+                                        .classList.add('error-star');
+                                }
+                                if (data.message.includes('number')) {
+                                    const phoneError = document.getElementById('phoneError');
+                                    const phoneField = document.querySelector(
+                                        'input[name="phone_number"]');
+                                    phoneError.textContent = data.message;
+                                    phoneError.style.display = 'block';
+                                    phoneField.closest('.form-group').querySelector('.label')
+                                        .classList.add('error-star');
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            removePreloader();
+                            console.error('Error:', error);
+                        });
+                } else {
                     currentStep++;
                     updateStepProgress();
                 }
-            });
+            }
+        });
+        document.querySelector('input[name="email"]').addEventListener('input', () => {
+            const emailError = document.getElementById('emailError');
+            const emailField = document.querySelector('input[name="email"]');
+            emailError.style.display = 'none';
+            emailField.closest('.form-group').querySelector('.label').classList.remove('error-star');
+        });
 
-            prevButton.addEventListener('click', () => {
-                if (currentStep > 0) {
-                    currentStep--;
-                    updateStepProgress();
-                }
-            });
+        document.querySelector('input[name="phone_number"]').addEventListener('input', () => {
+            const phoneError = document.getElementById('phoneError');
+            const phoneField = document.querySelector('input[name="phone_number"]');
+            phoneError.style.display = 'none';
+            phoneField.closest('.form-group').querySelector('.label').classList.remove('error-star');
+        });
 
-            updateStepProgress();
 
-            function validateStep(step) {
-                const activeStep = formSteps[step];
-                let isValid = true;
 
-                activeStep.querySelectorAll('input.required').forEach(field => {
-                    const label = field.closest('.form-group').querySelector('.label');
-                    if (!field.value) {
-                        if (label) label.classList.add('error-star');
-                        isValid = false;
-                    } else {
-                        if (label) label.classList.remove('error-star');
-                    }
+        prevButton.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStepProgress();
+            }
+        });
 
-                    field.addEventListener('input', () => {
-                        if (field.value) {
-                            if (label) label.classList.remove('error-star');
-                        }
-                    });
-                });
+        updateStepProgress();
 
-                // Validate dropdown lists
-                activeStep.querySelectorAll('.dropdown-content.required').forEach(dropdown => {
-                    const input = dropdown.previousElementSibling;
-                    const label = input.closest('.form-group').querySelector('.label');
-                    if (!input.value) {
-                        if (label) label.classList.add('error-star');
-                        isValid = false;
-                    } else {
-                        if (label) label.classList.remove('error-star');
-                    }
+        function validateStep(step) {
+            const activeStep = formSteps[step];
+            let isValid = true;
 
-                    dropdown.addEventListener('click', () => {
-                        if (input.value) {
-                            if (label) label.classList.remove('error-star');
-                        }
-                    });
-                });
-
-                // Validate room list
-                activeStep.querySelectorAll('.roomsList-content.required').forEach(roomList => {
-                    const input = roomList.nextElementSibling;
-                    const label = roomList.closest('.form-group').querySelector('.label');
-                    if (!input.value) {
-                        if (label) label.classList.add('error-star');
-                        isValid = false;
-                    } else {
-                        if (label) label.classList.remove('error-star');
-                    }
-
-                    roomList.addEventListener('click', () => {
-                        if (input.value) {
-                            if (label) label.classList.remove('error-star');
-                        }
-                    });
-                });
-                // Validate privacy policy checkbox
-                const privacyPolicyCheckbox = document.getElementById('privacyPolicyCheckbox');
-                const privacyPolicyError = document.getElementById('privacyPolicyError');
-                if (privacyPolicyCheckbox && !privacyPolicyCheckbox.checked && currentStep == 1) {
-                    privacyPolicyError.style.display = 'block';
+            activeStep.querySelectorAll('input.required').forEach(field => {
+                const label = field.closest('.form-group').querySelector('.label');
+                if (!field.value) {
+                    if (label) label.classList.add('error-star');
                     isValid = false;
                 } else {
-                    privacyPolicyError.style.display = 'none';
+                    if (label) label.classList.remove('error-star');
                 }
 
-                if (currentStep === 1) {
-                    const password = document.querySelector('input[name="password"]');
-                    const confirmPassword = document.querySelector('input[name="password_confirmation"]');
-                    const passwordError = document.getElementById('passwordError');
+                field.addEventListener('input', () => {
+                    if (field.value) {
+                        if (label) label.classList.remove('error-star');
+                    }
+                });
+            });
 
-                    if (password.value && confirmPassword.value) {
-                        if (password.value !== confirmPassword.value) {
-                            password.closest('.form-group').querySelector('.label').classList.add('error-star');
-                            confirmPassword.closest('.form-group').querySelector('.label').classList.add(
-                                'error-star');
-                            passwordError.style.display = 'block';
-                            isValid = false;
-                        } else {
-                            password.closest('.form-group').querySelector('.label').classList.remove('error-star');
-                            confirmPassword.closest('.form-group').querySelector('.label').classList.remove(
-                                'error-star');
-                            passwordError.style.display = 'none';
-                        }
+            // Validate dropdown lists
+            activeStep.querySelectorAll('.dropdown-content.required').forEach(dropdown => {
+                const input = dropdown.previousElementSibling;
+                const label = input.closest('.form-group').querySelector('.label');
+                if (!input.value) {
+                    if (label) label.classList.add('error-star');
+                    isValid = false;
+                } else {
+                    if (label) label.classList.remove('error-star');
+                }
+
+                dropdown.addEventListener('click', () => {
+                    if (input.value) {
+                        if (label) label.classList.remove('error-star');
+                    }
+                });
+            });
+
+            // Validate room list
+            activeStep.querySelectorAll('.roomsList-content.required').forEach(roomList => {
+                const input = roomList.nextElementSibling;
+                const label = roomList.closest('.form-group').querySelector('.label');
+                if (!input.value) {
+                    if (label) label.classList.add('error-star');
+                    isValid = false;
+                } else {
+                    if (label) label.classList.remove('error-star');
+                }
+
+                roomList.addEventListener('click', () => {
+                    if (input.value) {
+                        if (label) label.classList.remove('error-star');
+                    }
+                });
+            });
+            // Validate privacy policy checkbox
+            const privacyPolicyCheckbox = document.getElementById('privacyPolicyCheckbox');
+            const privacyPolicyError = document.getElementById('privacyPolicyError');
+            if (privacyPolicyCheckbox && !privacyPolicyCheckbox.checked && currentStep == 1) {
+                privacyPolicyError.style.display = 'block';
+                isValid = false;
+            } else {
+                privacyPolicyError.style.display = 'none';
+            }
+
+            if (currentStep === 1) {
+                const password = document.querySelector('input[name="password"]');
+                const confirmPassword = document.querySelector('input[name="password_confirmation"]');
+                const passwordError = document.getElementById('passwordError');
+
+                if (password.value && confirmPassword.value) {
+                    if (password.value !== confirmPassword.value) {
+                        password.closest('.form-group').querySelector('.label').classList.add('error-star');
+                        confirmPassword.closest('.form-group').querySelector('.label').classList.add(
+                            'error-star');
+                        passwordError.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        password.closest('.form-group').querySelector('.label').classList.remove('error-star');
+                        confirmPassword.closest('.form-group').querySelector('.label').classList.remove(
+                            'error-star');
+                        passwordError.style.display = 'none';
                     }
                 }
-                return isValid;
             }
+            return isValid;
+        }
 
-            const roomsItems = document.querySelectorAll('#roomsList li');
-            // Rooms number selection
-            roomsItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    roomsItems.forEach(i => i.classList.remove('active', 'error-border'));
-                    item.classList.add('active');
-                    document.getElementById('numberOfRooms').value = item.getAttribute(
-                        'data-value');
-                    item.parentElement.previousElementSibling.classList.remove('error-star');
-                });
-            });
-
-            const roomsItems_wish = document.querySelectorAll('#roomsList_wish li');
-            // Rooms number selection
-            roomsItems_wish.forEach(item => {
-                item.addEventListener('click', () => {
-                    roomsItems_wish.forEach(i => i.classList.remove('active', 'error-border'));
-                    item.classList.add('active');
-                    document.getElementById('numberOfRooms_wish').value = item.getAttribute(
-                        'data-value');
-                    item.parentElement.previousElementSibling.classList.remove('error-star');
-                });
-            });
-
-            const prevSlideButton = document.getElementById('prevSlide');
-            const nextSlideButton = document.getElementById('nextSlide');
-            let currentSlide = 0;
-            let images = [];
-
-            // Handle gallery upload and preview
-            document.getElementById('gallery').addEventListener('change', function(event) {
-                const files = event.target.files;
-                images = [];
-                Array.from(files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        images.push(e.target.result);
-                        updateSlideshow();
-                    };
-                    reader.readAsDataURL(file);
-                });
-
-                if (files.length > 0) {
-                    document.querySelector('.preview-container').style.display = 'flex';
-                    document.getElementById('previewControls').style.display = 'flex';
-                    prevSlideButton.disabled = true;
-                    nextSlideButton.disabled = images.length <= 5;
-                } else {
-                    document.querySelector('.preview-container').style.display = 'none';
-                    document.getElementById('previewControls').style.display = 'none';
-                }
-            });
-
-            function updateSlideshow() {
-                const slideshow = document.getElementById('previewSlideshow');
-                slideshow.innerHTML = '';
-                const visibleImages = images.slice(currentSlide, currentSlide + 5);
-                visibleImages.forEach(src => {
-                    const img = document.createElement('img');
-                    img.src = src;
-                    slideshow.appendChild(img);
-                });
-
-                prevSlideButton.disabled = currentSlide === 0;
-                nextSlideButton.disabled = currentSlide >= images.length - 5;
-            }
-
-            prevSlideButton.addEventListener('click', () => {
-                if (currentSlide > 0) {
-                    currentSlide--;
-                    updateSlideshow();
-                }
-            });
-
-            nextSlideButton.addEventListener('click', () => {
-                if (currentSlide < images.length - 5) {
-                    currentSlide++;
-                    updateSlideshow();
-                }
+        const roomsItems = document.querySelectorAll('#roomsList li');
+        // Rooms number selection
+        roomsItems.forEach(item => {
+            item.addEventListener('click', () => {
+                roomsItems.forEach(i => i.classList.remove('active', 'error-border'));
+                item.classList.add('active');
+                document.getElementById('numberOfRooms').value = item.getAttribute(
+                    'data-value');
+                item.parentElement.previousElementSibling.classList.remove('error-star');
             });
         });
+
+        const roomsItems_wish = document.querySelectorAll('#roomsList_wish li');
+        // Rooms number selection
+        roomsItems_wish.forEach(item => {
+            item.addEventListener('click', () => {
+                roomsItems_wish.forEach(i => i.classList.remove('active', 'error-border'));
+                item.classList.add('active');
+                document.getElementById('numberOfRooms_wish').value = item.getAttribute(
+                    'data-value');
+                item.parentElement.previousElementSibling.classList.remove('error-star');
+            });
+        });
+
+        const prevSlideButton = document.getElementById('prevSlide');
+        const nextSlideButton = document.getElementById('nextSlide');
+        const galleryInput = document.getElementById('gallery');
+        let currentSlide = 0;
+        let images = [];
+        let filesArray = [];
+
+        // Handle gallery upload and preview
+        galleryInput.addEventListener('change', function(event) {
+            const files = Array.from(event.target.files);
+            images = [];
+            filesArray = files;
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    images.push(e.target.result);
+                    updateSlideshow();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            if (files.length > 0) {
+                document.querySelector('.preview-container').style.display = 'flex';
+                document.getElementById('previewControls').style.display = 'flex';
+                prevSlideButton.disabled = true;
+                nextSlideButton.disabled = images.length <= 5;
+            } else {
+                document.querySelector('.preview-container').style.display = 'none';
+                document.getElementById('previewControls').style.display = 'none';
+            }
+        });
+
+        function updateSlideshow() {
+            const slideshow = document.getElementById('previewSlideshow');
+            slideshow.innerHTML = '';
+            const visibleImages = images.slice(currentSlide, currentSlide + 5);
+            visibleImages.forEach((src, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.style.position = 'relative';
+                const img = document.createElement('img');
+                img.src = src;
+                imgContainer.appendChild(img);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'remove-image';
+                removeBtn.addEventListener('click', () => {
+                    const actualIndex = currentSlide + index;
+                    images.splice(actualIndex, 1);
+                    filesArray.splice(actualIndex, 1);
+                    updateFileInput();
+                    if (currentSlide >= images.length - 5 && currentSlide > 0) {
+                        currentSlide--;
+                    }
+                    updateSlideshow();
+                });
+                imgContainer.appendChild(removeBtn);
+                slideshow.appendChild(imgContainer);
+            });
+
+            prevSlideButton.disabled = currentSlide === 0;
+            nextSlideButton.disabled = currentSlide >= images.length - 5;
+        }
+
+        function updateFileInput() {
+            const dataTransfer = new DataTransfer();
+            filesArray.forEach(file => dataTransfer.items.add(file));
+            galleryInput.files = dataTransfer.files;
+        }
+
+        prevSlideButton.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlideshow();
+            }
+        });
+
+        nextSlideButton.addEventListener('click', () => {
+            if (currentSlide < images.length - 5) {
+                currentSlide++;
+                updateSlideshow();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.querySelector('form');
             if (form) {

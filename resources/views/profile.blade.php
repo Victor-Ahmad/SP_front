@@ -81,10 +81,12 @@
                     <div class="detail">
 
                         <div class="tags-container" id="tagsContainer">
-                            @foreach ($profile['intersts'] as $interest)
-                                <div class=tag>{{ $interest['interest'] }} <span data-city={{ $interest['id'] }}
-                                        class="remove-tag" style="display:none">&times;</span></div>
-                            @endforeach
+                            @if (isset($profile['intersts']) && !empty($profile['intersts']))
+                                @foreach ($profile['intersts'] as $interest)
+                                    <div class=tag>{{ $interest['interest'] }} <span data-city={{ $interest['id'] }}
+                                            class="remove-tag" style="display:none">&times;</span></div>
+                                @endforeach
+                            @endif
                         </div>
 
                     </div>

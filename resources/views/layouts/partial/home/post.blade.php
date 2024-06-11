@@ -3,10 +3,16 @@
         <div class="swiper-container noo carousel-2 img-style">
             <div class="swiper-wrapper">
                 @if (!empty($post['images']))
-                    @foreach ($post['images'] as $image)
+                    @foreach ($post['images'] as $index => $image)
                         <div class="swiper-slide post_image_container">
-                            <img class="post_image" src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}"
-                                alt="images">
+                            <img class="post_image @if ($index !== 0) blurred @endif"
+                                src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
+                            @if ($index !== 0 && !$showAll)
+                                <div class="overlay-container">
+                                    <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
+                                    <p class="overlay-text">@lang('lang.complete_profile_first_to_view_the_images')</p> <!-- Overlay text -->
+                                </div>
+                            @endif
                         </div>
                     @endforeach
                 @else
@@ -45,9 +51,11 @@
         </div>
         <div class="icon-box flex">
             <div class=""><span>@lang('lang.interests'): </span><span class="fw-6">
-                    @foreach ($post['user']['intersts'] as $interest)
-                        {{ $interest['interest'] }},
-                    @endforeach
+                    @if (isset($post['user']['intersts']) && !empty($post['user']['intersts']))
+                        @foreach ($post['user']['intersts'] as $interest)
+                            {{ $interest['interest'] }},
+                        @endforeach
+                    @endif
                 </span>
             </div>
         </div>
