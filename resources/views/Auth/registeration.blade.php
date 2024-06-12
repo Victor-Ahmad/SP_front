@@ -312,7 +312,7 @@
                                     <div style="margin-top:30px "></div>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="rooms-label label">@lang('lang.min_number_of_rooms ')</h3>
+                                            <h3 class="rooms-label label">@lang('lang.min_number_of_rooms')</h3>
                                             <ul id="roomsList_wish" class="roomsList-content required">
                                                 @foreach ($numberOfRooms as $number)
                                                     <li data-value="{{ $number['id'] }}"
