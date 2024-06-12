@@ -120,7 +120,7 @@ return [
     'remaining_steps' => 'Resterende Stappen',
     'max_rent_price' => 'Maximale Huurprijs',
     'min_number_of_rooms' => 'Minimum aantal kamers',
-    'your_wishes' => 'Uw Wensen',
+    // 'your_wishes' => 'Uw Wensen',
     'complete_your_account_to_get_better_house_exchange_matches' => 'Voltooi je account om betere woningruilmatches te krijgen ',
     'go_profile' => 'Ga naar Profiel',
 ];

@@ -303,7 +303,7 @@
                                                 value="{{ old('house_type_wish') }}">
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="price-label label">@lang('lang.max rent price') (€)</h3>
+                                            <h3 class="price-label label">@lang('lang.max_rent_price') (€)</h3>
                                             <input type="number" id="price_wish" name="price_wish"
                                                 placeholder="@lang('lang.enter price')" class="input-field required" step="0.01"
                                                 value="{{ old('price_wish') }}" required>
