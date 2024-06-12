@@ -328,7 +328,7 @@
 
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="area-label label">@lang('lang.area') (m²)</h3>
+                                            <h3 class="area-label label">@lang('lang.min_area') (m²)</h3>
                                             <div class="dropdown">
                                                 <input type="text" id="areaDropdownInput_wish"
                                                     placeholder="@lang('lang.select an option')" readonly
