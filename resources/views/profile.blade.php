@@ -101,7 +101,7 @@
                         </span>
                     </div> --}}
                     <div class="detail">
-                        <span class="label">@lang('lang.house description'):</span>
+                        <span class="label">@lang('lang.house_description'):</span>
                         <span class="value">
                             <textarea name="description" class="editable" disabled style="width: 25vw; min-height:15vh;">{{ $profile['one_to_one_swap_house']['description'] }}</textarea>
                         </span>
@@ -109,7 +109,7 @@
 
                 </div>
 
-                <h2>@lang('lang.your wishes')</h2>
+                <h2>@lang('lang.your_wishes')</h2>
                 <div class="house-details">
                     <span class="label">@lang('lang.locations of interest'):</span>
                     <input type="text" id="interestsAutocompleteInput" placeholder="Enter a location of interest"
@@ -145,17 +145,17 @@
                                 </span>
                             </div>
                             <div class="detail">
-                                <span class="label">@lang('lang.min number of rooms'):</span>
+                                <span class="label">@lang('lang.min_number_of_rooms'):</span>
                                 <span class="value"><input type="number" name="wish_number_of_rooms"
                                         value="{{ $wish['number_of_rooms'] }}" class="editable" disabled></span>
                             </div>
                             <div class="detail">
-                                <span class="label">@lang('lang.max rent price'):</span>
+                                <span class="label">@lang('lang.max_rent_price'):</span>
                                 <span class="value"><input type="number" step="0.01" name="wish_price"
                                         value="{{ $wish['price'] }}" class="editable" disabled></span>
                             </div>
                             <div class="detail">
-                                <span class="label">@lang('lang.area'):</span>
+                                <span class="label">@lang('lang.min_area'):</span>
                                 <span class="value"><input type="number" step="0.01" name="wish_area"
                                         value="{{ $wish['area'] }}" class="editable" disabled></span>
                             </div>

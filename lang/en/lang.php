@@ -113,7 +113,7 @@ return [
     'your_information' => 'Your Information',
     'more into your house' => 'More Into Your House',
     'describe your house' => 'Describe Your House',
-    'house description' => 'House Description',
+    'house_description' => 'Huisbeschrijving',
     'add_house_picture' => "Uploading photos of your house significantly increases your chances of finding the perfect swap partner. Showcasing your home helps others see its potential, making it more likely you'll find the ideal match!",
     'log in to view images' => 'Log in to view images',
     'complete profile first to view the images' => 'Complete your profile in order to view the images',
