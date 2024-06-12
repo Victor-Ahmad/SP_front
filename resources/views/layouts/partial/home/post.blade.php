@@ -5,7 +5,7 @@
                 @if (!empty($post['images']))
                     @foreach ($post['images'] as $index => $image)
                         <div class="swiper-slide post_image_container">
-                            <img class="post_image @if ($index !== 0) blurred @endif"
+                            <img class="post_image @if (!$showAll) blurred @endif"
                                 src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
                             @if (!$showAll)
                                 <div class="overlay-container">
@@ -20,7 +20,7 @@
                         style=" display: flex;
                     justify-content: center;
                     align-items: center;">
-                        <img class="post_image"
+                        <img class="post_image @if (!$showAll) blurred @endif"
                             style="  max-width: 100%;
                             max-height: 100%;
                         height: auto;   
