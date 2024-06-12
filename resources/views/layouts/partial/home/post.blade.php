@@ -7,7 +7,7 @@
                         <div class="swiper-slide post_image_container">
                             <img class="post_image @if ($index !== 0) blurred @endif"
                                 src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
-                            @if ($index !== 0 && !$showAll)
+                            @if (!$showAll)
                                 <div class="overlay-container">
                                     <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
                                     <p class="overlay-text">@lang('lang.complete_profile_first_to_view_the_images')</p> <!-- Overlay text -->
@@ -26,6 +26,12 @@
                         height: auto;   
                         object-fit: contain; "
                             src="assets/images/house/featured-7.png" alt="images">
+                        @if (!$showAll)
+                            <div class="overlay-container">
+                                <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
+                                <p class="overlay-text">@lang('lang.complete_profile_first_to_view_the_images')</p> <!-- Overlay text -->
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>

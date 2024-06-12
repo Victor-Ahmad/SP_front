@@ -1132,7 +1132,7 @@
 .mobile-button.mobi-style::before,
 .mobile-button.mobi-style::after,
 .mobile-button.mobi-style span {
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 .mobile-menu .login-box {
