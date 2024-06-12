@@ -139,25 +139,59 @@ class HomeController extends Controller
         }
 
         try {
+            $profileInfo = $this->apiService->getProfile()['result'];
+            return $request->features;
             $data = [
-                'interests' => $request->interests,
                 'delete_images' => $request->delete_images,
-                'delete_interests' => $request->delete_interests,
-                'location' => $request->location,
-                'post_code' => $request->post_code,
-                'street' => $request->street,
-                'house_number' => $request->house_number,
-                'number_of_rooms' => $request->number_of_rooms,
-                'description' => $request->description,
-                // 'specific_properties' => '',
+                'first_name' => $profileInfo['first_name'],
+                'last_name' => $profileInfo['last_name'],
+                'email' => $profileInfo['email'],
+                'number' => $profileInfo['number'],
+                'agreed_privacy_policy' => (string)$profileInfo['agreed_to_privacy_policy'],
+                'agreed_terms_of_use' => (string)$profileInfo['agreed_to_terms_of_use'],
+                'wish' => [
+                    'house_type_id' => $request->wish_house_type[0],
+                    'number_of_rooms' => $request->wish_number_of_rooms,
+                    'price' => $request->wish_price,
+                    'area' => $request->wish_area,
+                    'locations' => array_map(function ($location) {
+                        return $location['location'];
+                    }, $profileInfo['wishes'][0]['wish_locations']),
+                    'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', substr($request->features_wish, 1)) : null,
+                ],
+                'house' => [
+                    'house_number' => $profileInfo['one_to_one_swap_house']['house_number'],
+                    'post_code' => $profileInfo['one_to_one_swap_house']['post_code'],
+                    'location' => $profileInfo['one_to_one_swap_house']['location'],
+                    'street' => $profileInfo['one_to_one_swap_house']['street'],
+                    'number_of_rooms' => $request->number_of_rooms,
+                    'price' => $request->price,
+                    'area' => $profileInfo['one_to_one_swap_house']['area'],
+                    'description' => $request->description,
+                    'property_ids' => isset($request->features) && !empty($request->features) ? explode(',', substr($request->features, 1)) : null,
+                    'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id']
+                ]
             ];
 
-            $data = array_filter($data, function ($value) {
-                return !is_null($value) && $value !== '';
-            });
+            // $data = [
+            //     'interests' => $request->interests,
+            //     'delete_images' => $request->delete_images,
+            //     'delete_interests' => $request->delete_interests,
+            //     'location' => $request->location,
+            //     'post_code' => $request->post_code,
+            //     'street' => $request->street,
+            //     'house_number' => $request->house_number,
+            //     'number_of_rooms' => $request->number_of_rooms,
+            //     'description' => $request->description,
+            //     // 'specific_properties' => '',
+            // ];
+
+            // $data = array_filter($data, function ($value) {
+            //     return !is_null($value) && $value !== '';
+            // });
             $files = $request->file('images');
-
-
+            return $data;
+            // dd($request->all(), $data);
             $response = $this->apiService->updateProfile($data, $files);
             if ($response['success'] == 1) {
                 return redirect()->route('profile.get');
@@ -247,3 +281,41 @@ class HomeController extends Controller
         }
     }
 }
+
+
+
+ //    $data = [
+            //                 'delete_images' => $request->delete_images,
+            //                 'first_name' => $profileInfo['first_name'],
+            //                 'last_name' => $profileInfo['last_name'],
+            //                 'email' => $profileInfo['email'],
+            //                 'number' => $profileInfo['number'],
+            //                 'agreed_privacy_policy' => (string)$profileInfo['agreed_to_privacy_policy'],
+            //                 'agreed_terms_of_use' => (string)$profileInfo['agreed_to_terms_of_use'],
+            //                 'wish' => [
+            //                     'house_type_id' => (string)$profileInfo['wishes'][0]['house_type_id'],
+            //                     'number_of_rooms' => (string)$profileInfo['wishes'][0]['number_of_rooms'],
+            //                     'price' => $profileInfo['wishes'][0]['price'],
+            //                     'area' => $profileInfo['wishes'][0]['area'],
+            //                     'locations' => array_map(function ($location) {
+            //                         return $location['location'];
+            //                     }, $profileInfo['wishes'][0]['wish_locations']),
+            //                     'property_ids' => array_filter(array_map(function ($property) {
+            //                         return $property['specific_property'] ? (string)$property['specific_property']['id'] : null;
+            //                     }, $profileInfo['wishes'][0]['specific_properties']))
+            //                 ],
+            //                 'house' => [
+            //                     'house_number' => $profileInfo['one_to_one_swap_house']['house_number'],
+            //                     'post_code' => $profileInfo['one_to_one_swap_house']['post_code'],
+            //                     'location' => $profileInfo['one_to_one_swap_house']['location'],
+            //                     'street' => $profileInfo['one_to_one_swap_house']['street'],
+            //                     'number_of_rooms' => (string)$profileInfo['one_to_one_swap_house']['number_of_rooms'],
+            //                     'price' => $profileInfo['one_to_one_swap_house']['price'],
+            //                     'area' => $profileInfo['one_to_one_swap_house']['area'],
+            //                     'description' => $profileInfo['one_to_one_swap_house']['description'],
+            //                     'property_ids' => array_filter(array_map(function ($property) {
+            //                         return $property['specific_property'] ? (string)$property['specific_property']['id'] : null;
+            //                     }, $profileInfo['one_to_one_swap_house']['specific_properties'])),
+            //                     'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id']
+            //                 ]
+            //             ];

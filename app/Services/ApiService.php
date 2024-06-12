@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\UploadedFile;
 
+use function Laravel\Prompts\error;
 
 class ApiService
 {
@@ -265,35 +266,83 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
-
     public function updateProfile($data, $files)
     {
-        // Initialize the HTTP request with token and multipart form data
-        $httpRequest = $this->http->withToken(Session::get('token'))->asMultipart();
+        $multipartData = [];
 
-        // Attach files to the request
+        // Helper function to handle nested arrays
+        function addMultipartData(&$multipartData, $key, $value)
+        {
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    addMultipartData($multipartData, "{$key}[{$subKey}]", $subValue);
+                }
+            } else {
+                $multipartData[] = [
+                    'name' => $key,
+                    'contents' => (string) $value
+                ];
+            }
+        }
+
+        // Add form data to multipart
+        foreach ($data as $key => $value) {
+            addMultipartData($multipartData, $key, $value);
+        }
+
+        // Add files to multipart
         if ($files) {
             foreach ($files as $file) {
-                if ($file->isValid()) {
-                    $httpRequest = $httpRequest->attach(
-                        'images[]',
-                        fopen($file->getPathname(), 'r'),
-                        $file->getClientOriginalName()
-                    );
+                if ($file instanceof UploadedFile && $file->isValid()) {
+                    $multipartData[] = [
+                        'name' => 'house[images][]',
+                        'contents' => fopen($file->getPathname(), 'r'),
+                        'filename' => $file->getClientOriginalName()
+                    ];
                 }
             }
         }
 
-        // Send the API request with the data and files
-        $response = $httpRequest->post($this->baseUrl . 'update_profile', $data);
+        // Make the HTTP request with token and multipart form data
+        $response = $this->http->withToken(Session::get('token'))->asMultipart()->post($this->baseUrl . 'update_profile', $multipartData);
+        return $response;
 
-        // Check the response
         if ($response->successful()) {
             return $response->json();
         }
+
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+    // public function updateProfile($data, $files)
+    // {
+    //     // Initialize the HTTP request with token and multipart form data
+    //     $httpRequest = $this->http->withToken(Session::get('token'))->asMultipart();
+
+    //     // Attach files to the request
+    //     if ($files) {
+    //         foreach ($files as $file) {
+    //             if ($file->isValid()) {
+    //                 $httpRequest = $httpRequest->attach(
+    //                     'images[]',
+    //                     fopen($file->getPathname(), 'r'),
+    //                     $file->getClientOriginalName()
+    //                 );
+    //             }
+    //         }
+    //     }
+
+    //     // Send the API request with the data and files
+    //     $response = $httpRequest->post($this->baseUrl . 'update_profile', $data);
+
+    //     // Check the response
+    //     if ($response->successful()) {
+    //         return $response->json();
+    //     }
+    //     $this->revokeLogin($response);
+    //     throw new \Exception('API call failed: ' . $response->body());
+    // }
 
     public function checkNewMessages()
     {

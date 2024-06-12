@@ -131,18 +131,17 @@
                                 <span class="label">@lang('lang.house type'):</span>
                                 <span class="value">
                                     <div class="dropdown">
-                                        <input type="text" id="dropdownInput_wish_{{ $loop->index }}"
-                                            placeholder="@lang('lang.select an option')" readonly class="editable" disabled
-                                            value="{{ old('house_type_wish', $wish['house_type']['type']) }}">
-                                        <ul id="dropdownList_wish_{{ $loop->index }}" class="dropdown-content">
+                                        <input type="text" id="dropdownInput_wish" placeholder="@lang('lang.select an option')"
+                                            readonly class="editable" disabled
+                                            value="{{ old('wish_house_type', $wish['house_type']['type']) }}">
+                                        <ul id="dropdownList_wish" class="dropdown-content">
                                             @foreach ($houseTypes as $type)
                                                 <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
                                             @endforeach
                                         </ul>
                                     </div>
-                                    <input type="hidden" id="houseType_wish_{{ $loop->index }}"
-                                        name="house_type_wish[]"
-                                        value="{{ old('house_type_wish', $wish['house_type_id']) }}">
+                                    <input type="hidden" id="houseType_wish" name="wish_house_type[]"
+                                        value="{{ old('wish_house_type', $wish['house_type_id']) }}">
                                 </span>
                             </div>
                             <div class="detail">
@@ -164,9 +163,8 @@
                                 <span class="label">@lang('lang.house features'):</span>
                                 <span class="value">
                                     <div class="multi-select">
-                                        <input type="text" id="featuresInput_wish_{{ $loop->index }}" readonly
-                                            class="editable" disabled>
-                                        <ul id="featuresList_wish_{{ $loop->index }}" class="multi-select-content">
+                                        <input type="text" id="featuresInput_wish" readonly class="editable" disabled>
+                                        <ul id="featuresList_wish" class="multi-select-content">
                                             @foreach ($features as $feature)
                                                 <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
                                                     class="{{ in_array($feature['id'], array_column($wish['specific_properties'], 'property_id')) ? 'selected' : '' }}">
@@ -175,8 +173,7 @@
                                             @endforeach
                                         </ul>
                                     </div>
-                                    <input type="hidden" id="features_wish_{{ $loop->index }}"
-                                        name="features_wish_{{ $loop->index }}[]"
+                                    <input type="hidden" id="features_wish" name="features_wish[]"
                                         value="{{ implode(',', array_column($wish['specific_properties'], 'property_id')) }}">
                                 </span>
                             </div>
@@ -324,58 +321,61 @@
             document.getElementById('delete_images').value = delete_images;
         }
         // Multi-select functionality for house features
-        const featuresInput = document.getElementById('featuresInput');
-        const featuresList = document.getElementById('featuresList');
-        const featuresItems = featuresList.querySelectorAll('li');
-        let selectedFeatures = [];
-        let selectedFeaturesNames = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            const featuresInput = document.getElementById('featuresInput');
+            const featuresList = document.getElementById('featuresList');
+            const featuresItems = featuresList.querySelectorAll('li');
+            let selectedFeatures = [];
+            let selectedFeaturesNames = [];
 
-        // Initialize selected features from profile data
-        selectedFeatures = {!! json_encode(array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) !!};
-        selectedFeaturesNames = selectedFeatures.map(value => {
-            const item = featuresList.querySelector(`li[data-value="${value}"]`);
-            if (item) {
-                item.classList.add('selected');
-                return item.getAttribute('data-name');
-            }
-            return '';
-        }).filter(name => name !== '');
-        featuresInput.value = selectedFeaturesNames.join(', ');
-
-        featuresInput.addEventListener('click', (e) => {
-            e.stopPropagation();
-            featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
-        });
-
-        featuresItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                const value = e.target.getAttribute('data-value');
-                const name = e.target.getAttribute('data-name');
-                if (selectedFeatures.includes(value)) {
-                    selectedFeatures = selectedFeatures.filter(feature => feature !== value);
-                    selectedFeaturesNames = selectedFeaturesNames.filter(featureName => featureName !==
-                        name);
-                    e.target.classList.remove('selected');
-                } else {
-                    selectedFeatures.push(value);
-                    selectedFeaturesNames.push(name);
-                    e.target.classList.add('selected');
+            // Initialize selected features from profile data
+            selectedFeatures = {!! json_encode(array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) !!};
+            selectedFeaturesNames = selectedFeatures.map(value => {
+                const item = featuresList.querySelector(`li[data-value="${value}"]`);
+                if (item) {
+                    item.classList.add('selected');
+                    return item.getAttribute('data-name');
                 }
-                featuresInput.value = selectedFeaturesNames.join(', ');
-                document.getElementById('features').value = selectedFeatures.join(',');
+                return '';
+            }).filter(name => name !== '');
+            featuresInput.value = selectedFeaturesNames.join(', ');
+
+            featuresInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+                featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
+            });
+
+            featuresItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const value = e.target.getAttribute('data-value');
+                    const name = e.target.getAttribute('data-name');
+                    if (selectedFeatures.includes(value)) {
+                        selectedFeatures = selectedFeatures.filter(feature => feature !== value);
+                        selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
+                            featureName !==
+                            name);
+                        e.target.classList.remove('selected');
+                    } else {
+                        selectedFeatures.push(value);
+                        selectedFeaturesNames.push(name);
+                        e.target.classList.add('selected');
+                    }
+                    featuresInput.value = selectedFeaturesNames.join(', ');
+                    document.getElementById('features').value = selectedFeatures.join(',');
+                    alert(selectedFeatures.join(','));
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                featuresList.style.display = 'none';
             });
         });
-
-        document.addEventListener('click', (e) => {
-            featuresList.style.display = 'none';
-        });
-
         document.addEventListener('DOMContentLoaded', () => {
             @foreach ($profile['wishes'] as $wish)
                 const featuresInputWish{{ $loop->index }} = document.getElementById(
-                    'featuresInput_wish_{{ $loop->index }}');
+                    'featuresInput_wish');
                 const featuresListWish{{ $loop->index }} = document.getElementById(
-                    'featuresList_wish_{{ $loop->index }}');
+                    'featuresList_wish');
                 const featuresItemsWish{{ $loop->index }} = featuresListWish{{ $loop->index }}.querySelectorAll(
                     'li');
                 let selectedFeaturesWish{{ $loop->index }} = [];
@@ -421,7 +421,7 @@
                         }
                         featuresInputWish{{ $loop->index }}.value =
                             selectedFeaturesNamesWish{{ $loop->index }}.join(', ');
-                        document.getElementById('features_wish_{{ $loop->index }}').value =
+                        document.getElementById('features_wish').value =
                             selectedFeaturesWish{{ $loop->index }}.join(',');
                     });
                 });
