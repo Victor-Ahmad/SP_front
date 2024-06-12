@@ -40,7 +40,7 @@ return [
     'rent price' => 'Rent Price',
     'house type' => 'House Type',
     'number of rooms' => 'Number of Rooms',
-    'your_house' => 'Your House',
+    'your_house' => 'Your House / Where do you Live?',
     'step 1: your house information' => 'Stap 1: Your House Information',
     'step 2: your house location' => 'Stap 2: Your House Location',
     'step 3: your house gallery' => 'Stap 3: Your House Gallery',
