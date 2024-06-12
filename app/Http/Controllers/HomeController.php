@@ -140,7 +140,7 @@ class HomeController extends Controller
 
         try {
             $profileInfo = $this->apiService->getProfile()['result'];
-            return $request->features;
+            // return $request->features;
             $data = [
                 'delete_images' => $request->delete_images,
                 'first_name' => $profileInfo['first_name'],
@@ -157,7 +157,7 @@ class HomeController extends Controller
                     'locations' => array_map(function ($location) {
                         return $location['location'];
                     }, $profileInfo['wishes'][0]['wish_locations']),
-                    'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', substr($request->features_wish, 1)) : null,
+                    // 'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', substr($request->features_wish, 1)) : null,
                 ],
                 'house' => [
                     'house_number' => $profileInfo['one_to_one_swap_house']['house_number'],
@@ -168,7 +168,7 @@ class HomeController extends Controller
                     'price' => $request->price,
                     'area' => $profileInfo['one_to_one_swap_house']['area'],
                     'description' => $request->description,
-                    'property_ids' => isset($request->features) && !empty($request->features) ? explode(',', substr($request->features, 1)) : null,
+                    // 'property_ids' => isset($request->features) && !empty($request->features) ? explode(',', substr($request->features, 1)) : null,
                     'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id']
                 ]
             ];
@@ -190,7 +190,7 @@ class HomeController extends Controller
             //     return !is_null($value) && $value !== '';
             // });
             $files = $request->file('images');
-            return $data;
+            // return $data;
             // dd($request->all(), $data);
             $response = $this->apiService->updateProfile($data, $files);
             if ($response['success'] == 1) {

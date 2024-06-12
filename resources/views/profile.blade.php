@@ -81,7 +81,7 @@
                         <span class="value"><input type="number" step="0.01" name="price"
                                 value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
                     </div>
-                    <div class="detail">
+                    {{-- <div class="detail">
                         <span class="label">@lang('lang.house features'):</span>
                         <span class="value">
                             <div class="multi-select">
@@ -99,7 +99,7 @@
                                 name="features[]"
                                 value="{{ implode(',', array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) }}">
                         </span>
-                    </div>
+                    </div> --}}
                     <div class="detail">
                         <span class="label">@lang('lang.house description'):</span>
                         <span class="value">
@@ -159,7 +159,7 @@
                                 <span class="value"><input type="number" step="0.01" name="wish_area"
                                         value="{{ $wish['area'] }}" class="editable" disabled></span>
                             </div>
-                            <div class="detail">
+                            {{-- <div class="detail">
                                 <span class="label">@lang('lang.house features'):</span>
                                 <span class="value">
                                     <div class="multi-select">
@@ -176,7 +176,7 @@
                                     <input type="hidden" id="features_wish" name="features_wish[]"
                                         value="{{ implode(',', array_column($wish['specific_properties'], 'property_id')) }}">
                                 </span>
-                            </div>
+                            </div> --}}
                         </div>
                     @endforeach
 
