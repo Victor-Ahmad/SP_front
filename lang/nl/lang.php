@@ -125,4 +125,5 @@ return [
     // 'your_wishes' => 'Uw Wensen',
     'complete_your_account_to_get_better_house_exchange_matches' => 'Voltooi je account om betere woningruilmatches te krijgen ',
     'go_profile' => 'Ga naar Profiel',
+    'house_details' => 'Huisdetails',
 ];

@@ -73,12 +73,13 @@
             font-size: 50px;
             /* Adjust the icon size */
             margin-bottom: 10px;
+            color: grey !important;
             /* Space between the icon and text */
         }
 
         .overlay-text {
             font-size: 16px;
-            color: #fff !important;
+            color: grey !important;
             /* Adjust the text size */
         }
 

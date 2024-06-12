@@ -10,7 +10,7 @@
                             @if (!$showAll)
                                 <div class="overlay-container">
                                     <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
-                                    <p class="overlay-text">@lang('lang.complete_profile_first_to_view_the_images')</p> <!-- Overlay text -->
+                                    <p class="overlay-text">@lang('lang.complete_your_account_to_get_better_house_exchange_matches')</p> <!-- Overlay text -->
                                 </div>
                             @endif
                         </div>
@@ -25,11 +25,11 @@
                             max-height: 100%;
                         height: auto;   
                         object-fit: contain; "
-                            src="assets/images/house/featured-7.png" alt="images">
+                            src="/assets/images/house/featured-7.png" alt="images">
                         @if (!$showAll)
                             <div class="overlay-container">
                                 <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->
-                                <p class="overlay-text">@lang('lang.complete_profile_first_to_view_the_images')</p> <!-- Overlay text -->
+                                <p class="overlay-text">@lang('lang.complete_your_account_to_get_better_house_exchange_matches')</p> <!-- Overlay text -->
                             </div>
                         @endif
                     </div>

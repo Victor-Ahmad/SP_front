@@ -126,4 +126,5 @@ return [
     'your wishes' => 'Your Wishes',
     'complete_your_account_to_get_better_house_exchange_matches' => 'Complete your account to get better house exchange matches ',
     'go_profile' => 'Go to Profile',
+    'house_details' => 'House Details',
 ];

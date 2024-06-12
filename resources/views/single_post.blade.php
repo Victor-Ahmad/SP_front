@@ -116,17 +116,29 @@
                     <div class="col-lg-12">
                         <div id="slider-wrap">
                             <div id="slider">
-                                @foreach ($post['images'] as $index => $image)
-                                    <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images"
-                                        class=" @if ($index !== 0) blurred @endif">
-                                    @if ($index !== 0 && !$post['showAll'])
+                                @if (!empty($post['images']))
+                                    @foreach ($post['images'] as $index => $image)
+                                        <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images"
+                                            class=" @if ($index !== 0) blurred @endif">
+                                        @if ($index !== 0 && !$post['showAll'])
+                                            <div class="overlay-container">
+                                                <i class="fas fa-lock overlay-icon"></i>
+                                                <!-- Overlay icon for blurred images -->
+                                                <p class="overlay-text">@lang('lang.complete profile first to view the images')</p> <!-- Overlay text -->
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <img src="assets/images/house/featured-7.png" alt="images"
+                                        class=" @if (!$post['showAll']) blurred @endif">
+                                    @if (!$post['showAll'])
                                         <div class="overlay-container">
                                             <i class="fas fa-lock overlay-icon"></i>
                                             <!-- Overlay icon for blurred images -->
                                             <p class="overlay-text">@lang('lang.complete profile first to view the images')</p> <!-- Overlay text -->
                                         </div>
                                     @endif
-                                @endforeach
+                                @endif
                             </div>
                             <div id="previous" class="btns">❮</div>
                             <div id="next" class="btns">❯</div>
@@ -211,7 +223,7 @@
                             </div>
                             <div class="wrap-property wrap-style">
                                 <div class="titles">
-                                    <h3>@lang('lang.house details')</h3>
+                                    <h3>@lang('lang.house_details')</h3>
                                 </div>
                                 <div class="box flex">
                                     <ul>
@@ -222,6 +234,12 @@
                                                 class="two">{{ $post['number_of_rooms'] }}</span></li>
                                         <li class="flex"><span class="one fw-6">@lang('lang.rent price'):</span><span
                                                 class="two">{{ $post['price'] }} (€)
+                                            </span></li>
+                                        <li class="flex"><span class="one fw-6">@lang('lang.area'):</span><span
+                                                class="two">{{ $post['area'] }} (€)
+                                            </span></li>
+                                        <li class="flex"><span class="one fw-6">@lang('lang.description'):</span><span
+                                                class="two">{{ $post['description'] }} (€)
                                             </span></li>
 
                                     </ul>
