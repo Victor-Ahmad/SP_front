@@ -248,6 +248,7 @@ class HomeController extends Controller
                 $post['intersts'] = $response['result']['house_owner']['intersts'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
                 $post['showAll'] = Session::get('showAll') ?? 'false';
+                $post['progress'] =   $this->apiService->getProfileProgress()['result'];
                 return view('single_post', compact('post'));
             } else {
                 return back()->withErrors(['password' => $response['message']]);

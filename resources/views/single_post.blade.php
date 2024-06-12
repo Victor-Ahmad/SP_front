@@ -105,6 +105,82 @@
             color: #fff !important;
             /* Adjust the text size */
         }
+
+
+
+
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .progress-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .progress-circle .background {
+            stroke: #ffa920;
+        }
+
+        .progress-circle .foreground {
+            stroke: #2a81b2;
+            stroke-linecap: round;
+            stroke-dasharray: 0 100;
+            transition: stroke-dasharray 1s ease, stroke-dashoffset 1s ease;
+            transition-delay: 0.3s;
+        }
+
+        .progress-circle .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .missing-steps {
+            margin-left: 20px;
+        }
+
+        .missing-steps p {
+            font-size: 1em;
+        }
+
+        .missing-steps a {
+            display: block;
+            color: #2a81b2 !important;
+            text-decoration: none;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .missing-steps a:hover {
+            text-decoration: none !important;
+            color: #ff9700 !important;
+
+        }
+
+        .missing-steps a:hover {
+            text-decoration: underline;
+        }
     </style>
 @endsection
 
@@ -149,7 +225,24 @@
             </div>
         </section>
         <div class="clearfix"></div>
-
+        @if ($post['progress']['progress'] != '100 %')
+            <div class="progress-container">
+                <div class="progress-circle">
+                    <svg viewBox="0 0 100 100">
+                        <circle class="background" cx="50" cy="50" r="45"></circle>
+                        <circle class="foreground" cx="50" cy="50" r="45"></circle>
+                    </svg>
+                    <div class="progress-text" id="progress-text"></div>
+                </div>
+                <div class="missing-steps">
+                    <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
+                    <a href="{{ route('profile.get') }}">@lang('lang.go_profile')</a>
+                    {{-- @foreach ($progress['missing_steps'] as $step)
+                    <a href="{{ route('profile.get') }}">{{ $step }}</a>
+                @endforeach --}}
+                </div>
+            </div>
+        @endif
         <section class="flat-property-detail property-detail2 style2">
             <br>
             <br>
@@ -293,6 +386,19 @@
 @endsection
 
 @section('additional_scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressValue = {{ json_encode((int) str_replace(' %', '', $progress['progress'])) }};
+            const circumference = 2 * Math.PI * 45;
+            const offset = circumference - (progressValue / 100) * circumference;
+            const foregroundCircle = document.querySelector('.progress-circle .foreground');
+            const progressText = document.getElementById('progress-text');
+
+            foregroundCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            foregroundCircle.style.strokeDashoffset = offset;
+            progressText.textContent = `${progressValue}%`;
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             let pos = 0;
