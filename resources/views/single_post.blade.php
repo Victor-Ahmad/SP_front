@@ -98,11 +98,12 @@
             /* Adjust the icon size */
             margin-bottom: 10px;
             /* Space between the icon and text */
+            color: #2a81b2 !important;
         }
 
         .overlay-text {
             font-size: 16px;
-            color: #fff !important;
+            color: #2a81b2 !important;
             /* Adjust the text size */
         }
 
@@ -195,8 +196,8 @@
                                 @if (!empty($post['images']))
                                     @foreach ($post['images'] as $index => $image)
                                         <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images"
-                                            class=" @if ($index !== 0) blurred @endif">
-                                        @if ($index !== 0 && !$post['showAll'])
+                                            class=" @if (!$post['showAll']) blurred @endif">
+                                        @if (!$post['showAll'])
                                             <div class="overlay-container">
                                                 <i class="fas fa-lock overlay-icon"></i>
                                                 <!-- Overlay icon for blurred images -->
@@ -205,7 +206,7 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    <img src="assets/images/house/featured-7.png" alt="images"
+                                    <img src="../assets/images/house/featured-7.png" alt="images"
                                         class=" @if (!$post['showAll']) blurred @endif">
                                     @if (!$post['showAll'])
                                         <div class="overlay-container">
@@ -225,28 +226,31 @@
             </div>
         </section>
         <div class="clearfix"></div>
-        @if ($post['progress']['progress'] != '100 %')
-            <div class="progress-container">
-                <div class="progress-circle">
-                    <svg viewBox="0 0 100 100">
-                        <circle class="background" cx="50" cy="50" r="45"></circle>
-                        <circle class="foreground" cx="50" cy="50" r="45"></circle>
-                    </svg>
-                    <div class="progress-text" id="progress-text"></div>
-                </div>
-                <div class="missing-steps">
-                    <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
-                    <a href="{{ route('profile.get') }}">@lang('lang.go_profile')</a>
-                    {{-- @foreach ($progress['missing_steps'] as $step)
-                    <a href="{{ route('profile.get') }}">{{ $step }}</a>
-                @endforeach --}}
-                </div>
-            </div>
-        @endif
+
         <section class="flat-property-detail property-detail2 style2">
             <br>
             <br>
             <div class="container">
+                @if ($post['progress']['progress'] != '100 %')
+                    <div class="progress-container">
+                        <div class="progress-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="background" cx="50" cy="50" r="45"></circle>
+                                <circle class="foreground" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="progress-text" id="progress-text"></div>
+                        </div>
+                        <div class="missing-steps">
+                            <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
+                            <a href="{{ route('profile.get') }}">@lang('lang.go_profile')</a>
+                            {{-- @foreach ($progress['missing_steps'] as $step)
+                        <a href="{{ route('profile.get') }}">{{ $step }}</a>
+                    @endforeach --}}
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                @endif
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="post">
@@ -329,11 +333,13 @@
                                                 class="two">{{ $post['price'] }} (€)
                                             </span></li>
                                         <li class="flex"><span class="one fw-6">@lang('lang.area'):</span><span
-                                                class="two">{{ $post['area'] }} (€)
+                                                class="two">{{ $post['area'] }} (m²)
                                             </span></li>
-                                        <li class="flex"><span class="one fw-6">@lang('lang.description'):</span><span
-                                                class="two">{{ $post['description'] }} (€)
-                                            </span></li>
+                                        @if ($post['description'] != '')
+                                            <li class="flex"><span class="one fw-6">@lang('lang.house_description'):</span><span
+                                                    class="two">{{ $post['description'] }}
+                                                </span></li>
+                                        @endif
 
                                     </ul>
                                     {{-- <ul>
@@ -388,7 +394,7 @@
 @section('additional_scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const progressValue = {{ json_encode((int) str_replace(' %', '', $progress['progress'])) }};
+            const progressValue = {{ json_encode((int) str_replace(' %', '', $post['progress']['progress'])) }};
             const circumference = 2 * Math.PI * 45;
             const offset = circumference - (progressValue / 100) * circumference;
             const foregroundCircle = document.querySelector('.progress-circle .foreground');
