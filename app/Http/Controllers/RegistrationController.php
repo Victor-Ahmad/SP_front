@@ -39,6 +39,10 @@ class RegistrationController extends Controller
                     ["id" => 6, "number" => "6"],
                 ],
                 'areas' => [
+                    '40',
+                    '45',
+                    '50',
+                    '55',
                     '60',
                     '65',
                     '70',

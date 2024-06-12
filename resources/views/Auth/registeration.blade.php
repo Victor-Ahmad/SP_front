@@ -303,7 +303,7 @@
                                                 value="{{ old('house_type_wish') }}">
                                         </div>
                                         <div class="form-group">
-                                            <h3 class="price-label label">@lang('lang.rent price') (€)</h3>
+                                            <h3 class="price-label label">@lang('lang.max rent price') (€)</h3>
                                             <input type="number" id="price_wish" name="price_wish"
                                                 placeholder="@lang('lang.enter price')" class="input-field required" step="0.01"
                                                 value="{{ old('price_wish') }}" required>
@@ -312,7 +312,7 @@
                                     <div style="margin-top:30px "></div>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="rooms-label label">@lang('lang.number of rooms')</h3>
+                                            <h3 class="rooms-label label">@lang('lang.min number of rooms')</h3>
                                             <ul id="roomsList_wish" class="roomsList-content required">
                                                 @foreach ($numberOfRooms as $number)
                                                     <li data-value="{{ $number['id'] }}"
@@ -372,92 +372,6 @@
                                     <div style="margin-top:30px "></div>
                                 </div>
                                 <!-- Step 2 -->
-                                <div class="form-step">
-                                    <div class="row center-content">
-                                        <h3 style="font-size: 24px !important;">@lang('lang.your_information')</h3>
-                                    </div>
-                                    <hr>
-                                    <br>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.first name')</h3>
-                                            <input class="text required input-field" type="text" name="first_name"
-                                                placeholder="@lang('lang.first name')" value="{{ old('first_name') }}"
-                                                required>
-                                        </div>
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.last name')</h3>
-                                            <input class="text email required input-field" type="text"
-                                                name="last_name" placeholder="@lang('lang.last name')"
-                                                value="{{ old('last_name') }}" required>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top:30px "></div>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.email')</h3>
-                                            <input class="text email required input-field" type="email" name="email"
-                                                value="{{ old('email') }}" placeholder="@lang('lang.email')" required>
-                                            <div class="invalid-feedback" id="emailError"
-                                                style="display: none; color: red;">Email is already taken</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.phone number')</h3>
-                                            <input class="text email required input-field" type="tel"
-                                                name="phone_number" placeholder="@lang('lang.phone number')" required
-                                                pattern="[0-9]{9,15}" value="{{ old('phone_number') }}"
-                                                title="Phone number must be between 10 to 15 digits">
-                                            <div class="invalid-feedback" id="phoneError"
-                                                style="display: none; color: red;">Phone number is already taken</div>
-                                        </div>
-
-                                    </div>
-                                    <div style="margin-top:30px "></div>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.password')</h3>
-                                            <input class="text required input-field" type="password" name="password"
-                                                placeholder="@lang('lang.password')" required>
-                                            <div class="invalid-feedback" id="passwordError"
-                                                style="display: none; color: red;">Passwords do not match</div>
-                                        </div>
-                                        <div class="form-group">
-                                            <h3 class="label">@lang('lang.confirm password')</h3>
-                                            <input class="text required input-field" type="password"
-                                                name="password_confirmation" placeholder="@lang('lang.confirm password')" required>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top:30px "></div>
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <div class="wthree-text">
-                                                <label class="anim">
-                                                    <input name="privacy_policy_and_terms_of_use" type="checkbox"
-                                                        class="checkbox required" id="privacyPolicyCheckbox" required>
-                                                    <span>
-                                                        {!! __('lang.agree_text', [
-                                                            'privacy_policy' =>
-                                                                '<a style="color:#2981B2;" href="' .
-                                                                route('privacy-policy') .
-                                                                '" target="_blank">' .
-                                                                __('lang.privacy_policy') .
-                                                                '</a>',
-                                                            'terms_of_use' => '',
-                                                            // 'terms_of_use' => '<a href="" target="_blank">' . __('lang.terms_of_use') . '</a>',
-                                                        ]) !!}
-                                                    </span>
-                                                </label>
-                                                <div id="privacyPolicyError" class="invalid-feedback"
-                                                    style="display: none;">
-                                                    @lang('lang.agree_to_privacy_policy')
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div style="margin-top:30px "></div>
-                                </div>
-                                <!-- Step 3 -->
                                 <div class="form-step">
                                     <div class="row center-content">
                                         <h3 style="font-size: 24px !important;">@lang('lang.your_house')</h3>
@@ -585,6 +499,93 @@
                                     </div>
                                     <div style="margin-top:30px"></div>
                                 </div>
+                                <!-- Step 3 -->
+                                <div class="form-step">
+                                    <div class="row center-content">
+                                        <h3 style="font-size: 24px !important;">@lang('lang.your_information')</h3>
+                                    </div>
+                                    <hr>
+                                    <br>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.first name')</h3>
+                                            <input class="text required input-field" type="text" name="first_name"
+                                                placeholder="@lang('lang.first name')" value="{{ old('first_name') }}"
+                                                required>
+                                        </div>
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.last name')</h3>
+                                            <input class="text email required input-field" type="text"
+                                                name="last_name" placeholder="@lang('lang.last name')"
+                                                value="{{ old('last_name') }}" required>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:30px "></div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.email')</h3>
+                                            <input class="text email required input-field" type="email" name="email"
+                                                value="{{ old('email') }}" placeholder="@lang('lang.email')" required>
+                                            <div class="invalid-feedback" id="emailError"
+                                                style="display: none; color: red;">Email is already taken</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.phone number')</h3>
+                                            <input class="text email required input-field" type="tel"
+                                                name="phone_number" placeholder="@lang('lang.phone number')" required
+                                                pattern="[0-9]{9,15}" value="{{ old('phone_number') }}"
+                                                title="Phone number must be between 10 to 15 digits">
+                                            <div class="invalid-feedback" id="phoneError"
+                                                style="display: none; color: red;">Phone number is already taken</div>
+                                        </div>
+
+                                    </div>
+                                    <div style="margin-top:30px "></div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.password')</h3>
+                                            <input class="text required input-field" type="password" name="password"
+                                                placeholder="@lang('lang.password')" required>
+                                            <div class="invalid-feedback" id="passwordError"
+                                                style="display: none; color: red;">Passwords do not match</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h3 class="label">@lang('lang.confirm password')</h3>
+                                            <input class="text required input-field" type="password"
+                                                name="password_confirmation" placeholder="@lang('lang.confirm password')" required>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:30px "></div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <div class="wthree-text">
+                                                <label class="anim">
+                                                    <input name="privacy_policy_and_terms_of_use" type="checkbox"
+                                                        class="checkbox required" id="privacyPolicyCheckbox" required>
+                                                    <span>
+                                                        {!! __('lang.agree_text', [
+                                                            'privacy_policy' =>
+                                                                '<a style="color:#2981B2;" href="' .
+                                                                route('privacy-policy') .
+                                                                '" target="_blank">' .
+                                                                __('lang.privacy_policy') .
+                                                                '</a>',
+                                                            'terms_of_use' => '',
+                                                            // 'terms_of_use' => '<a href="" target="_blank">' . __('lang.terms_of_use') . '</a>',
+                                                        ]) !!}
+                                                    </span>
+                                                </label>
+                                                <div id="privacyPolicyError" class="invalid-feedback"
+                                                    style="display: none;">
+                                                    @lang('lang.agree_to_privacy_policy')
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div style="margin-top:30px "></div>
+                                </div>
+
                                 <!-- Step 4 -->
                                 <div class="form-step">
                                     <div class="row center-content">
@@ -1117,7 +1118,7 @@
 
         nextButton.addEventListener('click', () => {
             if (currentStep < steps.length - 1 && validateStep(currentStep)) {
-                if (currentStep === 1) {
+                if (currentStep === 2) {
                     const email = document.querySelector('input[name="email"]').value;
                     const phoneNumber = document.querySelector('input[name="phone_number"]').value;
                     createPreloader();
@@ -1255,14 +1256,14 @@
             // Validate privacy policy checkbox
             const privacyPolicyCheckbox = document.getElementById('privacyPolicyCheckbox');
             const privacyPolicyError = document.getElementById('privacyPolicyError');
-            if (privacyPolicyCheckbox && !privacyPolicyCheckbox.checked && currentStep == 1) {
+            if (privacyPolicyCheckbox && !privacyPolicyCheckbox.checked && currentStep == 2) {
                 privacyPolicyError.style.display = 'block';
                 isValid = false;
             } else {
                 privacyPolicyError.style.display = 'none';
             }
 
-            if (currentStep === 1) {
+            if (currentStep === 2) {
                 const password = document.querySelector('input[name="password"]');
                 const confirmPassword = document.querySelector('input[name="password_confirmation"]');
                 const passwordError = document.getElementById('passwordError');

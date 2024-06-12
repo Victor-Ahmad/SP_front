@@ -76,6 +76,7 @@ class HomeController extends Controller
             $posts = array_merge($first_posts, $last_posts);
             $progress =    $this->apiService->getProfileProgress()['result'];
             $showAll = $response['result']['has_more_than_two_images'];
+            Session::put('showAll', $showAll);
             return view('home', ['posts' => $posts, 'progress' => $progress, 'showAll' => $showAll]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
@@ -119,7 +120,9 @@ class HomeController extends Controller
             if (!$response['result']['one_to_one_swap_house']) {
                 return redirect()->route('account_completion');
             }
-            return view('profile', ['profile' => $response['result']]);
+            $houseTypes = $this->apiService->getHouseTypes()['result'];
+            $features = $this->apiService->getHouseProperties()['result'];
+            return view('profile', ['profile' => $response['result'], 'houseTypes' => $houseTypes, 'features' => $features,]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -128,7 +131,7 @@ class HomeController extends Controller
 
     public function updateProfile(Request $request)
     {
-
+        // return $request;
         if (!Session::get('token')) {
             return redirect()->route('login');
         } else {
@@ -145,6 +148,8 @@ class HomeController extends Controller
                 'street' => $request->street,
                 'house_number' => $request->house_number,
                 'number_of_rooms' => $request->number_of_rooms,
+                'description' => $request->description,
+                // 'specific_properties' => '',
             ];
 
             $data = array_filter($data, function ($value) {
@@ -208,6 +213,7 @@ class HomeController extends Controller
                 $post = $response['result']['house'];
                 $post['intersts'] = $response['result']['house_owner']['intersts'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
+                $post['showAll'] = Session::get('showAll') ?? 'false';
                 return view('single_post', compact('post'));
             } else {
                 return back()->withErrors(['password' => $response['message']]);

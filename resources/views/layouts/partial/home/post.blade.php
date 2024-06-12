@@ -38,7 +38,9 @@
     </div>
     <div class="content">
         <h3 class="link-style-1"><a href="">{{ $post['location'] }}, {{ $post['street'] }}</a></h3>
+        <p class="p-12">{{ $post['post_code'] }}</p>
         <div class="text-address">
+
             <p class="p-12">{{ $post['user']['first_name'] }} {{ $post['user']['last_name'] }}</p>
         </div>
         <div class="money fs-18 fw-6 text-color-3"><a href="">€ {{ $post['price'] }}</a></div>

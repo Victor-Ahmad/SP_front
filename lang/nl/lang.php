@@ -103,7 +103,7 @@ return [
     'message_suggestion_3' => 'Kun je me meer vertellen over de omgeving?',
     'show_message_suggestions' => 'Berichtsuggesties weergeven',
     'delete account' => 'Account Verwijderen',
-    'your_wishes' => 'Uw Wensen',
+    'your_wishes' => 'Uw Wensen: Waar wil je naar toe?',
     'area' => 'Oppervlakte',
     'house features' => 'Huiskenmerken',
     'specify house features' => 'Specificeer Huiskenmerken',
@@ -118,4 +118,7 @@ return [
     'complete_profile_first_to_view_the_images' => 'Voltooi je profiel om de afbeeldingen te bekijken',
     'completed' => 'Voltooid',
     'remaining_steps' => 'Resterende Stappen',
+    'max_rent_price' => 'Maximale Huurprijs',
+    'min_number_of_rooms' => 'Minimum aantal kamers',
+    'your_wishes' => 'Uw Wensen',
 ];

@@ -103,7 +103,7 @@ return [
     'message_suggestion_3' => 'Can you tell me more about the area?',
     'show_message_suggestions' => 'Show Message Suggestions',
     'delete account' => 'Delete Account',
-    'your_wishes' => 'Your Wishes',
+    'your_wishes' => 'Your Wishes: Where do you want to go?',
     'area' => 'Area',
     'house features' => 'House Features',
     'specify house features' => 'Specify House Features',
@@ -119,5 +119,7 @@ return [
     'account completion' => 'Account Completion',
     'completed' => 'Completed',
     'remaining_steps' => 'Remaining Steps',
-
+    'max rent price' => 'Max Rent Price',
+    'min number of rooms' => 'Minimmum number of rooms',
+    'your wishes' => 'Your Wishes',
 ];

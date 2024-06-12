@@ -27,7 +27,7 @@
             /* background-color: #ffa920 !important; */
             /* color: #ffa920 !important; */
             transition: background-color 0.3s ease !important;
-            background-color: #18638b !important;
+            background-color: #2a81b2 !important;
             /* Hover background color */
         }
 
@@ -40,13 +40,9 @@
         }
 
         .text-outline {
-            color: white;
+            color: #2a81b2;
             /* You can set the text color as desired */
-            text-shadow:
-                -1px -1px 0 #18638b,
-                1px -1px 0 #18638b,
-                -1px 1px 0 #18638b,
-                1px 1px 0 #18638b;
+
             /* Blue outline */
 
             /* Adjust as necessary */
@@ -87,6 +83,10 @@
             font-size: 16px;
             color: #fff !important;
             /* Adjust the text size */
+        }
+
+        .flat-icon {
+            background-color: #fff !important;
         }
     </style>
 @endsection

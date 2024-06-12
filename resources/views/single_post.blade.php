@@ -68,6 +68,43 @@
             margin-right: 5px;
             /* Adjust spacing between icon and text */
         }
+
+        .image-group {
+            position: relative;
+        }
+
+        .post_image_container {
+            position: relative;
+        }
+
+        .blurred {
+            filter: blur(20px);
+            /* Adjust the blur intensity */
+            width: 100%;
+            /* Adjust the size as needed */
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .overlay-icon {
+            font-size: 50px;
+            /* Adjust the icon size */
+            margin-bottom: 10px;
+            /* Space between the icon and text */
+        }
+
+        .overlay-text {
+            font-size: 16px;
+            color: #fff !important;
+            /* Adjust the text size */
+        }
     </style>
 @endsection
 
@@ -79,8 +116,16 @@
                     <div class="col-lg-12">
                         <div id="slider-wrap">
                             <div id="slider">
-                                @foreach ($post['images'] as $image)
-                                    <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images">
+                                @foreach ($post['images'] as $index => $image)
+                                    <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="images"
+                                        class=" @if ($index !== 0) blurred @endif">
+                                    @if ($index !== 0 && !$post['showAll'])
+                                        <div class="overlay-container">
+                                            <i class="fas fa-lock overlay-icon"></i>
+                                            <!-- Overlay icon for blurred images -->
+                                            <p class="overlay-text">@lang('lang.complete profile first to view the images')</p> <!-- Overlay text -->
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
                             <div id="previous" class="btns">❮</div>

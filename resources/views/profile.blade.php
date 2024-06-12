@@ -3,10 +3,13 @@
 @section('title', 'Profile')
 
 @section('head_css')
+
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
     <link href="{{ asset('app/css/profile.css') }}?v={{ filemtime(public_path('app/css/profile.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @endsection
 
 @section('content')
@@ -37,6 +40,12 @@
 
                 <h2>@lang('lang.house details')</h2>
                 <div class="house-details">
+                    <div class="detail">
+                        <span class="label">@lang('lang.house type'):</span>
+                        <span class="value"><input type="text" name="house_type"
+                                value="{{ $profile['one_to_one_swap_house']['house_type']['type'] }}" class="uneditable"
+                                disabled></span>
+                    </div>
                     <div class="detail">
                         <span class="label">@lang('lang.location'):</span>
                         <span class="value"><input type="text" name="location" id ="location"
@@ -72,14 +81,40 @@
                         <span class="value"><input type="number" step="0.01" name="price"
                                 value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
                     </div>
+                    <div class="detail">
+                        <span class="label">@lang('lang.house features'):</span>
+                        <span class="value">
+                            <div class="multi-select">
+                                <input type="text" id="featuresInput" readonly class="editable" disabled>
+                                <ul id="featuresList" class="multi-select-content">
+                                    @foreach ($features as $feature)
+                                        <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
+                                            class="{{ in_array($feature['id'], array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) ? 'selected' : '' }}">
+                                            {{ $feature['name'] }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <input type="hidden" id="features\"
+                                name="features[]"
+                                value="{{ implode(',', array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) }}">
+                        </span>
+                    </div>
+                    <div class="detail">
+                        <span class="label">@lang('lang.house description'):</span>
+                        <span class="value">
+                            <textarea name="description" class="editable" disabled style="width: 25vw; min-height:15vh;">{{ $profile['one_to_one_swap_house']['description'] }}</textarea>
+                        </span>
+                    </div>
+
                 </div>
 
-                <h2>@lang('lang.interests')</h2>
+                <h2>@lang('lang.your wishes')</h2>
                 <div class="house-details">
+                    <span class="label">@lang('lang.locations of interest'):</span>
                     <input type="text" id="interestsAutocompleteInput" placeholder="Enter a location of interest"
                         style="display:none; width:40%" class="input-field">
                     <div class="detail">
-
                         <div class="tags-container" id="tagsContainer">
                             @if (isset($profile['intersts']) && !empty($profile['intersts']))
                                 @foreach ($profile['intersts'] as $interest)
@@ -90,8 +125,67 @@
                         </div>
 
                     </div>
+                    @foreach ($profile['wishes'] as $wish)
+                        <div class="wish-details">
+                            <div class="detail">
+                                <span class="label">@lang('lang.house type'):</span>
+                                <span class="value">
+                                    <div class="dropdown">
+                                        <input type="text" id="dropdownInput_wish_{{ $loop->index }}"
+                                            placeholder="@lang('lang.select an option')" readonly class="editable" disabled
+                                            value="{{ old('house_type_wish', $wish['house_type']['type']) }}">
+                                        <ul id="dropdownList_wish_{{ $loop->index }}" class="dropdown-content">
+                                            @foreach ($houseTypes as $type)
+                                                <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="houseType_wish_{{ $loop->index }}"
+                                        name="house_type_wish[]"
+                                        value="{{ old('house_type_wish', $wish['house_type_id']) }}">
+                                </span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.min number of rooms'):</span>
+                                <span class="value"><input type="number" name="wish_number_of_rooms"
+                                        value="{{ $wish['number_of_rooms'] }}" class="editable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.max rent price'):</span>
+                                <span class="value"><input type="number" step="0.01" name="wish_price"
+                                        value="{{ $wish['price'] }}" class="editable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.area'):</span>
+                                <span class="value"><input type="number" step="0.01" name="wish_area"
+                                        value="{{ $wish['area'] }}" class="editable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.house features'):</span>
+                                <span class="value">
+                                    <div class="multi-select">
+                                        <input type="text" id="featuresInput_wish_{{ $loop->index }}" readonly
+                                            class="editable" disabled>
+                                        <ul id="featuresList_wish_{{ $loop->index }}" class="multi-select-content">
+                                            @foreach ($features as $feature)
+                                                <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
+                                                    class="{{ in_array($feature['id'], array_column($wish['specific_properties'], 'property_id')) ? 'selected' : '' }}">
+                                                    {{ $feature['name'] }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="features_wish_{{ $loop->index }}"
+                                        name="features_wish_{{ $loop->index }}[]"
+                                        value="{{ implode(',', array_column($wish['specific_properties'], 'property_id')) }}">
+                                </span>
+                            </div>
+                        </div>
+                    @endforeach
+
 
                 </div>
+
                 <h2>@lang('lang.house images')</h2>
                 <div class="house-images" id="house-images">
                     @foreach ($profile['one_to_one_swap_house']['images'] as $image)
@@ -121,7 +215,6 @@
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         let initialImagesHTML = '';
         let initialTagsHTML = '';
@@ -153,7 +246,7 @@
 
             if (inputs[0].disabled) {
                 saveButton.style.display = 'none';
-                deleteAccountButton.style.display = 'none';
+                // deleteAccountButton.style.display = 'none';
                 addImageInput.style.display = 'none';
                 interestsAutocompleteInput.style.display = 'none';
                 this.innerText = '@lang('lang.edit')';
@@ -168,7 +261,7 @@
                 attachRemoveTagListeners(); // Reattach listeners to restored tags
             } else {
                 saveButton.style.display = 'block';
-                deleteAccountButton.style.display = 'block';
+                // deleteAccountButton.style.display = 'block';
                 addImageInput.style.display = 'block';
                 interestsAutocompleteInput.style.display = 'block';
                 this.innerText = '@lang('lang.cancel')';
@@ -230,6 +323,114 @@
             }
             document.getElementById('delete_images').value = delete_images;
         }
+        // Multi-select functionality for house features
+        const featuresInput = document.getElementById('featuresInput');
+        const featuresList = document.getElementById('featuresList');
+        const featuresItems = featuresList.querySelectorAll('li');
+        let selectedFeatures = [];
+        let selectedFeaturesNames = [];
+
+        // Initialize selected features from profile data
+        selectedFeatures = {!! json_encode(array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) !!};
+        selectedFeaturesNames = selectedFeatures.map(value => {
+            const item = featuresList.querySelector(`li[data-value="${value}"]`);
+            if (item) {
+                item.classList.add('selected');
+                return item.getAttribute('data-name');
+            }
+            return '';
+        }).filter(name => name !== '');
+        featuresInput.value = selectedFeaturesNames.join(', ');
+
+        featuresInput.addEventListener('click', (e) => {
+            e.stopPropagation();
+            featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
+        });
+
+        featuresItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const value = e.target.getAttribute('data-value');
+                const name = e.target.getAttribute('data-name');
+                if (selectedFeatures.includes(value)) {
+                    selectedFeatures = selectedFeatures.filter(feature => feature !== value);
+                    selectedFeaturesNames = selectedFeaturesNames.filter(featureName => featureName !==
+                        name);
+                    e.target.classList.remove('selected');
+                } else {
+                    selectedFeatures.push(value);
+                    selectedFeaturesNames.push(name);
+                    e.target.classList.add('selected');
+                }
+                featuresInput.value = selectedFeaturesNames.join(', ');
+                document.getElementById('features').value = selectedFeatures.join(',');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            featuresList.style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            @foreach ($profile['wishes'] as $wish)
+                const featuresInputWish{{ $loop->index }} = document.getElementById(
+                    'featuresInput_wish_{{ $loop->index }}');
+                const featuresListWish{{ $loop->index }} = document.getElementById(
+                    'featuresList_wish_{{ $loop->index }}');
+                const featuresItemsWish{{ $loop->index }} = featuresListWish{{ $loop->index }}.querySelectorAll(
+                    'li');
+                let selectedFeaturesWish{{ $loop->index }} = [];
+                let selectedFeaturesNamesWish{{ $loop->index }} = [];
+
+                // Initialize selected features from the wish
+                selectedFeaturesWish{{ $loop->index }} = {!! json_encode(array_column($wish['specific_properties'], 'property_id')) !!};
+                selectedFeaturesNamesWish{{ $loop->index }} = selectedFeaturesWish{{ $loop->index }}.map(
+                    value => {
+                        const item = featuresListWish{{ $loop->index }}.querySelector(
+                            `li[data-value="${value}"]`);
+                        if (item) {
+                            item.classList.add('selected');
+                            return item.getAttribute('data-name');
+                        }
+                        return '';
+                    }).filter(name => name !== '');
+                featuresInputWish{{ $loop->index }}.value = selectedFeaturesNamesWish{{ $loop->index }}.join(
+                    ', ');
+
+                featuresInputWish{{ $loop->index }}.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    featuresListWish{{ $loop->index }}.style.display =
+                        featuresListWish{{ $loop->index }}.style.display === 'block' ? 'none' : 'block';
+                });
+
+                featuresItemsWish{{ $loop->index }}.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const value = e.target.getAttribute('data-value');
+                        const name = e.target.getAttribute('data-name');
+                        if (selectedFeaturesWish{{ $loop->index }}.includes(value)) {
+                            selectedFeaturesWish{{ $loop->index }} =
+                                selectedFeaturesWish{{ $loop->index }}.filter(feature =>
+                                    feature !== value);
+                            selectedFeaturesNamesWish{{ $loop->index }} =
+                                selectedFeaturesNamesWish{{ $loop->index }}.filter(featureName =>
+                                    featureName !== name);
+                            e.target.classList.remove('selected');
+                        } else {
+                            selectedFeaturesWish{{ $loop->index }}.push(value);
+                            selectedFeaturesNamesWish{{ $loop->index }}.push(name);
+                            e.target.classList.add('selected');
+                        }
+                        featuresInputWish{{ $loop->index }}.value =
+                            selectedFeaturesNamesWish{{ $loop->index }}.join(', ');
+                        document.getElementById('features_wish_{{ $loop->index }}').value =
+                            selectedFeaturesWish{{ $loop->index }}.join(',');
+                    });
+                });
+
+                document.addEventListener('click', () => {
+                    featuresListWish{{ $loop->index }}.style.display = 'none';
+                });
+            @endforeach
+        });
 
 
 
