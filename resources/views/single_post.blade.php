@@ -222,13 +222,13 @@
                         </div>
                     </div>
                 </div>
-
+                <hr>
             </div>
         </section>
         <div class="clearfix"></div>
 
         <section class="flat-property-detail property-detail2 style2">
-            <br>
+
             <br>
             <div class="container">
                 @if ($post['progress']['progress'] != '100 %')
@@ -248,8 +248,9 @@
                     @endforeach --}}
                         </div>
                     </div>
+
                     <br>
-                    <br>
+                    <hr>
                 @endif
                 <div class="row">
                     <div class="col-lg-8">

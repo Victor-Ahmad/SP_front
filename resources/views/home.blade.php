@@ -188,7 +188,19 @@
             progressText.textContent = `${progressValue}%`;
         });
     </script>
+    <script>
+        function toggleFilter() {
+            const filterForm = document.querySelector('.filter-form-container');
+            filterForm.style.display = filterForm.style.display === 'flex' ? 'none' : 'flex';
+        }
 
+        function clearFilters() {
+            document.querySelector('#searchAutocompleteInput').value = '';
+            document.querySelector('input[name="rooms"]').value = 'any';
+            document.querySelector('input[name="min_value"]').value = '';
+            document.querySelector('input[name="max_value"]').value = '';
+        }
+    </script>
     <script>
         let currentSlideIndex = 0;
 

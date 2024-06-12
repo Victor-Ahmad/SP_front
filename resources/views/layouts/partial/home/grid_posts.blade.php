@@ -2,6 +2,7 @@
     <div class="container3">
         <div class="row">
             <div class="col-lg-12 background_white">
+
                 <div class="heading-section center">
                     <h2 class="heading_title">@lang('lang.available houses')</h2>
                 </div>
