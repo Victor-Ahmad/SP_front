@@ -82,60 +82,80 @@
             /* Adjust the text size */
         }
 
-        /* Enhanced Progress Bar CSS */
-        #profile-progress-container {
-            margin: 20px 0;
-            text-align: center;
+
+
+
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
         }
 
-        .progress-bar {
-            background-color: #ffa920;
-            /* Color for remaining part */
-            border-radius: 25px;
+        .progress-circle {
             position: relative;
-            margin: 15px 0;
-            height: 30px;
-            width: 80%;
-            margin: 0 auto;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-            /* Add some inner shadow */
+            width: 150px;
+            height: 150px;
         }
 
-        .progress {
-            background: linear-gradient(135deg, #2a81b2 25%, #3ba1d0 75%);
-            /* Gradient color */
-            height: 100%;
-            text-align: center;
-            color: white;
-            line-height: 30px;
-            transition: width 1.5s ease-in-out;
-            /* Smooth transition */
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 25px 0 0 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .progress-label {
-            position: absolute;
+        .progress-circle svg {
             width: 100%;
-            left: 0;
-            top: 0;
-            font-weight: bold;
-            color: white;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100%;
+            transform: rotate(-90deg);
         }
 
-        .progress-details {
-            margin-top: 10px;
-            font-size: 16px;
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .progress-circle .background {
+            stroke: #ffa920;
+        }
+
+        .progress-circle .foreground {
+            stroke: #2a81b2;
+            stroke-linecap: round;
+            stroke-dasharray: 0 100;
+            transition: stroke-dasharray 1s ease, stroke-dashoffset 1s ease;
+            transition-delay: 0.3s;
+        }
+
+        .progress-circle .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .missing-steps {
+            margin-left: 20px;
+        }
+
+        .missing-steps p {
+            font-size: 1em;
+        }
+
+        .missing-steps a {
+            display: block;
+            color: #2a81b2 !important;
+            text-decoration: none;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .missing-steps a:hover {
+            text-decoration: none !important;
+            color: #ff9700 !important;
+
+        }
+
+        .missing-steps a:hover {
+            text-decoration: underline;
         }
     </style>
 @endsection
@@ -156,23 +176,16 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const progressFill = document.getElementById('progress-fill');
-                progressFill.style.width = '{{ explode(' ', $progress['progress'])[0] }}%';
-            }, 500); // Delay to ensure the page is fully loaded
+            const progressValue = {{ json_encode((int) str_replace(' %', '', $progress['progress'])) }};
+            const circumference = 2 * Math.PI * 45;
+            const offset = circumference - (progressValue / 100) * circumference;
+            const foregroundCircle = document.querySelector('.progress-circle .foreground');
+            const progressText = document.getElementById('progress-text');
+
+            foregroundCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            foregroundCircle.style.strokeDashoffset = offset;
+            progressText.textContent = `${progressValue}%`;
         });
-
-        function toggleFilter() {
-            const filterForm = document.querySelector('.filter-form-container');
-            filterForm.style.display = filterForm.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function clearFilters() {
-            document.querySelector('#searchAutocompleteInput').value = '';
-            document.querySelector('input[name="rooms"]').value = 'any';
-            document.querySelector('input[name="min_value"]').value = '';
-            document.querySelector('input[name="max_value"]').value = '';
-        }
     </script>
 
     <script>

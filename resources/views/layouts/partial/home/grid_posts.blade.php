@@ -6,21 +6,24 @@
                     <h2 class="heading_title">@lang('lang.available houses')</h2>
                 </div>
                 @if ($progress['progress'] != '100 %')
-                    <div id="profile-progress-container">
-                        <h4>@lang('lang.account completion')</h4>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 0%;" id="progress-fill">
-                                <span class="progress-label" id="progress-label">{{ $progress['progress'] }}
-                                    @lang('lang.completed')</span>
-                            </div>
+                    <div class="progress-container">
+                        <div class="progress-circle">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="background" cx="50" cy="50" r="45"></circle>
+                                <circle class="foreground" cx="50" cy="50" r="45"></circle>
+                            </svg>
+                            <div class="progress-text" id="progress-text"></div>
                         </div>
-                        <div class="progress-details">
-                            @if (!empty($progress['missing_steps']))
-                                <span>@lang('lang.remaining_steps') {{ implode(', ', $progress['missing_steps']) }}</span>
-                            @endif
+                        <div class="missing-steps">
+                            <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
+                            <a href="{{ route('profile.get') }}">@lang('lang.go_profile')</a>
+                            {{-- @foreach ($progress['missing_steps'] as $step)
+                                <a href="{{ route('profile.get') }}">{{ $step }}</a>
+                            @endforeach --}}
                         </div>
                     </div>
                 @endif
+
                 <button class="filter-toggle-btn" onclick="toggleFilter()">Filter</button>
 
                 <!-- Filter Form Start -->
