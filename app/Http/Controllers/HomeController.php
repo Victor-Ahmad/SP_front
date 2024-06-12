@@ -242,7 +242,7 @@ class HomeController extends Controller
         try {
             $response = $this->apiService->getPost($id);
 
-            return $response;
+
             if ($response['success'] == 1) {
                 $post = $response['result']['house'];
                 $post['intersts'] = $response['result']['house_owner']['intersts'];
