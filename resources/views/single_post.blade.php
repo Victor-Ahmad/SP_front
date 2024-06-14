@@ -242,6 +242,7 @@
                         </div>
                         @php
                             $type = 0;
+                            $progress = $post['progress'];
                             if (empty($progress['missing_steps'])) {
                                 $type = 0;
                             } elseif (count($progress['missing_steps']) > 1) {
