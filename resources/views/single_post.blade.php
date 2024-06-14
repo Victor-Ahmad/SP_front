@@ -240,9 +240,21 @@
                             </svg>
                             <div class="progress-text" id="progress-text"></div>
                         </div>
+                        @php
+                            $type = 0;
+                            if (empty($progress['missing_steps'])) {
+                                $type = 0;
+                            } elseif (count($progress['missing_steps']) > 1) {
+                                $type = 3;
+                            } elseif ($progress['missing_steps'][0] === 'Images') {
+                                $type = 2;
+                            } else {
+                                $type = 1;
+                            }
+                        @endphp
                         <div class="missing-steps">
                             <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
-                            <a href="{{ route('profile.compelete.get') }}">@lang('lang.go_profile')</a>
+                            <a href="{{ route('profile.compelete.get', ['type' => $type]) }}">@lang('lang.go_profile')</a>
                             {{-- @foreach ($progress['missing_steps'] as $step)
                         <a href="{{ route('profile.get') }}">{{ $step }}</a>
                     @endforeach --}}

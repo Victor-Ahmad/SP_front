@@ -120,7 +120,7 @@ class HomeController extends Controller
             if (!$response['result']['one_to_one_swap_house']) {
                 return redirect()->route('account_completion');
             }
-
+            // return $response;
             $houseTypes = $this->apiService->getHouseTypes()['result'];
             $features = $this->apiService->getHouseProperties()['result'];
             return view('profile', [
@@ -169,12 +169,12 @@ class HomeController extends Controller
         } else {
             error_log(Session::get('token'));
         }
-
+        // return $request->all();
         try {
             $profileInfo = $this->apiService->getProfile()['result'];
-
+            $deleted_images = $request->delete_images ? explode(",", $request->delete_images) : null;
             $data = [
-                'delete_images' => $request->delete_images,
+
                 'first_name' => $profileInfo['first_name'],
                 'last_name' => $profileInfo['last_name'],
                 'email' => $profileInfo['email'],
@@ -198,11 +198,12 @@ class HomeController extends Controller
                     'price' => $request->price,
                     'area' => $profileInfo['one_to_one_swap_house']['area'],
                     'description' => $request->description,
-                    // 'property_ids' => isset($request->features) && !empty($request->features) ? explode(',', substr($request->features, 1)) : null,
+                    'property_ids' => isset($request->features) && !empty($request->features) ? explode(', ', $request->features) : null,
                     'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id'],
-                    'delete_images' => explode(",", $request->delete_images),
+                    'delete_images' => $deleted_images,
                 ]
             ];
+            // return isset($request->features) && !empty($request->features) ? explode(', ', $request->features) : null;
 
             // $data = [
             //     'interests' => $request->interests,
@@ -224,10 +225,11 @@ class HomeController extends Controller
             // return $data;
             // dd($request->all(), $data);
             $response = $this->apiService->updateProfile($data, $files);
+
             if ($response['success'] == 1) {
                 return redirect()->route('profile.get');
             } else {
-                return back()->withErrors(['password' => $response['message']]);
+                return back()->withErrors(['message' => $response['message']]);
             }
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());

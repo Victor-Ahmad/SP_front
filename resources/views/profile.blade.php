@@ -112,20 +112,6 @@
                                 </div>
                             @endforeach
                         </div>
-
-                        {{-- <div class="slider-container">
-                            <div class="slider-wrapper" id="slider-wrapper">
-                                @foreach ($profile['one_to_one_swap_house']['images'] as $image)
-                                    <div class="slider-item" id="image-container-{{ $image['id'] }}">
-                                        <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="House Image">
-                                        <button type="button" class="delete-button"
-                                            onclick="deleteImage({{ $image['id'] }})">&times;</button>
-                                    </div>
-                                @endforeach
-                            </div>
-                            <button class="slider-arrow slider-arrow-left" id="slider-arrow-left">&#10094;</button>
-                            <button class="slider-arrow slider-arrow-right" id="slider-arrow-right">&#10095;</button>
-                        </div> --}}
                         <input type="file" name="images[]" class="add-image" id="add-image" multiple>
                         <div class="house-details">
                             <div class="detail">
@@ -169,6 +155,29 @@
                                 <span class="label">@lang('lang.house_description'):</span>
                                 <span class="value">
                                     <textarea name="description" class="editable" disabled style="width: 100%; min-height:15vh;">{{ $profile['one_to_one_swap_house']['description'] }}</textarea>
+                                </span>
+                            </div>
+                            <div class="detail">
+                                @php
+                                    $oldFeatures = old('features', '');
+                                    if (!is_array($oldFeatures)) {
+                                        $oldFeatures = array_map('trim', explode(',', $oldFeatures));
+                                    }
+                                @endphp
+                                <span class="label">@lang('lang.house features'):</span>
+                                <span class="value">
+                                    <div class="dropdown">
+                                        <input type="text" id="featuresInput" placeholder="@lang('lang.specify house features')"
+                                            readonly class="editable" disabled>
+                                        <ul id="featuresList" class="multi-select-content">
+                                            @foreach ($features as $feature)
+                                                <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
+                                                    class="{{ in_array($feature['id'], $oldFeatures) ? 'selected' : '' }}">
+                                                    {{ $feature['name'] }} </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="features" name="features" value="{{ old('features') }}">
                                 </span>
                             </div>
                         </div>
@@ -224,8 +233,6 @@
                                             <input type="hidden" id="area_wish" name="area_wish"
                                                 value="{{ old('area_wish') }}">
                                         </span>
-                                        {{-- <span class="value"><input type="number" step="0.01" name="wish_area"
-                                            value="{{ $wish['area'] }}" class="editable" disabled></span> --}}
                                     </div>
                                 </div>
                         </div>
@@ -416,6 +423,62 @@
                     dropdown.style.display = 'none';
                 });
             });
+            // Multi-select functionality
+            const featuresInput = document.getElementById('featuresInput');
+            const featuresList = document.getElementById('featuresList');
+            const featuresItems = featuresList.querySelectorAll('li');
+            let selectedFeatures = [];
+            let selectedFeaturesNames = [];
+
+
+            featuresInput.addEventListener('click', (e) => {
+                e.stopPropagation();
+                featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
+            });
+
+            featuresItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    const value = e.target.getAttribute('data-value');
+                    const name = e.target.getAttribute('data-name');
+                    if (selectedFeatures.includes(value)) {
+                        selectedFeatures = selectedFeatures.filter(feature => feature !== value);
+                        selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
+                            featureName !== name);
+                        e.target.classList.remove('selected');
+                    } else {
+                        selectedFeatures.push(value);
+                        selectedFeaturesNames.push(name);
+                        e.target.classList.add('selected');
+                    }
+                    featuresInput.value = selectedFeaturesNames.join(', ');
+                    document.getElementById('features').value = selectedFeatures.join(', ');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                featuresList.style.display = 'none';
+            });
+            const profile = @json($profile); // Assuming $profile is available in the Blade template
+            if (profile && profile.one_to_one_swap_house && profile.one_to_one_swap_house.specific_properties) {
+                const specificProperties = profile.one_to_one_swap_house.specific_properties;
+                specificProperties.forEach(property => {
+                    if (property.specific_property) {
+                        const featureId = property.specific_property.id.toString();
+                        const featureName = property.specific_property.name;
+                        const featureItem = [...featuresItems].find(item => item.getAttribute(
+                            'data-value') === featureId);
+                        if (featureItem) {
+                            if (!selectedFeatures.includes(featureId)) {
+                                selectedFeatures.push(featureId);
+                                selectedFeaturesNames.push(featureName);
+                                featureItem.classList.add('selected');
+                            }
+                        }
+                    }
+                });
+                featuresInput.value = selectedFeaturesNames.join(', ');
+                document.getElementById('features').value = selectedFeatures.join(', ');
+            }
 
         });
 
