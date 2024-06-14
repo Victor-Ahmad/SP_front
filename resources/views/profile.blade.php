@@ -3,13 +3,391 @@
 @section('title', 'Profile')
 
 @section('head_css')
-
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
-    <link href="{{ asset('app/css/profile.css') }}?v={{ filemtime(public_path('app/css/profile.css')) }}" rel="stylesheet"
-        type="text/css" media="all" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+        }
 
+        .profile-container {
+            max-width: 60vw;
+            margin: 15vh auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-header img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-header img:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-header .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .edit-button,
+        .save-button,
+        .delete-account-button {
+            margin-left: auto;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .edit-button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .save-button,
+        .delete-account-button {
+            background-color: #2ecc71;
+        }
+
+        .save-button:hover,
+        .delete-account-button:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .delete-account-button {
+            background-color: red;
+        }
+
+        .delete-account-button:hover {
+            background-color: rgb(179, 0, 0);
+            transform: scale(1.05);
+        }
+
+        .tab-content {
+            margin-top: 30px;
+        }
+
+        .tab-pane {
+            animation: fadeEffect 0.5s;
+        }
+
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .detail span {
+            font-size: 16px;
+        }
+
+        .detail .label {
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .detail .value {
+            font-weight: 600;
+            color: #2c3e50;
+            width: 40%;
+        }
+
+        .editable,
+        .uneditable {
+            border: 1px solid #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            color: black !important;
+        }
+
+        .editable:disabled,
+        .uneditable:disabled {
+            background-color: #f4f4f9;
+            border-color: #ecf0f1;
+            color: #2a81b2 !important;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background-color: #2981B2;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tag .remove-tag {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            color: #2981B2;
+        }
+
+        .input-field:focus {
+            border-color: #2981B2;
+            box-shadow: 0 0 5px rgb(41, 129, 178);
+            outline: none;
+        }
+
+        .dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            color: #2981B2;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Adjustments for better mobile responsiveness */
+        @media (max-width: 1024px) {
+            .profile-container {
+                max-width: 80vw;
+            }
+
+            .profile-header .name {
+                font-size: 24px;
+            }
+
+            .edit-button {
+                padding: 8px 16px;
+            }
+
+            .save-button,
+            .delete-account-button {
+                padding: 8px 16px;
+            }
+
+            .detail span {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .profile-container {
+                max-width: 90vw;
+                margin: 5vh auto;
+                padding: 20px;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile-header img {
+                width: 60px;
+                height: 60px;
+                margin: 0 0 10px 0;
+            }
+
+            .profile-header .name {
+                font-size: 18px;
+            }
+
+            .edit-button,
+            .save-button,
+            .delete-account-button {
+                margin-left: 0;
+                margin-top: 10px;
+                padding: 8px 16px;
+            }
+
+            .detail {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px 0;
+            }
+
+            .detail .label {
+                width: 100%;
+            }
+
+            .detail .value {
+                width: 100%;
+            }
+
+            .tag {
+                padding: 5px 8px;
+            }
+
+            .input-field {
+                padding: 10px;
+            }
+
+            .dropdown input {
+                padding: 10px;
+            }
+        }
+
+        /* Slider styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            position: relative;
+        }
+
+        .slider img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .slider-arrow-left {
+            left: 10px;
+        }
+
+        .slider-arrow-right {
+            right: 10px;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 16px;
+            line-height: 25px;
+            text-align: center;
+            cursor: pointer;
+            display: none;
+        }
+
+        .edit-mode .delete-button {
+            display: block;
+        }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .image-container img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .image-container .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 100%;
+            cursor: pointer;
+            padding: 0 5px;
+            font-size: 16px;
+            color: #e74c3c;
+            display: none;
+        }
+
+        .image-container.edit-mode .delete-button {
+            display: block;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -19,193 +397,214 @@
                 <img src="https://via.placeholder.com/100" alt="Profile Picture">
                 <div class="name">{{ $profile['first_name'] }} {{ $profile['last_name'] }}</div>
                 <button class="edit-button" id="edit-button">Edit</button>
+
             </div>
 
-            <h2>@lang('lang.profile information')</h2>
+            <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="profile-info-tab" data-toggle="tab" href="#profile-info" role="tab"
+                        aria-controls="profile-info" aria-selected="true">@lang('lang.personal_information')</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="house-location-tab" data-toggle="tab" href="#house-location" role="tab"
+                        aria-controls="house-location" aria-selected="false">@lang('lang.your house location')</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="house-details-tab" data-toggle="tab" href="#house-details" role="tab"
+                        aria-controls="house-details" aria-selected="false">@lang('lang.your house')</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="your-wishes-tab" data-toggle="tab" href="#your-wishes" role="tab"
+                        aria-controls="your-wishes" aria-selected="false">@lang('lang.your wishes')</a>
+                </li>
+            </ul>
             <form id="profile-form" action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                {{-- @method('PATCH') --}}
-                <div class="profile-details">
-                    <div class="detail">
-                        <span class="label">@lang('lang.email'):</span>
-                        <span class="value"><input type="text" name="email" value="{{ $profile['email'] }}"
-                                class="uneditable" disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.phone number'):</span>
-                        <span class="value"><input type="text" name="number" value="{{ $profile['number'] }}"
-                                class="uneditable" disabled></span>
-                    </div>
-                </div>
-
-                <h2>@lang('lang.house details')</h2>
-                <div class="house-details">
-                    <div class="detail">
-                        <span class="label">@lang('lang.house type'):</span>
-                        <span class="value"><input type="text" name="house_type"
-                                value="{{ $profile['one_to_one_swap_house']['house_type']['type'] }}" class="uneditable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.location'):</span>
-                        <span class="value"><input type="text" name="location" id ="location"
-                                value="{{ $profile['one_to_one_swap_house']['location'] }}" class="uneditable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.post code'):</span>
-                        <span class="value"><input type="text" name="post_code"
-                                value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="uneditable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.street'):</span>
-                        <span class="value"><input type="text" name="street"
-                                value="{{ $profile['one_to_one_swap_house']['street'] }}" class="uneditable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.house number'):</span>
-                        <span class="value"><input type="text" name="house_number"
-                                value="{{ $profile['one_to_one_swap_house']['house_number'] }}" class="uneditable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.number of rooms'):</span>
-                        <span class="value"><input type="number" name="number_of_rooms"
-                                value="{{ $profile['one_to_one_swap_house']['number_of_rooms'] }}" class="editable"
-                                disabled></span>
-                    </div>
-                    <div class="detail">
-                        <span class="label">@lang('lang.rent price'):</span>
-                        <span class="value"><input type="number" step="0.01" name="price"
-                                value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable" disabled></span>
-                    </div>
-                    {{-- <div class="detail">
-                        <span class="label">@lang('lang.house features'):</span>
-                        <span class="value">
-                            <div class="multi-select">
-                                <input type="text" id="featuresInput" readonly class="editable" disabled>
-                                <ul id="featuresList" class="multi-select-content">
-                                    @foreach ($features as $feature)
-                                        <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
-                                            class="{{ in_array($feature['id'], array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) ? 'selected' : '' }}">
-                                            {{ $feature['name'] }}
-                                        </li>
-                                    @endforeach
-                                </ul>
+                <div class="tab-content" id="profileTabsContent">
+                    <div class="tab-pane fade show active" id="profile-info" role="tabpanel"
+                        aria-labelledby="profile-info-tab">
+                        <h2>@lang('lang.personal_information')</h2>
+                        <div class="profile-details">
+                            <div class="detail">
+                                <span class="label">@lang('lang.first name'):</span>
+                                <span class="value"><input type="text" name="first_name"
+                                        value="{{ $profile['first_name'] }}" class="uneditable" disabled></span>
                             </div>
-                            <input type="hidden" id="features\"
-                                name="features[]"
-                                value="{{ implode(',', array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) }}">
-                        </span>
-                    </div> --}}
-                    <div class="detail">
-                        <span class="label">@lang('lang.house_description'):</span>
-                        <span class="value">
-                            <textarea name="description" class="editable" disabled style="width: 25vw; min-height:15vh;">{{ $profile['one_to_one_swap_house']['description'] }}</textarea>
-                        </span>
+                            <div class="detail">
+                                <span class="label">@lang('lang.last name'):</span>
+                                <span class="value"><input type="text" name="last_name"
+                                        value="{{ $profile['last_name'] }}" class="uneditable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.email'):</span>
+                                <span class="value"><input type="text" name="email" value="{{ $profile['email'] }}"
+                                        class="uneditable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.phone number'):</span>
+                                <span class="value"><input type="text" name="number" value="{{ $profile['number'] }}"
+                                        class="uneditable" disabled></span>
+                            </div>
+                        </div>
                     </div>
 
-                </div>
+                    <div class="tab-pane fade" id="house-location" role="tabpanel" aria-labelledby="house-location-tab">
+                        <h2>@lang('lang.your house location')</h2>
+                        <div class="house-details">
+                            <div class="detail">
+                                <span class="label">@lang('lang.location'):</span>
+                                <span class="value"><input type="text" name="location" id="location"
+                                        value="{{ $profile['one_to_one_swap_house']['location'] }}" class="uneditable"
+                                        disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.street'):</span>
+                                <span class="value"><input type="text" name="street"
+                                        value="{{ $profile['one_to_one_swap_house']['street'] }}" class="uneditable"
+                                        disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.post code'):</span>
+                                <span class="value"><input type="text" name="post_code"
+                                        value="{{ $profile['one_to_one_swap_house']['post_code'] }}" class="uneditable"
+                                        disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.house number'):</span>
+                                <span class="value"><input type="text" name="house_number"
+                                        value="{{ $profile['one_to_one_swap_house']['house_number'] }}"
+                                        class="uneditable" disabled></span>
+                            </div>
+                        </div>
+                    </div>
 
-                <h2>@lang('lang.your_wishes')</h2>
-                <div class="house-details">
-                    <span class="label">@lang('lang.locations of interest'):</span>
-                    <input type="text" id="interestsAutocompleteInput" placeholder="Enter a location of interest"
-                        style="display:none; width:40%" class="input-field">
-                    <div class="detail">
-                        <div class="tags-container" id="tagsContainer">
-                            @if (isset($profile['intersts']) && !empty($profile['intersts']))
-                                @foreach ($profile['intersts'] as $interest)
-                                    <div class=tag>{{ $interest['interest'] }} <span data-city={{ $interest['id'] }}
-                                            class="remove-tag" style="display:none">&times;</span></div>
-                                @endforeach
-                            @endif
+                    <div class="tab-pane fade" id="house-details" role="tabpanel" aria-labelledby="house-details-tab">
+                        <h2>@lang('lang.your_house')</h2>
+                        <div class="house-images" id="house-images">
+                            @foreach ($profile['one_to_one_swap_house']['images'] as $image)
+                                <div class="image-container" id="image-container-{{ $image['id'] }}">
+                                    <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="House Image">
+                                    <button type="button" class="delete-button"
+                                        onclick="deleteImage({{ $image['id'] }})">&times;</button>
+                                </div>
+                            @endforeach
                         </div>
 
-                    </div>
-                    @foreach ($profile['wishes'] as $wish)
-                        <div class="wish-details">
+                        {{-- <div class="slider-container">
+                            <div class="slider-wrapper" id="slider-wrapper">
+                                @foreach ($profile['one_to_one_swap_house']['images'] as $image)
+                                    <div class="slider-item" id="image-container-{{ $image['id'] }}">
+                                        <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="House Image">
+                                        <button type="button" class="delete-button"
+                                            onclick="deleteImage({{ $image['id'] }})">&times;</button>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <button class="slider-arrow slider-arrow-left" id="slider-arrow-left">&#10094;</button>
+                            <button class="slider-arrow slider-arrow-right" id="slider-arrow-right">&#10095;</button>
+                        </div> --}}
+                        <input type="file" name="images[]" class="add-image" id="add-image" multiple>
+                        <div class="house-details">
                             <div class="detail">
                                 <span class="label">@lang('lang.house type'):</span>
+                                <span class="value"><input type="text" name="house_type"
+                                        value="{{ $profile['one_to_one_swap_house']['house_type']['type'] }}"
+                                        class="uneditable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.rent price'):</span>
+                                <span class="value"><input type="number" step="0.01" name="price"
+                                        value="{{ $profile['one_to_one_swap_house']['price'] }}" class="editable"
+                                        disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.number of rooms'):</span>
+                                <span class="value"><input type="number" name="number_of_rooms"
+                                        value="{{ $profile['one_to_one_swap_house']['number_of_rooms'] }}"
+                                        class="editable" disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.area'):</span>
+                                <span class="value"><input type="number" step="0.01" name="area"
+                                        value="{{ $profile['one_to_one_swap_house']['area'] }}" class="editable"
+                                        disabled></span>
+                            </div>
+                            <div class="detail">
+                                <span class="label">@lang('lang.house_description'):</span>
                                 <span class="value">
-                                    <div class="dropdown">
-                                        <input type="text" id="dropdownInput_wish" placeholder="@lang('lang.select an option')"
-                                            readonly class="editable" disabled
-                                            value="{{ old('wish_house_type', $wish['house_type']['type']) }}">
-                                        <ul id="dropdownList_wish" class="dropdown-content">
-                                            @foreach ($houseTypes as $type)
-                                                <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <input type="hidden" id="houseType_wish" name="wish_house_type[]"
-                                        value="{{ old('wish_house_type', $wish['house_type_id']) }}">
+                                    <textarea name="description" class="editable" disabled style="width: 100%; min-height:15vh;">{{ $profile['one_to_one_swap_house']['description'] }}</textarea>
                                 </span>
                             </div>
-                            <div class="detail">
-                                <span class="label">@lang('lang.min_number_of_rooms'):</span>
-                                <span class="value"><input type="number" name="wish_number_of_rooms"
-                                        value="{{ $wish['number_of_rooms'] }}" class="editable" disabled></span>
-                            </div>
-                            <div class="detail">
-                                <span class="label">@lang('lang.max_rent_price'):</span>
-                                <span class="value"><input type="number" step="0.01" name="wish_price"
-                                        value="{{ $wish['price'] }}" class="editable" disabled></span>
-                            </div>
-                            <div class="detail">
-                                <span class="label">@lang('lang.min_area'):</span>
-                                <span class="value"><input type="number" step="0.01" name="wish_area"
-                                        value="{{ $wish['area'] }}" class="editable" disabled></span>
-                            </div>
-                            {{-- <div class="detail">
-                                <span class="label">@lang('lang.house features'):</span>
-                                <span class="value">
-                                    <div class="multi-select">
-                                        <input type="text" id="featuresInput_wish" readonly class="editable" disabled>
-                                        <ul id="featuresList_wish" class="multi-select-content">
-                                            @foreach ($features as $feature)
-                                                <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
-                                                    class="{{ in_array($feature['id'], array_column($wish['specific_properties'], 'property_id')) ? 'selected' : '' }}">
-                                                    {{ $feature['name'] }}
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="your-wishes" role="tabpanel" aria-labelledby="your-wishes-tab">
+                        <h2>@lang('lang.your_wishes')</h2>
+                        <div class="house-details">
+                            <span class="label">@lang('lang.locations of interest'):</span>
+                            <input type="text" id="interestsAutocompleteInput"
+                                placeholder="Enter a location of interest" style="display:none; width:40%"
+                                class="input-field">
+                            @foreach ($profile['wishes'] as $wish)
+                                <div class="wish-details">
+                                    <div class="detail">
+                                        <span class="label">@lang('lang.house type'):</span>
+                                        <span class="value">
+                                            <div class="dropdown">
+                                                <input type="text" id="dropdownInput_wish"
+                                                    placeholder="@lang('lang.select an option')" readonly class="editable" disabled
+                                                    value="{{ old('wish_house_type', $wish['house_type']['type']) }}">
+                                                <ul id="dropdownList_wish" class="dropdown-content">
+                                                    @foreach ($houseTypes as $type)
+                                                        <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                            <input type="hidden" id="houseType_wish" name="wish_house_type[]"
+                                                value="{{ old('wish_house_type', $wish['house_type_id']) }}">
+                                        </span>
                                     </div>
-                                    <input type="hidden" id="features_wish" name="features_wish[]"
-                                        value="{{ implode(',', array_column($wish['specific_properties'], 'property_id')) }}">
-                                </span>
-                            </div> --}}
+                                    <div class="detail">
+                                        <span class="label">@lang('lang.max_rent_price'):</span>
+                                        <span class="value"><input type="number" step="0.01" name="wish_price"
+                                                value="{{ $wish['price'] }}" class="editable" disabled></span>
+                                    </div>
+                                    <div class="detail">
+                                        <span class="label">@lang('lang.min_number_of_rooms'):</span>
+                                        <span class="value"><input type="number" name="wish_number_of_rooms"
+                                                value="{{ $wish['number_of_rooms'] }}" class="editable" disabled></span>
+                                    </div>
+                                    <div class="detail">
+                                        <span class="label">@lang('lang.min_area'):</span>
+                                        <span class="value"><input type="number" step="0.01" name="wish_area"
+                                                value="{{ $wish['area'] }}" class="editable" disabled></span>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="detail">
+                                <div class="tags-container" id="tagsContainer">
+                                    @if (isset($profile['intersts']) && !empty($profile['intersts']))
+                                        @foreach ($profile['intersts'] as $interest)
+                                            <div class="tag">{{ $interest['interest'] }} <span
+                                                    data-city={{ $interest['id'] }} class="remove-tag"
+                                                    style="display:none">&times;</span></div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                    @endforeach
-
-
-                </div>
-
-                <h2>@lang('lang.house images')</h2>
-                <div class="house-images" id="house-images">
-                    @foreach ($profile['one_to_one_swap_house']['images'] as $image)
-                        <div class="image-container" id="image-container-{{ $image['id'] }}">
-                            <img src="{{ env('MEDIA_BASE_URL') . $image['image_path'] }}" alt="House Image">
-                            <button type="button" class="delete-button"
-                                onclick="deleteImage({{ $image['id'] }})">&times;</button>
-                        </div>
-                    @endforeach
+                    </div>
+                    <button type="submit" class="save-button" id="save-button"
+                        style="display: none;">@lang('lang.save changes')</button>
+                    <button class="delete-account-button" id="delete-account-button"
+                        style="display: none;">@lang('lang.delete account')</button>
                 </div>
                 <input type="hidden" name=delete_interests id="delete_interests" value="">
                 <input type="hidden" name=delete_images id="delete_images" value="">
                 <input type="hidden" name=interests id="interests" value="">
-                <input type="file" name="images[]" class="add-image" id="add-image" multiple>
-
-                <button type="submit" class="save-button" id="save-button"
-                    style="display: none;">@lang('lang.save changes')</button>
-                <button class="delete-account-button" id="delete-account-button"
-                    style="display: none;">@lang('lang.delete account')</button>
             </form>
         </div>
     </div>
-
 @endsection
 
 @section('additional_scripts')
@@ -237,13 +636,11 @@
             });
 
             var saveButton = document.getElementById('save-button');
-            var deleteAccountButton = document.getElementById('delete-account-button');
             var addImageInput = document.querySelector('.add-image');
             var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
 
             if (inputs[0].disabled) {
                 saveButton.style.display = 'none';
-                // deleteAccountButton.style.display = 'none';
                 addImageInput.style.display = 'none';
                 interestsAutocompleteInput.style.display = 'none';
                 this.innerText = '@lang('lang.edit')';
@@ -258,7 +655,6 @@
                 attachRemoveTagListeners(); // Reattach listeners to restored tags
             } else {
                 saveButton.style.display = 'block';
-                // deleteAccountButton.style.display = 'block';
                 addImageInput.style.display = 'block';
                 interestsAutocompleteInput.style.display = 'block';
                 this.innerText = '@lang('lang.cancel')';
@@ -320,117 +716,6 @@
             }
             document.getElementById('delete_images').value = delete_images;
         }
-        // Multi-select functionality for house features
-        document.addEventListener('DOMContentLoaded', () => {
-            const featuresInput = document.getElementById('featuresInput');
-            const featuresList = document.getElementById('featuresList');
-            const featuresItems = featuresList.querySelectorAll('li');
-            let selectedFeatures = [];
-            let selectedFeaturesNames = [];
-
-            // Initialize selected features from profile data
-            selectedFeatures = {!! json_encode(array_column($profile['one_to_one_swap_house']['specific_properties'], 'property_id')) !!};
-            selectedFeaturesNames = selectedFeatures.map(value => {
-                const item = featuresList.querySelector(`li[data-value="${value}"]`);
-                if (item) {
-                    item.classList.add('selected');
-                    return item.getAttribute('data-name');
-                }
-                return '';
-            }).filter(name => name !== '');
-            featuresInput.value = selectedFeaturesNames.join(', ');
-
-            featuresInput.addEventListener('click', (e) => {
-                e.stopPropagation();
-                featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
-            });
-
-            featuresItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const value = e.target.getAttribute('data-value');
-                    const name = e.target.getAttribute('data-name');
-                    if (selectedFeatures.includes(value)) {
-                        selectedFeatures = selectedFeatures.filter(feature => feature !== value);
-                        selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
-                            featureName !==
-                            name);
-                        e.target.classList.remove('selected');
-                    } else {
-                        selectedFeatures.push(value);
-                        selectedFeaturesNames.push(name);
-                        e.target.classList.add('selected');
-                    }
-                    featuresInput.value = selectedFeaturesNames.join(', ');
-                    document.getElementById('features').value = selectedFeatures.join(',');
-                    alert(selectedFeatures.join(','));
-                });
-            });
-
-            document.addEventListener('click', (e) => {
-                featuresList.style.display = 'none';
-            });
-        });
-        document.addEventListener('DOMContentLoaded', () => {
-            @foreach ($profile['wishes'] as $wish)
-                const featuresInputWish{{ $loop->index }} = document.getElementById(
-                    'featuresInput_wish');
-                const featuresListWish{{ $loop->index }} = document.getElementById(
-                    'featuresList_wish');
-                const featuresItemsWish{{ $loop->index }} = featuresListWish{{ $loop->index }}.querySelectorAll(
-                    'li');
-                let selectedFeaturesWish{{ $loop->index }} = [];
-                let selectedFeaturesNamesWish{{ $loop->index }} = [];
-
-                // Initialize selected features from the wish
-                selectedFeaturesWish{{ $loop->index }} = {!! json_encode(array_column($wish['specific_properties'], 'property_id')) !!};
-                selectedFeaturesNamesWish{{ $loop->index }} = selectedFeaturesWish{{ $loop->index }}.map(
-                    value => {
-                        const item = featuresListWish{{ $loop->index }}.querySelector(
-                            `li[data-value="${value}"]`);
-                        if (item) {
-                            item.classList.add('selected');
-                            return item.getAttribute('data-name');
-                        }
-                        return '';
-                    }).filter(name => name !== '');
-                featuresInputWish{{ $loop->index }}.value = selectedFeaturesNamesWish{{ $loop->index }}.join(
-                    ', ');
-
-                featuresInputWish{{ $loop->index }}.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    featuresListWish{{ $loop->index }}.style.display =
-                        featuresListWish{{ $loop->index }}.style.display === 'block' ? 'none' : 'block';
-                });
-
-                featuresItemsWish{{ $loop->index }}.forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        const value = e.target.getAttribute('data-value');
-                        const name = e.target.getAttribute('data-name');
-                        if (selectedFeaturesWish{{ $loop->index }}.includes(value)) {
-                            selectedFeaturesWish{{ $loop->index }} =
-                                selectedFeaturesWish{{ $loop->index }}.filter(feature =>
-                                    feature !== value);
-                            selectedFeaturesNamesWish{{ $loop->index }} =
-                                selectedFeaturesNamesWish{{ $loop->index }}.filter(featureName =>
-                                    featureName !== name);
-                            e.target.classList.remove('selected');
-                        } else {
-                            selectedFeaturesWish{{ $loop->index }}.push(value);
-                            selectedFeaturesNamesWish{{ $loop->index }}.push(name);
-                            e.target.classList.add('selected');
-                        }
-                        featuresInputWish{{ $loop->index }}.value =
-                            selectedFeaturesNamesWish{{ $loop->index }}.join(', ');
-                        document.getElementById('features_wish').value =
-                            selectedFeaturesWish{{ $loop->index }}.join(',');
-                    });
-                });
-
-                document.addEventListener('click', () => {
-                    featuresListWish{{ $loop->index }}.style.display = 'none';
-                });
-            @endforeach
-        });
 
 
 
@@ -530,26 +815,5 @@
         window.addEventListener('load', function() {
             removePreloader();
         });
-        document.getElementById('delete-account-button').addEventListener('click', function() {
-            if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                $.ajax({
-                    url: '{{ route('deleteAccount') }}', // Ensure you have a route for this
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            window.location.href = response.redirect;
-                        } else {
-                            alert('Error: ' + response.message);
-                        }
-                    },
-
-
-                });
-            }
-        });
     </script>
-
 @endsection

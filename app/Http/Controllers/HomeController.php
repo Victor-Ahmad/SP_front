@@ -140,7 +140,7 @@ class HomeController extends Controller
 
         try {
             $profileInfo = $this->apiService->getProfile()['result'];
-            // return $request->features;
+
             $data = [
                 'delete_images' => $request->delete_images,
                 'first_name' => $profileInfo['first_name'],
@@ -169,7 +169,8 @@ class HomeController extends Controller
                     'area' => $profileInfo['one_to_one_swap_house']['area'],
                     'description' => $request->description,
                     // 'property_ids' => isset($request->features) && !empty($request->features) ? explode(',', substr($request->features, 1)) : null,
-                    'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id']
+                    'house_type_id' => (string)$profileInfo['one_to_one_swap_house']['house_type_id'],
+                    'delete_images' => explode(",", $request->delete_images),
                 ]
             ];
 

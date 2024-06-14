@@ -221,6 +221,239 @@
             background-color: #ffa920;
             color: white;
         }
+
+        /* Extra Small Devices (phones, 600px and down) */
+        @media (max-width: 600px) {
+            .container.parent_container {
+                padding: 0 10px;
+            }
+
+            .wrap-contact {
+                padding: 15px 5px;
+            }
+
+            .stepper-wrapper {
+                flex-direction: row;
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .stepper-item {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+                flex: 1 1 45%;
+            }
+
+            .step-counter {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-navigation button {
+                width: 100%;
+                margin-bottom: 5px;
+                padding: 8px 10px;
+            }
+
+            .form-navigation .previous {
+                background: #6c757d;
+            }
+
+            .form-navigation button:hover:not([disabled]) {
+                transform: none;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .input-field,
+            .dropdown,
+            .multi-select,
+            textarea {
+                width: 100%;
+            }
+
+            .multi-select-content,
+            .dropdown-content {
+                width: 100%;
+                max-width: none;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .preview-slideshow img {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .preview-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Small Devices (portrait tablets and large phones, 600px to 768px) */
+        @media (max-width: 768px) {
+            .container.parent_container {
+                padding: 0 15px;
+            }
+
+            .wrap-contact {
+                padding: 20px 10px;
+            }
+
+            .stepper-wrapper {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .stepper-item {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .step-counter {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-navigation button {
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 10px 15px;
+            }
+
+            .form-navigation .previous {
+                background: #6c757d;
+            }
+
+            .form-navigation button:hover:not([disabled]) {
+                transform: none;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .input-field,
+            .dropdown,
+            .multi-select,
+            textarea {
+                width: 100%;
+            }
+
+            .multi-select-content,
+            .dropdown-content {
+                width: 100%;
+                max-width: none;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+        }
+
+        /* Medium Devices (landscape tablets, 768px to 992px) */
+        @media (max-width: 992px) {
+            .stepper-wrapper {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .stepper-item {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .step-counter {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+
+            .form-navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .form-navigation button {
+                width: 100%;
+                margin-bottom: 10px;
+                padding: 10px 20px;
+            }
+
+            .form-navigation .previous {
+                background: #6c757d;
+            }
+
+            .form-navigation button:hover:not([disabled]) {
+                transform: none;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .input-field,
+            .dropdown,
+            .multi-select,
+            textarea {
+                width: 100%;
+            }
+
+            .multi-select-content,
+            .dropdown-content {
+                width: 100%;
+                max-width: none;
+            }
+        }
+
+        /* Large Devices (laptops/desktops, 992px to 1200px) */
+        @media (max-width: 1200px) {
+            .step-counter {
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+
+            .form-navigation button {
+                padding: 10px 20px;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+
+            .input-field,
+            .dropdown,
+            .multi-select,
+            textarea {
+                width: 100%;
+            }
+
+            .multi-select-content,
+            .dropdown-content {
+                width: 100%;
+                max-width: none;
+            }
+        }
     </style>
     <link
         href="{{ asset('app/css/account_completion.css') }}?v={{ filemtime(public_path('app/css/account_completion.css')) }}"
