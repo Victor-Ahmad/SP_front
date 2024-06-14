@@ -74,7 +74,7 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     Route::get('/profile', [HomeController::class, 'getProfile'])->name('profile.get');
     Route::delete('/delete_account', [HomeController::class, 'deleteAccount'])->name('deleteAccount');
     Route::post('/profile', [HomeController::class, 'updateProfile'])->name('profile.update');
-    Route::get('/compelete_profile', [HomeController::class, 'getCompeleteProfile'])->name('profile.compelete.get');
+    Route::get('/compelete_profile/{type}', [HomeController::class, 'getCompeleteProfile'])->name('profile.compelete.get');
     Route::post('/compelete_profile', [HomeController::class, 'compeleteProfile'])->name('profile.compelete.post');
 
 

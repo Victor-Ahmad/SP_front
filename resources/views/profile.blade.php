@@ -367,14 +367,7 @@
                 }
             });
 
-            function deleteImage(imageId) {
-                // Remove the image container from the DOM
-                document.getElementById('image-container-' + imageId).remove();
-                if (!delete_images.includes(imageId)) {
-                    delete_images.push(imageId);
-                }
-                document.getElementById('delete_images').value = delete_images;
-            }
+
 
 
             document.addEventListener('DOMContentLoaded', function() {
@@ -425,6 +418,15 @@
             });
 
         });
+
+        function deleteImage(imageId) {
+            // Remove the image container from the DOM
+            document.getElementById('image-container-' + imageId).remove();
+            if (!delete_images.includes(imageId)) {
+                delete_images.push(imageId);
+            }
+            document.getElementById('delete_images').value = delete_images;
+        }
 
         function initAutocomplete() {
             var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');

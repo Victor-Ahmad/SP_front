@@ -235,8 +235,12 @@ class HomeController extends Controller
         }
     }
 
-    public function getCompeleteProfile()
+    public function getCompeleteProfile($type)
     {
+
+        //type=1 description
+        //type=2 images
+        //type=3 both
         if (!Session::get('token')) {
             return redirect()->route('login');
         } else {
@@ -249,7 +253,20 @@ class HomeController extends Controller
             }
             // $houseTypes = $this->apiService->getHouseTypes()['result'];
             // $features = $this->apiService->getHouseProperties()['result'];
-            return view('profile_compeletion', ['profile' => $response['result']]);
+            $show_images = false;
+            $show_description = false;
+            if ($type == 1) {
+                $show_description = true;
+            } elseif ($type == 2) {
+                $show_images = true;
+            } elseif ($type == 3) {
+                $show_description = true;
+                $show_images = true;
+            } else {
+                $show_description = false;
+                $show_images = false;
+            }
+            return view('profile_compeletion', ['profile' => $response['result'], 'show_images' => $show_images, 'show_description' => $show_description]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -264,12 +281,13 @@ class HomeController extends Controller
             error_log(Session::get('token'));
         }
         try {
-            $data = [
-                'description' => $request->house_description,
-                // 'house' => [
-                //     'delete_images' => explode(",", $request->delete_images),
-                // ]
-            ];
+            $data = [];
+            if ($request->house_description) {
+                $data = [
+                    'description' => $request->house_description,
+                ];
+            }
+
             $files = $request->file('gallery');
             $response = $this->apiService->compeleteProfile($data, $files);
 

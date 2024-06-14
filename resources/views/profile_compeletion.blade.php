@@ -228,49 +228,52 @@
                         <div class="wrap-contact">
 
                             <hr>
+                            @if ($show_description || $show_images)
+                                <form id="multiStepForm" action="{{ route('profile.compelete.post') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
 
-                            <form id="multiStepForm" action="{{ route('profile.compelete.post') }}" method="POST"
-                                enctype="multipart/form-data">
-                                @csrf
 
-
-                                <div class="row center-content">
-                                    <h3 style="font-size: 24px !important;">@lang('lang.more_into_your_house')</h3>
-                                </div>
-                                <hr>
-                                <br>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <h3 class="description-label label">@lang('lang.house_description')</h3>
-                                        <textarea id="house_description" name="house_description" placeholder="@lang('lang.describe your house')" class="input-field required"
-                                            rows="4" style="resize: none;">{{ old('house_description') }}</textarea>
+                                    <div class="row center-content">
+                                        <h3 style="font-size: 24px !important;">@lang('lang.more_into_your_house')</h3>
                                     </div>
-                                </div>
-                                <div style="margin-top:30px"></div>
-
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <h3>@lang('lang.house gallery')</h3>
-                                        <p style="margin-top:15px">@lang('lang.add_house_picture')</p>
-                                        <input type="file" id="gallery" name="gallery[]" multiple class="input-field"
-                                            style="margin-top:15px">
-                                        <div class="preview-container">
-                                            <div class="preview-slideshow" id="previewSlideshow"></div>
-                                            <div class="preview-controls" id="previewControls">
-                                                <button type="button" id="prevSlide" disabled>&#9664;</button>
-                                                <button type="button" id="nextSlide" disabled>&#9654;</button>
+                                    <hr>
+                                    <br>
+                                    @if ($show_description)
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <h3 class="description-label label">@lang('lang.house_description')</h3>
+                                                <textarea id="house_description" name="house_description" placeholder="@lang('lang.describe your house')" class="input-field required"
+                                                    rows="4" style="resize: none;">{{ old('house_description') }}</textarea>
                                             </div>
                                         </div>
+                                        <div style="margin-top:30px"></div>
+                                    @endif
+                                    @if ($show_images)
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <h3>@lang('lang.house gallery')</h3>
+                                                <p style="margin-top:15px">@lang('lang.add_house_picture')</p>
+                                                <input type="file" id="gallery" name="gallery[]" multiple
+                                                    class="input-field" style="margin-top:15px">
+                                                <div class="preview-container">
+                                                    <div class="preview-slideshow" id="previewSlideshow"></div>
+                                                    <div class="preview-controls" id="previewControls">
+                                                        <button type="button" id="prevSlide" disabled>&#9664;</button>
+                                                        <button type="button" id="nextSlide" disabled>&#9654;</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:30px "></div>
+                                    @endif
+                                    <!-- Navigation Buttons -->
+                                    <div class="form-navigation">
+
+                                        <button type="submit" class="submit">@lang('lang.submit')</button>
                                     </div>
-                                </div>
-                                <div style="margin-top:30px "></div>
-
-                                <!-- Navigation Buttons -->
-                                <div class="form-navigation">
-
-                                    <button type="submit" class="submit">@lang('lang.submit')</button>
-                                </div>
-                            </form>
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>
