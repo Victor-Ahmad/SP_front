@@ -822,13 +822,13 @@
                                 <!-- Step 4 -->
                                 <div class="form-step">
                                     <div class="row center-content">
-                                        <h3 style="font-size: 24px !important;">@lang('lang.more into your house')</h3>
+                                        <h3 style="font-size: 24px !important;">@lang('lang.more_into_your_house')</h3>
                                     </div>
                                     <hr>
                                     <br>
                                     <div class="form-row">
                                         <div class="form-group">
-                                            <h3 class="description-label label">@lang('lang.house description')</h3>
+                                            <h3 class="description-label label">@lang('lang.house_description')</h3>
                                             <textarea id="house_description" name="house_description" placeholder="@lang('lang.describe your house')"
                                                 class="input-field required" rows="4" style="resize: none;">{{ old('house_description') }}</textarea>
                                         </div>

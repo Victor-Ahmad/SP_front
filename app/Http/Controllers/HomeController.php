@@ -122,7 +122,38 @@ class HomeController extends Controller
             }
             $houseTypes = $this->apiService->getHouseTypes()['result'];
             $features = $this->apiService->getHouseProperties()['result'];
-            return view('profile', ['profile' => $response['result'], 'houseTypes' => $houseTypes, 'features' => $features,]);
+            return view('profile', [
+                'profile' => $response['result'],
+                'houseTypes' => $houseTypes,
+                'features' => $features,
+                'numberOfRooms' => [
+                    ["id" => 1, "number" => "1"],
+                    ["id" => 2, "number" => "2"],
+                    ["id" => 3, "number" => "3"],
+                    ["id" => 4, "number" => "4"],
+                    ["id" => 5, "number" => "5"],
+                    ["id" => 6, "number" => "6"],
+                ],
+                'areas' => [
+                    '40',
+                    '45',
+                    '50',
+                    '55',
+                    '60',
+                    '65',
+                    '70',
+                    '75',
+                    '80',
+                    '85',
+                    '90',
+                    '95',
+                    '100',
+                    '105',
+                    '110',
+                    '115',
+                    '120',
+                ],
+            ]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -204,6 +235,56 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+
+    public function getCompeleteProfile()
+    {
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+            $response = $this->apiService->getProfile();
+            if (!$response['result']['one_to_one_swap_house']) {
+                return redirect()->route('account_completion');
+            }
+            // $houseTypes = $this->apiService->getHouseTypes()['result'];
+            // $features = $this->apiService->getHouseProperties()['result'];
+            return view('profile_compeletion', ['profile' => $response['result']]);
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+    public function compeleteProfile(Request $request)
+    {
+        // return $request;
+        if (!Session::get('token')) {
+            return redirect()->route('login');
+        } else {
+            error_log(Session::get('token'));
+        }
+        try {
+            $data = [
+                'description' => $request->house_description,
+                // 'house' => [
+                //     'delete_images' => explode(",", $request->delete_images),
+                // ]
+            ];
+            $files = $request->file('gallery');
+            $response = $this->apiService->compeleteProfile($data, $files);
+
+            if ($response['success'] == 1) {
+                return redirect()->route('home');
+            } else {
+                return back()->withErrors(['message' => $response['message']]);
+            }
+        } catch (\Exception $e) {
+            error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
+            return back()->withErrors(['message' => $e->getMessage()]);
+        }
+    }
+
 
     public function deleteAccount()
     {

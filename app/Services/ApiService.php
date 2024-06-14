@@ -415,4 +415,54 @@ class ApiService
         $this->revokeLogin($response);
         throw new \Exception('API call failed: ' . $response->body());
     }
+
+
+    public function compeleteProfile($data, $files)
+    {
+        $multipartData = [];
+
+        // Helper function to handle nested arrays
+        function addMultipartData(&$multipartData, $key, $value)
+        {
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    addMultipartData($multipartData, "{$key}[{$subKey}]", $subValue);
+                }
+            } else {
+                $multipartData[] = [
+                    'name' => $key,
+                    'contents' => (string) $value
+                ];
+            }
+        }
+
+        // Add form data to multipart
+        foreach ($data as $key => $value) {
+            addMultipartData($multipartData, $key, $value);
+        }
+
+        // Add files to multipart
+        if ($files) {
+            foreach ($files as $file) {
+                if ($file instanceof UploadedFile && $file->isValid()) {
+                    $multipartData[] = [
+                        'name' => 'house[images][]',
+                        'contents' => fopen($file->getPathname(), 'r'),
+                        'filename' => $file->getClientOriginalName()
+                    ];
+                }
+            }
+        }
+
+        // Make the HTTP request with token and multipart form data
+        $response = $this->http->withToken(Session::get('token'))->asMultipart()->post($this->baseUrl . 'update_description_images', $multipartData);
+        return $response;
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        $this->revokeLogin($response);
+        throw new \Exception('API call failed: ' . $response->body());
+    }
 }

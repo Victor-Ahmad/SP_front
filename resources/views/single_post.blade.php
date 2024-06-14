@@ -242,7 +242,7 @@
                         </div>
                         <div class="missing-steps">
                             <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
-                            <a href="{{ route('profile.get') }}">@lang('lang.go_profile')</a>
+                            <a href="{{ route('profile.compelete.get') }}">@lang('lang.go_profile')</a>
                             {{-- @foreach ($progress['missing_steps'] as $step)
                         <a href="{{ route('profile.get') }}">{{ $step }}</a>
                     @endforeach --}}
