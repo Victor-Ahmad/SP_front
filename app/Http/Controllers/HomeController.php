@@ -120,6 +120,7 @@ class HomeController extends Controller
             if (!$response['result']['one_to_one_swap_house']) {
                 return redirect()->route('account_completion');
             }
+
             $houseTypes = $this->apiService->getHouseTypes()['result'];
             $features = $this->apiService->getHouseProperties()['result'];
             return view('profile', [
@@ -184,10 +185,8 @@ class HomeController extends Controller
                     'house_type_id' => $request->wish_house_type[0],
                     'number_of_rooms' => $request->wish_number_of_rooms,
                     'price' => $request->wish_price,
-                    'area' => $request->wish_area,
-                    'locations' => array_map(function ($location) {
-                        return $location['location'];
-                    }, $profileInfo['wishes'][0]['wish_locations']),
+                    'area' => $request->area_wish,
+                    'locations' => isset($request->interests) && $request->interests != null ? explode(',', $request->interests) : [],
                     // 'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', substr($request->features_wish, 1)) : null,
                 ],
                 'house' => [

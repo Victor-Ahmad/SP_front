@@ -161,7 +161,7 @@
                                         </ul>
                                     </div>
 
-                                    <input type="hidden" id="area_wish" name="area"
+                                    <input type="hidden" id="area" name="area"
                                         value="{{ $profile['one_to_one_swap_house']['area'] }}">
                                 </span>
                             </div>
@@ -177,10 +177,7 @@
                     <div class="tab-pane fade" id="your-wishes" role="tabpanel" aria-labelledby="your-wishes-tab">
                         <h2>@lang('lang.your_wishes')</h2>
                         <div class="house-details">
-                            <span class="label">@lang('lang.locations of interest'):</span>
-                            <input type="text" id="interestsAutocompleteInput"
-                                placeholder="Enter a location of interest" style="display:none; width:40%"
-                                class="input-field">
+
                             @foreach ($profile['wishes'] as $wish)
                                 <div class="wish-details">
                                     <div class="detail">
@@ -234,15 +231,21 @@
                         </div>
                         @endforeach
                         <div class="detail">
-                            <div class="tags-container" id="tagsContainer">
-                                @if (isset($profile['intersts']) && !empty($profile['intersts']))
-                                    @foreach ($profile['intersts'] as $interest)
-                                        <div class="tag">{{ $interest['interest'] }} <span
-                                                data-city={{ $interest['id'] }} class="remove-tag"
-                                                style="display:none">&times;</span></div>
-                                    @endforeach
-                                @endif
-                            </div>
+                            <span class="label">@lang('lang.locations of interest'):</span>
+                            <span class="value">
+                                <input type="text" id="interestsAutocompleteInput"
+                                    placeholder="Enter a location of interest" style="display:none;" class="editable"
+                                    disabled>
+                                <div class="tags-container" id="tagsContainer">
+                                    @if (isset($profile['wishes']) && !empty($profile['wishes'][0]['wish_locations']))
+                                        @foreach ($profile['wishes'][0]['wish_locations'] as $interest)
+                                            <div class="tag">{{ $interest['location'] }} <span
+                                                    data-city={{ $interest['id'] }} class="remove-tag"
+                                                    style="display:none">&times;</span></div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -264,12 +267,13 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete">
     </script>
     <script>
+        let initialImagesHTML = '';
+        let initialTagsHTML = '';
+        let delete_images = [];
+        let delete_interests = [];
+        let addedTages = [];
         document.addEventListener('DOMContentLoaded', function() {
-            let initialImagesHTML = '';
-            let initialTagsHTML = '';
-            let delete_images = [];
-            let delete_interests = [];
-            let addedTages = [];
+
 
             document.querySelectorAll('.remove-tag').forEach(function(removeTag) {
                 removeTag.addEventListener('click', function(event) {
@@ -372,83 +376,7 @@
                 document.getElementById('delete_images').value = delete_images;
             }
 
-            function initAutocomplete() {
-                var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
-                const tagsContainer = document.getElementById('tagsContainer');
 
-                var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
-                    types: ['(cities)'],
-                    componentRestrictions: {
-                        country: "NL"
-                    }
-                });
-                interestsAutocomplete.addListener('place_changed', function() {
-                    var place = interestsAutocomplete.getPlace();
-                    console.log(place);
-
-                    if (!place.place_id) {
-                        alert("Please select a place from the dropdown list.");
-                        return;
-                    }
-
-                    const cityName = place.name;
-
-                    if (!addedTages.includes(cityName)) {
-                        addedTages.push(cityName);
-                        addTag(cityName);
-                    }
-
-                    interestsAutocompleteInput.value = '';
-                });
-
-                var input = document.getElementById('location');
-
-                var autocomplete = new google.maps.places.Autocomplete(input, {
-                    types: ['(cities)'],
-                    componentRestrictions: {
-                        country: "NL"
-                    }
-                });
-
-                autocomplete.addListener('place_changed', function() {
-                    var place = autocomplete.getPlace();
-                    console.log(place);
-
-                    if (!place.place_id) {
-                        alert("Please select a place from the dropdown list.");
-                        return;
-                    }
-                });
-            }
-
-            function addTag(city) {
-                const tagsContainer = document.getElementById('tagsContainer');
-                const locationNamesInput = document.getElementById('interests');
-                const tag = document.createElement('div');
-                tag.className = 'tag';
-                tag.innerHTML = `${city} <span class="remove-tag" style="display:inline">&times;</span>`;
-                tagsContainer.appendChild(tag);
-
-                tag.querySelector('.remove-tag').addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    tag.remove();
-                });
-
-                locationNamesInput.value = addedTages.join(',');
-            }
-
-            function attachRemoveTagListeners() {
-                document.querySelectorAll('.remove-tag').forEach(removeTag => {
-                    removeTag.addEventListener('click', function(event) {
-                        event.stopPropagation();
-                        const tag = this.parentElement;
-                        tag.remove();
-                        document.getElementById('locationNames').value = addedTages.join(',');
-                    });
-                });
-            }
-
-            attachRemoveTagListeners();
             document.addEventListener('DOMContentLoaded', function() {
                 var form = document.querySelector('form');
                 if (form) {
@@ -495,7 +423,86 @@
                     dropdown.style.display = 'none';
                 });
             });
+
         });
+
+        function initAutocomplete() {
+            var interestsAutocompleteInput = document.getElementById('interestsAutocompleteInput');
+            const tagsContainer = document.getElementById('tagsContainer');
+
+            var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+            interestsAutocomplete.addListener('place_changed', function() {
+                var place = interestsAutocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+
+                const cityName = place.name;
+
+                if (!addedTages.includes(cityName)) {
+                    addedTages.push(cityName);
+                    addTag(cityName);
+                }
+
+                interestsAutocompleteInput.value = '';
+            });
+
+            var input = document.getElementById('location');
+
+            var autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['(cities)'],
+                componentRestrictions: {
+                    country: "NL"
+                }
+            });
+
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                console.log(place);
+
+                if (!place.place_id) {
+                    alert("Please select a place from the dropdown list.");
+                    return;
+                }
+            });
+
+            function addTag(city) {
+                const tagsContainer = document.getElementById('tagsContainer');
+                const locationNamesInput = document.getElementById('interests');
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `${city} <span class="remove-tag" style="display:inline">&times;</span>`;
+                tagsContainer.appendChild(tag);
+
+                tag.querySelector('.remove-tag').addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    tag.remove();
+                });
+
+                locationNamesInput.value = addedTages.join(',');
+            }
+
+            function attachRemoveTagListeners() {
+                document.querySelectorAll('.remove-tag').forEach(removeTag => {
+                    removeTag.addEventListener('click', function(event) {
+                        event.stopPropagation();
+                        const tag = this.parentElement;
+                        tag.remove();
+                        document.getElementById('locationNames').value = addedTages.join(',');
+                    });
+                });
+            }
+            attachRemoveTagListeners();
+
+        }
     </script>
 
 

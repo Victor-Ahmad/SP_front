@@ -131,6 +131,7 @@ body {
     width: 100%;
     box-sizing: border-box;
     color: black !important;
+    background-color: #fff;
 }
 
 .editable:disabled,
