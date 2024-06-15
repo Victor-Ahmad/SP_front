@@ -187,7 +187,7 @@ class HomeController extends Controller
                     'price' => $request->wish_price,
                     'area' => $request->area_wish,
                     'locations' => isset($request->interests) && $request->interests != null ? explode(',', $request->interests) : [],
-                    // 'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', substr($request->features_wish, 1)) : null,
+                    'property_ids' => isset($request->features_wish) && !empty($request->features_wish) ? explode(',', $request->features_wish) : null,
                 ],
                 'house' => [
                     'house_number' => $profileInfo['one_to_one_swap_house']['house_number'],

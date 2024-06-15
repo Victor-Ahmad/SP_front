@@ -238,6 +238,32 @@
                         </div>
                         @endforeach
                         <div class="detail">
+                            @php
+                                $oldFeatures_wish = old('features_wish', '');
+                                if (!is_array($oldFeatures_wish)) {
+                                    $oldFeatures_wish = array_map('trim', explode(',', $oldFeatures_wish));
+                                }
+                            @endphp
+                            <span class="label">@lang('lang.house features'):</span>
+                            <span class="value">
+                                <div class="dropdown">
+                                    <input type="text" id="featuresInput_wish" placeholder="@lang('lang.specify house features')"
+                                        readonly class="editable" disabled>
+                                    <ul id="featuresList_wish" class="multi-select-content">
+                                        @foreach ($features as $feature)
+                                            <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
+                                                class="{{ in_array($feature['id'], $oldFeatures_wish) ? 'selected' : '' }}">
+                                                {{ $feature['name'] }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <input type="hidden" id="features_wish" name="features_wish"
+                                    value="{{ old('features_wish') }}">
+                            </span>
+                        </div>
+
+                        <div class="detail">
                             <span class="label">@lang('lang.locations of interest'):</span>
                             <span class="value">
                                 <input type="text" id="interestsAutocompleteInput"
@@ -424,62 +450,80 @@
                 });
             });
             // Multi-select functionality
-            const featuresInput = document.getElementById('featuresInput');
-            const featuresList = document.getElementById('featuresList');
-            const featuresItems = featuresList.querySelectorAll('li');
-            let selectedFeatures = [];
-            let selectedFeaturesNames = [];
+            const setupMultiSelect = (inputId, listId, hiddenInputId, profileProperties) => {
+                const featuresInput = document.getElementById(inputId);
+                const featuresList = document.getElementById(listId);
+                const featuresItems = featuresList.querySelectorAll('li');
+                let selectedFeatures = [];
+                let selectedFeaturesNames = [];
 
-
-            featuresInput.addEventListener('click', (e) => {
-                e.stopPropagation();
-                featuresList.style.display = featuresList.style.display === 'block' ? 'none' : 'block';
-            });
-
-            featuresItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    const value = e.target.getAttribute('data-value');
-                    const name = e.target.getAttribute('data-name');
-                    if (selectedFeatures.includes(value)) {
-                        selectedFeatures = selectedFeatures.filter(feature => feature !== value);
-                        selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
-                            featureName !== name);
-                        e.target.classList.remove('selected');
-                    } else {
-                        selectedFeatures.push(value);
-                        selectedFeaturesNames.push(name);
-                        e.target.classList.add('selected');
-                    }
-                    featuresInput.value = selectedFeaturesNames.join(', ');
-                    document.getElementById('features').value = selectedFeatures.join(', ');
+                featuresInput.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    featuresList.style.display = featuresList.style.display === 'block' ? 'none' :
+                        'block';
                 });
-            });
 
-            document.addEventListener('click', (e) => {
-                featuresList.style.display = 'none';
-            });
-            const profile = @json($profile); // Assuming $profile is available in the Blade template
-            if (profile && profile.one_to_one_swap_house && profile.one_to_one_swap_house.specific_properties) {
-                const specificProperties = profile.one_to_one_swap_house.specific_properties;
-                specificProperties.forEach(property => {
-                    if (property.specific_property) {
-                        const featureId = property.specific_property.id.toString();
-                        const featureName = property.specific_property.name;
-                        const featureItem = [...featuresItems].find(item => item.getAttribute(
-                            'data-value') === featureId);
-                        if (featureItem) {
-                            if (!selectedFeatures.includes(featureId)) {
-                                selectedFeatures.push(featureId);
-                                selectedFeaturesNames.push(featureName);
-                                featureItem.classList.add('selected');
+                featuresItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        const value = e.target.getAttribute('data-value');
+                        const name = e.target.getAttribute('data-name');
+                        if (selectedFeatures.includes(value)) {
+                            selectedFeatures = selectedFeatures.filter(feature => feature !==
+                                value);
+                            selectedFeaturesNames = selectedFeaturesNames.filter(featureName =>
+                                featureName !== name);
+                            e.target.classList.remove('selected');
+                        } else {
+                            selectedFeatures.push(value);
+                            selectedFeaturesNames.push(name);
+                            e.target.classList.add('selected');
+                        }
+                        featuresInput.value = selectedFeaturesNames.join(', ');
+                        document.getElementById(hiddenInputId).value = selectedFeatures.join(
+                            ', ');
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    featuresList.style.display = 'none';
+                });
+
+                // Auto-select features based on profile data
+                if (profileProperties) {
+                    profileProperties.forEach(property => {
+                        if (property.specific_property) {
+                            const featureId = property.specific_property.id.toString();
+                            const featureName = property.specific_property.name;
+                            const featureItem = [...featuresItems].find(item => item.getAttribute(
+                                'data-value') === featureId);
+                            if (featureItem) {
+                                if (!selectedFeatures.includes(featureId)) {
+                                    selectedFeatures.push(featureId);
+                                    selectedFeaturesNames.push(featureName);
+                                    featureItem.classList.add('selected');
+                                }
                             }
                         }
-                    }
-                });
-                featuresInput.value = selectedFeaturesNames.join(', ');
-                document.getElementById('features').value = selectedFeatures.join(', ');
+                    });
+                    featuresInput.value = selectedFeaturesNames.join(', ');
+                    document.getElementById(hiddenInputId).value = selectedFeatures.join(', ');
+                }
+            };
+
+            // Profile data
+            const profile = @json($profile);
+
+            // Setup for one_to_one_swap_house
+            if (profile && profile.one_to_one_swap_house && profile.one_to_one_swap_house.specific_properties) {
+                setupMultiSelect('featuresInput', 'featuresList', 'features', profile.one_to_one_swap_house
+                    .specific_properties);
             }
 
+            // Setup for wishes
+            if (profile && profile.wishes && profile.wishes[0] && profile.wishes[0].specific_properties) {
+                setupMultiSelect('featuresInput_wish', 'featuresList_wish', 'features_wish', profile.wishes[0]
+                    .specific_properties);
+            }
         });
 
         function deleteImage(imageId) {

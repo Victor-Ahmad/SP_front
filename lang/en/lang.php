@@ -126,7 +126,7 @@ return [
     'max_rent_price' => 'Max Rent Price',
     'min_number_of_rooms' => 'Minimmum number of rooms',
     'your wishes' => 'Your Wishes',
-    'complete_your_account_to_get_better_house_exchange_matches' => 'Complete your account to get better house exchange matches ',
+    'complete_your_account_to_get_better_house_exchange_matches' => 'Upload at least 2 picture of your house to get better house exchange matches ',
     'go_profile' => 'Go to Profile',
     'house_details' => 'House Details',
 ];

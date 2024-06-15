@@ -10,7 +10,7 @@ body {
     padding: 30px;
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
     transition: box-shadow 0.3s ease-in-out;
 }
 
@@ -281,7 +281,7 @@ body {
 @media (max-width: 600px) {
     .profile-container {
         max-width: 90vw;
-        margin: 5vh auto;
+        /* margin: 5vh auto; */
         padding: 20px;
     }
 
