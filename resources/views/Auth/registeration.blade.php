@@ -593,7 +593,7 @@
                                                         <li data-name="{{ $feature['name'] }}"
                                                             data-value="{{ $feature['id'] }}"
                                                             class="{{ in_array($feature['id'], $oldFeaturesWish) ? 'selected' : '' }}">
-                                                            {{ $feature['name'] }}
+                                                            @lang('lang.' . $feature['name'])
                                                         </li>
                                                     @endforeach
                                                 </ul>
@@ -721,7 +721,7 @@
                                                         <li data-name="{{ $feature['name'] }}"
                                                             data-value="{{ $feature['id'] }}"
                                                             class="{{ in_array($feature['id'], $oldFeatures) ? 'selected' : '' }}">
-                                                            {{ $feature['name'] }}</li>
+                                                            @lang('lang.' . $feature['name'])</li>
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -758,7 +758,9 @@
                                         <div class="form-group">
                                             <h3 class="label">@lang('lang.email')</h3>
                                             <input class="text email required input-field" type="email" name="email"
-                                                value="{{ old('email') }}" placeholder="@lang('lang.email')" required>
+                                                value="{{ old('email') }}" placeholder="@lang('lang.email')" required
+                                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                                title="Please enter a valid email address">
                                             <div class="invalid-feedback" id="emailError"
                                                 style="display: none; color: red;">Email is already taken</div>
                                         </div>
@@ -767,11 +769,10 @@
                                             <input class="text email required input-field" type="tel"
                                                 name="phone_number" placeholder="@lang('lang.phone number')" required
                                                 pattern="[0-9]{9,15}" value="{{ old('phone_number') }}"
-                                                title="Phone number must be between 10 to 15 digits">
+                                                title="Phone number must be between 9 to 15 digits">
                                             <div class="invalid-feedback" id="phoneError"
                                                 style="display: none; color: red;">Phone number is already taken</div>
                                         </div>
-
                                     </div>
                                     <div style="margin-top:30px "></div>
                                     <div class="form-row">
@@ -1304,6 +1305,8 @@
             document.addEventListener('click', (e) => {
                 featuresList.style.display = 'none';
             });
+
+
         });
 
         document.addEventListener('click', (e) => {
@@ -1373,6 +1376,7 @@
                                 removePreloader();
                                 currentStep++;
                                 updateStepProgress();
+                                scrollToTop();
                             } else {
                                 removePreloader();
                                 // Display error message under the respective field
@@ -1403,6 +1407,7 @@
                 } else {
                     currentStep++;
                     updateStepProgress();
+                    scrollToTop();
                 }
             }
         });
@@ -1426,10 +1431,44 @@
             if (currentStep > 0) {
                 currentStep--;
                 updateStepProgress();
+                scrollToTop();
             }
         });
 
         updateStepProgress();
+
+        const emailInput = document.querySelector('input[name="email"]');
+        const phoneInput = document.querySelector('input[name="phone_number"]');
+        const emailError = document.getElementById('emailError');
+        const phoneError = document.getElementById('phoneError');
+
+        // Email validation pattern
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Phone validation pattern
+        const phonePattern = /^[0-9]{9,15}$/;
+
+        emailInput.addEventListener('input', () => {
+            if (!emailPattern.test(emailInput.value)) {
+                emailInput.classList.add('error-border');
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.style.display = 'block';
+            } else {
+                emailInput.classList.remove('error-border');
+                emailError.style.display = 'none';
+            }
+        });
+
+        phoneInput.addEventListener('input', () => {
+            if (!phonePattern.test(phoneInput.value)) {
+                phoneInput.classList.add('error-border');
+                phoneError.textContent = 'Phone number must be between 9 to 15 digits';
+                phoneError.style.display = 'block';
+            } else {
+                phoneInput.classList.remove('error-border');
+                phoneError.style.display = 'none';
+            }
+        });
 
         function validateStep(step) {
             const activeStep = formSteps[step];
@@ -1449,6 +1488,18 @@
                         if (label) label.classList.remove('error-star');
                     }
                 });
+
+                // Custom validation for email
+                if (field.type === 'email' && !emailPattern.test(field.value)) {
+                    field.classList.add('error-border');
+                    isValid = false;
+                }
+
+                // Custom validation for phone number
+                if (field.type === 'tel' && !phonePattern.test(field.value)) {
+                    field.classList.add('error-border');
+                    isValid = false;
+                }
             });
 
             // Validate dropdown lists
@@ -1640,5 +1691,12 @@
         window.addEventListener('load', function() {
             removePreloader();
         });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     </script>
 @endsection

@@ -129,4 +129,7 @@ return [
     'complete_your_account_to_get_better_house_exchange_matches' => 'Upload at least 2 picture of your house to get better house exchange matches ',
     'go_profile' => 'Go to Profile',
     'house_details' => 'House Details',
+    'Garden' => 'Garden',
+    'Balcony' => 'Balcony',
+    'Elevator' => 'Elevator',
 ];

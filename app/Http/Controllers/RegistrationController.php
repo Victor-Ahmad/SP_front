@@ -39,6 +39,9 @@ class RegistrationController extends Controller
                     ["id" => 6, "number" => "6"],
                 ],
                 'areas' => [
+                    '25',
+                    '30',
+                    '35',
                     '40',
                     '45',
                     '50',
@@ -48,14 +51,6 @@ class RegistrationController extends Controller
                     '70',
                     '75',
                     '80',
-                    '85',
-                    '90',
-                    '95',
-                    '100',
-                    '105',
-                    '110',
-                    '115',
-                    '120',
                 ],
             ]);
         } catch (\Exception $e) {

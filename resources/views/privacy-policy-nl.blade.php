@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacybeleid en Algemene Voorwaarden voor Snelwoningruil.nl</title>
     <link rel="stylesheet" href="{{ asset('app/css/privacy-policy.css') }}">
-    <link rel="stylesheet" href="{{ asset('app/css/home.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('app/css/home.css') }}"> --}}
 </head>
 
 <body>

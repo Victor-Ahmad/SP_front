@@ -173,7 +173,8 @@
                                             @foreach ($features as $feature)
                                                 <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
                                                     class="{{ in_array($feature['id'], $oldFeatures) ? 'selected' : '' }}">
-                                                    {{ $feature['name'] }} </li>
+                                                    @lang('lang.' . $feature['name'])
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -253,7 +254,7 @@
                                         @foreach ($features as $feature)
                                             <li data-name="{{ $feature['name'] }}" data-value="{{ $feature['id'] }}"
                                                 class="{{ in_array($feature['id'], $oldFeatures_wish) ? 'selected' : '' }}">
-                                                {{ $feature['name'] }}
+                                                @lang('lang.' . $feature['name'])
                                             </li>
                                         @endforeach
                                     </ul>

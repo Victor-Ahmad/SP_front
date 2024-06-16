@@ -19,7 +19,8 @@ Route::post('/get-place-details-by-coords', [GooglePlacesController::class, 'get
 
 Route::middleware([Localization::class, CacheImages::class])->group(function () {
     Route::get('/privacy-policy', function () {
-        $locale = Session::get('locale', 'en');
+        $locale = Session::get('locale', 'nl');
+        // return  $locale;
         if ($locale == 'nl') {
             return view('privacy-policy-nl');
         }
