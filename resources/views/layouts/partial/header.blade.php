@@ -8,8 +8,8 @@
                         <!-- Logo Box -->
                         <div class="logo-box flex">
                             <div class="logo"><a href="{{ route('landing_page') }}">
-                                    <img style="height: 50px" src="{{ asset('assets/images/logo/logo.png') }}"
-                                        alt="" title="">
+                                    <img style="height: 40px; width: auto;"
+                                        src="{{ asset('assets/images/logo/logo.png') }}" alt="" title="">
                                 </a></div>
                         </div>
                         <div class="nav-outer flex align-center">
