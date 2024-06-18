@@ -9,7 +9,8 @@
                         <div class="logo-box flex">
                             <div class="logo"><a href="{{ route('landing_page') }}">
                                     <img style="height: 40px; width: auto;"
-                                        src="{{ asset('assets/images/logo/logo.png') }}" alt="" title="">
+                                        src="{{ asset('assets/images/logo/logo.png') }}?v={{ filemtime(public_path('assets/images/logo/logo.png')) }}"
+                                        alt="" title="">
                                 </a></div>
                         </div>
                         <div class="nav-outer flex align-center">
