@@ -72,7 +72,8 @@
         /* Extra Small Devices (phones, 600px and down) */
         @media (max-width: 600px) {
             .chat-container {
-                padding: 0;
+                padding: 10vh 0;
+
             }
         }
     </style>

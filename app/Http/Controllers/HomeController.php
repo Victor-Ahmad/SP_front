@@ -178,7 +178,7 @@ class HomeController extends Controller
                 'agreed_privacy_policy' => (string)$profileInfo['agreed_to_privacy_policy'],
                 'agreed_terms_of_use' => (string)$profileInfo['agreed_to_terms_of_use'],
                 'wish' => [
-                    'house_type_id' => $request->wish_house_type[0],
+                    'house_type_id' => $request->wish_house_type[0] ?? null,
                     'number_of_rooms' => $request->wish_number_of_rooms,
                     'price' => $request->wish_price,
                     'area' => $request->area_wish,

@@ -196,7 +196,7 @@
                                             <div class="dropdown">
                                                 <input type="text" id="dropdownInput_wish"
                                                     placeholder="@lang('lang.select an option')" readonly class="editable" disabled
-                                                    value="{{ old('wish_house_type', $wish['house_type']['type']) }}">
+                                                    value="{{ old('wish_house_type', $wish['house_type']['type'] ?? null) }}">
                                                 <ul id="dropdownList_wish" class="dropdown-content">
                                                     @foreach ($houseTypes as $type)
                                                         <li data-value="{{ $type['id'] }}">@lang('lang.' . $type['type'])</li>
