@@ -71,8 +71,10 @@
 
         <div class="days-box flex justify-content-between align-items-center">
             <div class="chat-button-container ml-auto">
-                <a href="{{ route('checkChat', ['userId' => $post['user']['id']]) }}" class="btn btn-chat"><i
-                        class="fas fa-comments"></i> @lang('lang.chat')</a>
+                @if (isset($post['user']['id']) ?? false)
+                    <a href="{{ route('checkChat', ['userId' => $post['user']['id']]) }}" class="btn btn-chat"><i
+                            class="fas fa-comments"></i> @lang('lang.chat')</a>
+                @endif
             </div>
         </div>
     </div>
