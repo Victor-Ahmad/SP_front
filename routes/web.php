@@ -92,6 +92,7 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     Route::post('/check-email-phone', [RegistrationController::class, 'checkEmailAvailability'])->name('check.email.phone');
 
 
+    // Route::get('/marketing', [HomeController::class, 'marketing'])->name('marketing');
     // Route::get('/index', function () {
     //     return view('index');
     // })->name('index.view');
