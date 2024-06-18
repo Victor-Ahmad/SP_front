@@ -5,8 +5,8 @@
                 <div class="wrap-logo flex align-center justify-space">
                     <div class="logo-footer style box-1" id="logo-footer">
                         <a href="{{ route('landing_page') }}">
-                            <img src="{{ asset('assets/images/logo/logo.png') }}" alt="img" width="197"
-                                height="48">
+                            <img src="{{ asset('assets/images/logo/logo.png') }}?v={{ filemtime(public_path('assets/images/logo/logo.png')) }}"
+                                alt="img" width="197" height="48">
                         </a>
                     </div>
                     <div class="box-menu box-2">

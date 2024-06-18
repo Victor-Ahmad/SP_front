@@ -107,7 +107,8 @@
     <div class="mobile-menu">
         <div class="menu-backdrop"></div>
         <nav class="menu-box">
-            <div class="nav-logo"><a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}"
+            <div class="nav-logo"><a href="index.html"><img
+                        src="{{ asset('assets/images/logo/logo.png') }}?v={{ filemtime(public_path('assets/images/logo/logo.png')) }}"
                         alt="" width="197" height="48"></a></div>
             <div class="bottom-canvas">
                 <div class="login-box flex align-center">

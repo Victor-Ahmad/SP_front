@@ -25,7 +25,8 @@
                             max-height: 100%;
                         height: auto;   
                         object-fit: contain; "
-                            src="/assets/images/house/featured-7.png" alt="images">
+                            src="{{ asset('assets/images/house/featured-7.png') }}?v={{ filemtime(public_path('assets/images/house/featured-7.png')) }}"
+                            alt="images">
                         @if (!$showAll)
                             <div class="overlay-container">
                                 <i class="fas fa-lock overlay-icon"></i> <!-- Overlay icon for blurred images -->

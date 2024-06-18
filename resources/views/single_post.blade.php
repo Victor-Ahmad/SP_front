@@ -182,6 +182,10 @@
         .missing-steps a:hover {
             text-decoration: underline;
         }
+
+        .special_span {
+            margin-right: 50px;
+        }
     </style>
 @endsection
 
@@ -206,8 +210,8 @@
                                         @endif
                                     @endforeach
                                 @else
-                                    <img src="../assets/images/house/featured-7.png" alt="images"
-                                        class=" @if (!$post['showAll']) blurred @endif">
+                                    <img src="{{ asset('assets/images/house/featured-7.png') }}?v={{ filemtime(public_path('assets/images/house/featured-7.png')) }}"
+                                        alt="images" class=" @if (!$post['showAll']) blurred @endif">
                                     @if (!$post['showAll'])
                                         <div class="overlay-container">
                                             <i class="fas fa-lock overlay-icon"></i>
@@ -338,19 +342,24 @@
                                 </div>
                                 <div class="box flex">
                                     <ul>
-                                        <li class="flex"><span class="one fw-6">@lang('lang.house type'):</span><span
+                                        <li class="flex"><span
+                                                class="one fw-6 special_span">@lang('lang.house type'):</span><span
                                                 class="two">{{ __('lang.' . $post['house_type']['type']) }}</span>
                                         </li>
-                                        <li class="flex"><span class="one fw-6">@lang('lang.rooms'):</span><span
+                                        <li class="flex"><span
+                                                class="one fw-6 special_span">@lang('lang.rooms'):</span><span
                                                 class="two">{{ $post['number_of_rooms'] }}</span></li>
-                                        <li class="flex"><span class="one fw-6">@lang('lang.rent price'):</span><span
+                                        <li class="flex"><span
+                                                class="one fw-6 special_span">@lang('lang.rent price'):</span><span
                                                 class="two">{{ $post['price'] }} (€)
                                             </span></li>
-                                        <li class="flex"><span class="one fw-6">@lang('lang.area'):</span><span
+                                        <li class="flex"><span
+                                                class="one fw-6 special_span">@lang('lang.area'):</span><span
                                                 class="two">{{ $post['area'] }} (m²)
                                             </span></li>
                                         @if ($post['description'] != '')
-                                            <li class="flex"><span class="one fw-6">@lang('lang.house_description'):</span><span
+                                            <li class="flex"><span
+                                                    class="one fw-6 special_span">@lang('lang.house_description'):</span><span
                                                     class="two">{{ $post['description'] }}
                                                 </span></li>
                                         @endif
