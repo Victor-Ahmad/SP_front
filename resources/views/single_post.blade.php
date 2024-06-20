@@ -357,12 +357,14 @@
                                                 class="one fw-6 special_span">@lang('lang.area'):</span><span
                                                 class="two">{{ $post['area'] }} (m²)
                                             </span></li>
-                                        @if ($post['description'] != '')
-                                            <li class="flex"><span
-                                                    class="one fw-6 special_span">@lang('lang.house_description'):</span><span
-                                                    class="two">{{ $post['description'] }}
-                                                </span></li>
-                                        @endif
+
+                                        <li class="flex"><span class="one fw-6 special_span">@lang('lang.house_description'):</span>
+                                            @if ($post['description'] != '')
+                                                <span class="two">{{ $post['description'] }}
+                                                </span>
+                                            @endif
+                                        </li>
+
 
                                     </ul>
                                     {{-- <ul>
@@ -379,12 +381,13 @@
                                     </ul> --}}
                                 </div>
                             </div>
-                            @if (!empty($post['intersts']))
-                                <div class="wrap-overview wrap-style">
-                                    <div class="titles">
-                                        <h3>@lang('lang.interests')</h3>
-                                    </div>
-                                    <div class="icon-wrap flex">
+
+                            <div class="wrap-overview wrap-style">
+                                <div class="titles">
+                                    <h3>@lang('lang.interests')</h3>
+                                </div>
+                                <div class="icon-wrap flex">
+                                    @if (!empty($post['intersts']))
                                         @foreach ($post['intersts'] as $interst)
                                             <div class="box-icon">
                                                 <div class="inner flex">
@@ -395,11 +398,11 @@
                                                 </div>
                                             </div>
                                         @endforeach
+                                    @endif
 
-
-                                    </div>
                                 </div>
-                            @endif
+                            </div>
+
                             <div class="chat-button-container ">
                                 <a href="{{ route('checkChat', ['userId' => $post['user_id']]) }}"
                                     class="btn btn-chat center-text"><i class="fas fa-comments"></i> @lang('lang.chat') -

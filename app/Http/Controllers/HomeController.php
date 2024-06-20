@@ -77,6 +77,7 @@ class HomeController extends Controller
             $progress =    $this->apiService->getProfileProgress()['result'];
             $showAll = $response['result']['has_more_than_two_images'];
             Session::put('showAll', $showAll);
+
             return view('home', ['posts' => $posts, 'progress' => $progress, 'showAll' => $showAll]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
