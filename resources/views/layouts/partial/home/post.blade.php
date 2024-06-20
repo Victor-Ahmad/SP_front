@@ -44,7 +44,8 @@
         </div>
     </div>
     <div class="content">
-        <h3 class="link-style-1"><a href="">{{ $post['location'] }}, {{ $post['street'] }}</a></h3>
+        <h3 class="link-style-1"><a href="{{ route('getPost', $post['id']) }}">{{ $post['location'] }},
+                {{ $post['street'] }}</a></h3>
         <p class="p-12">{{ $post['post_code'] }}</p>
         <div class="text-address">
 
