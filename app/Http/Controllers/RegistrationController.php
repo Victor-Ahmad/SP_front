@@ -79,8 +79,9 @@ class RegistrationController extends Controller
     {
 
         $features_wish =  array_map('trim', explode(',', $request->features_wish));
+        array_shift($features_wish);
         $features =  array_map('trim', explode(',', $request->features));
-
+        array_shift($features);
         $data = [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -94,9 +95,7 @@ class RegistrationController extends Controller
                 'number_of_rooms' => $request->number_of_rooms_wish,
                 'price' => $request->price_wish,
                 'area' => $request->area_wish,
-                'locations' => [
-                    '0', '0'
-                ],
+                'locations' => explode(',', $request->location_names),
                 'property_ids' => $features_wish,
 
             ],
@@ -105,9 +104,7 @@ class RegistrationController extends Controller
                 'number_of_rooms' => $request->number_of_rooms,
                 'price' => $request->price,
                 'area' => $request->area,
-                'locations' => [
-                    '0', '0'
-                ],
+                'locations' => $request->location_name,
                 'property_ids' => $features,
                 'description' => $request->house_description,
                 'street' => $request->street,

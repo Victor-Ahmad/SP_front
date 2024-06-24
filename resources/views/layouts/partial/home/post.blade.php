@@ -62,9 +62,9 @@
         </div>
         <div class="icon-box flex">
             <div class=""><span>@lang('lang.interests'): </span><span class="fw-6">
-                    @if (isset($post['user']['intersts']) && !empty($post['user']['intersts']))
-                        @foreach ($post['user']['intersts'] as $interest)
-                            {{ $interest['interest'] }},
+                    @if (isset($post['user']['wishes']) && !empty($post['user']['wishes'][0]))
+                        @foreach ($post['user']['wishes'][0]['wish_locations'] as $interest)
+                            {{ $interest['location'] }},
                         @endforeach
                     @endif
                 </span>
