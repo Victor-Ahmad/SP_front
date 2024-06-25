@@ -31,7 +31,9 @@
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div> --}}
+
                 </div>
+
             </div>
         </div>
     </div>

@@ -148,6 +148,62 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Pagination Links -->
+                @if (isset($pagination))
+                    <div class="pagination-links">
+                        <ul class="pagination">
+                            {{-- @if ($pagination['prev_page_url'])
+                                <li><a
+                                        href="{{ route('home', ['page' => $pagination['current_page'] - 1]) }}">@lang('lang.previous')</a>
+                                </li>
+                            @endif --}}
+
+                            <li>
+                                <a href="{{ route('home', ['page' => 1]) }}">
+                                    <i class="fas fa-angle-double-left"></i> @lang('lang.first')
+                                </a>
+                            </li>
+
+                            @php
+                                $start = max(1, $pagination['current_page'] - 2);
+                                $end = min($pagination['last_page'], $pagination['current_page'] + 2);
+
+                                if ($pagination['last_page'] <= 5) {
+                                    $start = 1;
+                                    $end = $pagination['last_page'];
+                                } else {
+                                    if ($start == 1) {
+                                        $end = 5;
+                                    }
+                                    if ($end == $pagination['last_page']) {
+                                        $start = $pagination['last_page'] - 4;
+                                    }
+                                }
+                            @endphp
+
+                            @for ($i = $start; $i <= $end; $i++)
+                                <li class="{{ $i == $pagination['current_page'] ? 'active' : '' }}">
+                                    <a href="{{ route('home', ['page' => $i]) }}">{{ $i }}</a>
+                                </li>
+                            @endfor
+
+                            <li>
+                                <a href="{{ route('home', ['page' => $pagination['last_page']]) }}">
+                                    @lang('lang.last') <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </li>
+
+                            {{-- @if ($pagination['next_page_url'])
+                                <li><a
+                                        href="{{ route('home', ['page' => $pagination['current_page'] + 1]) }}">@lang('lang.next')</a>
+                                </li>
+                            @endif --}}
+
+                        </ul>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>

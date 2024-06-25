@@ -132,4 +132,7 @@ return [
     'Garden' => 'Garden',
     'Balcony' => 'Balcony',
     'Elevator' => 'Elevator',
+    'first' => 'First Page',
+    'last' => 'Last Page',
+
 ];

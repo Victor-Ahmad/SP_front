@@ -29,7 +29,7 @@ class HomeController extends Controller
     }
 
 
-    public function home()
+    public function home($page = 1)
     {
         if (!Session::get('token')) {
             return redirect()->route('landing_page');
@@ -45,18 +45,18 @@ class HomeController extends Controller
                 'price_max' => request()->max_value,
                 'number_of_rooms' => request()->rooms != 'any' ? request()->rooms : null,
                 'location' => request()->location,
+                'page' => request()->page ?? 1 // Adding page parameter
             ];
 
             $data = array_filter($data, function ($value) {
                 return !is_null($value) && $value !== '';
             });
 
-            $response = $this->apiService->getPosts($data);
-            $posts = $response['result']['filtered_houses'];
+            $response = $this->apiService->getPosts($data, $page);
+            $posts = $response['result']['filtered_houses']['data'];
             $first_posts = [];
             $last_posts = [];
             $my_interest = Session::get('my_location') ?? '';
-
             foreach ($posts as  $post) {
                 $in_interest = false;
                 if (isset($post['user']['intersts']) && !empty($post['user']['intersts'])) {
@@ -66,7 +66,6 @@ class HomeController extends Controller
                         }
                     }
                 }
-
                 if ($in_interest) {
                     $first_posts[] = $post;
                 } else {
@@ -74,11 +73,12 @@ class HomeController extends Controller
                 }
             }
             $posts = array_merge($first_posts, $last_posts);
+            $pagination = $response['result']['filtered_houses'];
             $progress =    $this->apiService->getProfileProgress()['result'];
             $showAll = $response['result']['has_more_than_two_images'];
             Session::put('showAll', $showAll);
-
-            return view('home', ['posts' => $posts, 'progress' => $progress, 'showAll' => $showAll]);
+            // return   $pagination;
+            return view('home', ['posts' => $posts, 'progress' => $progress, 'showAll' => $showAll, 'pagination' => $pagination]);
         } catch (\Exception $e) {
             error_log('File:' . $e->getFile() . 'Line:' . $e->getLine() . 'Message:' . $e->getMessage());
             return back()->withErrors(['message' => $e->getMessage()]);
@@ -340,10 +340,9 @@ class HomeController extends Controller
         try {
             $response = $this->apiService->getPost($id);
 
-
             if ($response['success'] == 1) {
                 $post = $response['result']['house'];
-                $post['intersts'] = $response['result']['house_owner']['intersts'];
+                $post['intersts'] = $response['result']['house_owner']['wishes'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
                 $post['showAll'] = Session::get('showAll') ?? 'false';
                 $post['progress'] =   $this->apiService->getProfileProgress()['result'];

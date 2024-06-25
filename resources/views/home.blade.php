@@ -158,6 +158,36 @@
         .missing-steps a:hover {
             text-decoration: underline;
         }
+
+        .pagination {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination li a {
+            text-decoration: none;
+            color: #333;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        .pagination li a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination li.active a {
+            background-color: #333;
+            color: #fff;
+            border-color: #333;
+        }
     </style>
 @endsection
 
@@ -174,6 +204,13 @@
 @section('additional_scripts')
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete&language=nl">
+    </script>
+    <script>
+        function submitPaginationForm(url) {
+            const page = new URL(url).searchParams.get('page');
+            document.getElementById('pageInput').value = page;
+            document.getElementById('paginationForm').submit();
+        }
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -132,4 +132,6 @@ return [
     'Garden' => 'Tuin',
     'Balcony' => 'Balkon',
     'Elevator' => 'Lift',
+    'first' => 'Eerste pagina',
+    'last' => 'Laatste pagina',
 ];

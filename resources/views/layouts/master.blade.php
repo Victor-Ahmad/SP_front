@@ -16,7 +16,7 @@
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
     <link rel="apple-touch-icon-precomposed"
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .navigation li a {
             color: #2a81b2 !important;
@@ -132,6 +132,35 @@
             padding: 4px 7px;
             font-size: 8px;
             font-weight: bold;
+        }
+
+        .social-media-icons {
+            margin-left: 18vw;
+        }
+
+        .social-media-icons .social-icon {
+            margin-right: 10px;
+            color: #2a81b2;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .fa-facebook-f,
+        .fa-instagram {
+            font-size: 20px;
+            margin-right: 5px;
+        }
+
+        .social-media-icons .social-icon:hover {
+            color: #FF9700;
+        }
+
+        .main-menu .facebook_custom {
+            margin-left: 15vw;
+        }
+
+        .mobile-menu .facebook_custom {
+            margin-top: 15vw;
         }
     </style>
 

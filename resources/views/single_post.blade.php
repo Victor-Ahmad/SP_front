@@ -387,12 +387,12 @@
                                     <h3>@lang('lang.interests')</h3>
                                 </div>
                                 <div class="icon-wrap flex">
-                                    @if (!empty($post['intersts']))
-                                        @foreach ($post['intersts'] as $interst)
+                                    @if (!empty($post['intersts']) && isset($post['intersts'][0]['wish_locations']))
+                                        @foreach ($post['intersts'][0]['wish_locations'] as $interst)
                                             <div class="box-icon">
                                                 <div class="inner flex">
                                                     <div class="content">
-                                                        <div class="font-2 fw-7">{{ $interst['interest'] }}
+                                                        <div class="font-2 fw-7">{{ $interst['location'] }}
                                                         </div>
                                                     </div>
                                                 </div>
