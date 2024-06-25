@@ -67,7 +67,7 @@ Route::middleware([Localization::class, CacheImages::class])->group(function () 
     Route::get('/account_completion', [RegistrationController::class, 'account_completion'])->name('account_completion');
     Route::post('/account_completion', [RegistrationController::class, 'complete_account'])->name('complete_account');
     Route::get('/home/{page?}', [HomeController::class, 'home'])->name('home');
-    Route::get('/home/{id}', [HomeController::class, 'getPost'])->name('getPost');
+    Route::get('/home_ad/{id}', [HomeController::class, 'getPost'])->name('getPost');
     Route::get('/chats', [ChatController::class, 'chats'])->name('chats');
     Route::get('/chat/{id}', [ChatController::class, 'showChatMessages'])->name('chat.show');
     Route::get('/feed_back', [HomeController::class, 'feedBack'])->name('feed_back');
