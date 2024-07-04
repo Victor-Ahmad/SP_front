@@ -346,12 +346,14 @@ class ApiService
 
     public function checkNewMessages()
     {
-        $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "chats_with_unread_messages");
-        if ($response->successful()) {
-            return $response->json();
+        if (Session::get('token')) {
+            $response = $this->http->withToken(Session::get('token'))->get($this->baseUrl . "chats_with_unread_messages");
+            if ($response->successful()) {
+                return $response->json();
+            }
+            $this->revokeLogin($response);
+            throw new \Exception('API call failed: ' . $response->body());
         }
-        $this->revokeLogin($response);
-        throw new \Exception('API call failed: ' . $response->body());
     }
 
     public function checkChat($userId)
