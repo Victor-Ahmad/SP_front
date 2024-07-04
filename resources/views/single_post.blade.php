@@ -3,14 +3,16 @@
 @php
     $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
     $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $post['area'] . '(m²)';
+    $og_image = !empty($post['images'])
+        ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
+        : asset('assets/images/default_image.jpg');
 @endphp
 
 @section('title', $title)
 
 @section('og_title', $title)
 @section('og_description', $dsc)
-@section('og_image', !empty($post['images']) ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path'] :
-    asset('assets/images/default_image.jpg'))
+@section('og_image', $og_image)
 @section('og_url', url()->current())
 
 @section('head_css')
@@ -49,8 +51,7 @@
                                         @if (!$post['showAll'])
                                             <div class="overlay-container">
                                                 <i class="fas fa-lock overlay-icon"></i>
-                                                <!-- Overlay icon for blurred images -->
-                                                <p class="overlay-text">@lang('lang.complete profile first to view the images')</p> <!-- Overlay text -->
+                                                <p class="overlay-text">@lang('lang.complete profile first to view the images')</p>
                                             </div>
                                         @endif
                                     @endforeach
@@ -60,8 +61,7 @@
                                     @if (!$post['showAll'])
                                         <div class="overlay-container">
                                             <i class="fas fa-lock overlay-icon"></i>
-                                            <!-- Overlay icon for blurred images -->
-                                            <p class="overlay-text">@lang('lang.complete profile first to view the images')</p> <!-- Overlay text -->
+                                            <p class="overlay-text">@lang('lang.complete profile first to view the images')</p>
                                         </div>
                                     @endif
                                 @endif
@@ -86,7 +86,7 @@
                             <div class="progress-text" id="progress-text"></div>
                         </div>
                         <div class="missing-steps">
-                            <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
+                            <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches')</P>
                             <a href="{{ route('profile.compelete.get', ['type' => $type]) }}">@lang('lang.go_profile')</a>
                         </div>
                     </div>
@@ -142,12 +142,10 @@
                                                 class="two">{{ $post['number_of_rooms'] }}</span></li>
                                         <li class="flex"><span
                                                 class="one fw-6 special_span">@lang('lang.rent price'):</span><span
-                                                class="two">{{ $post['price'] }} (€)
-                                            </span></li>
+                                                class="two">{{ $post['price'] }} (€)</span></li>
                                         <li class="flex"><span
                                                 class="one fw-6 special_span">@lang('lang.area'):</span><span
-                                                class="two">{{ $post['area'] }} (m²)
-                                            </span></li>
+                                                class="two">{{ $post['area'] }} (m²)</span></li>
                                         <li class="flex"><span class="one fw-6 special_span">@lang('lang.house_description'):</span>
                                             @if ($post['description'] != '')
                                                 <span class="two">{{ $post['description'] }}</span>
