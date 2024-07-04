@@ -66,18 +66,14 @@
                                     @endif
                                 @endif
                             </div>
-                            <div id="previous" class="btns">❮</div>
-                            <div id="next" class="btns">❯</div>
                         </div>
                     </div>
                 </div>
-                <hr>
             </div>
         </section>
         <div class="clearfix"></div>
 
         <section class="flat-property-detail property-detail2 style2">
-
             <br>
             <div class="container">
                 @if ($post['progress']['progress'] != '100 %')
@@ -89,21 +85,17 @@
                             </svg>
                             <div class="progress-text" id="progress-text"></div>
                         </div>
-
                         <div class="missing-steps">
                             <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
                             <a href="{{ route('profile.compelete.get', ['type' => $type]) }}">@lang('lang.go_profile')</a>
-
                         </div>
                     </div>
-
                     <br>
                     <hr>
                 @endif
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="post">
-
                             <div class="wrap-overview wrap-style">
                                 <div class="titles">
                                     <h3>@lang('lang.location')</h3>
@@ -125,7 +117,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="box-icon">
                                         <div class="inner flex">
                                             <div class="content">
@@ -157,20 +148,14 @@
                                                 class="one fw-6 special_span">@lang('lang.area'):</span><span
                                                 class="two">{{ $post['area'] }} (m²)
                                             </span></li>
-
                                         <li class="flex"><span class="one fw-6 special_span">@lang('lang.house_description'):</span>
                                             @if ($post['description'] != '')
-                                                <span class="two">{{ $post['description'] }}
-                                                </span>
+                                                <span class="two">{{ $post['description'] }}</span>
                                             @endif
                                         </li>
-
-
                                     </ul>
-
                                 </div>
                             </div>
-
                             <div class="wrap-overview wrap-style">
                                 <div class="titles">
                                     <h3>@lang('lang.interests')</h3>
@@ -181,17 +166,14 @@
                                             <div class="box-icon">
                                                 <div class="inner flex">
                                                     <div class="content">
-                                                        <div class="font-2 fw-7">{{ $interst['location'] }}
-                                                        </div>
+                                                        <div class="font-2 fw-7">{{ $interst['location'] }}</div>
                                                     </div>
                                                 </div>
                                             </div>
                                         @endforeach
                                     @endif
-
                                 </div>
                             </div>
-
                             <div class="chat-button-container ">
                                 <a href="{{ route('checkChat', ['userId' => $post['user_id']]) }}"
                                     class="btn btn-chat center-text"><i class="fas fa-comments"></i> @lang('lang.chat') -
@@ -199,7 +181,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>

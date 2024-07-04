@@ -15,7 +15,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Your Site Name" />
     <meta property="og:locale" content="en_US" />
+    <meta property="fb:app_id" content="YOUR_APP_ID_HERE" /> <!-- Replace with your actual Facebook App ID -->
 
+    <!-- Other meta tags and CSS links -->
     <link rel="stylesheet"
         href="{{ asset('app/dist/font-awesome.css') }}?v={{ filemtime(public_path('app/dist/font-awesome.css')) }}">
     <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}?v={{ filemtime(public_path('app/dist/app.css')) }}">
@@ -29,7 +31,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet"
         href="{{ asset('app/css/master.css') }}?v={{ filemtime(public_path('app/css/master.css')) }}">
-
 
     @yield('head_css')
     <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
@@ -113,6 +114,5 @@
     </script>
     <a id="scroll-top" class="button-go"></a>
 </body>
-
 
 </html>
