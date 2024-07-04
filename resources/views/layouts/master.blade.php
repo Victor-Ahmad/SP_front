@@ -13,7 +13,7 @@
     <meta property="og:image" content="@yield('og_image', asset('assets/images/default_image.jpg'))" />
     <meta property="og:url" content="@yield('og_url', url()->current())" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Your Site Name" />
+    <meta property="og:site_name" content="ٍSnelwoningruil.nl" />
     <meta property="og:locale" content="en_US" />
     <meta property="fb:app_id" content="YOUR_APP_ID_HERE" /> <!-- Replace with your actual Facebook App ID -->
 
