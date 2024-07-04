@@ -14,8 +14,7 @@
     <meta property="og:url" content="@yield('og_url', url()->current())" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="ٍSnelwoningruil.nl" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="fb:app_id" content="YOUR_APP_ID_HERE" /> <!-- Replace with your actual Facebook App ID -->
+    <meta property="og:locale" content="nl_NL" />
 
     <!-- Other meta tags and CSS links -->
     <link rel="stylesheet"
