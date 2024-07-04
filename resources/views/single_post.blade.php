@@ -1,8 +1,12 @@
 @extends('layouts.master')
 
-@section('title', $post['owner_name'])
+@php
+    $title = $post['location'] . ', ' . $post['street'];
+@endphp
 
-@section('og_title', $post['owner_name'])
+@section('title', $title)
+
+@section('og_title', $title)
 @section('og_description', 'A brief description of your page') <!-- Adjust the description as needed -->
 @section('og_image', !empty($post['images']) ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path'] :
     asset('assets/images/default_image.jpg'))
