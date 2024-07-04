@@ -1,0 +1,181 @@
+#slider-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 50vh;
+    display: flex;
+    align-items: center;
+}
+
+#slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform;
+}
+
+#slider img {
+    height: 50vh;
+    margin-right: 10px;
+    /* Adjust gap between images */
+    display: block;
+}
+
+.btns {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 1;
+}
+
+#previous {
+    left: 0;
+}
+
+#next {
+    right: 0;
+}
+
+@media (max-width: 768px) {
+    #slider img {
+        height: 30vh;
+    }
+
+    .btns {
+        padding: 5px;
+    }
+}
+
+.btn.btn-chat.center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn.btn-chat.center-text i {
+    margin-right: 5px;
+    /* Adjust spacing between icon and text */
+}
+
+.image-group {
+    position: relative;
+}
+
+.post_image_container {
+    position: relative;
+}
+
+.blurred {
+    filter: blur(20px);
+    /* Adjust the blur intensity */
+    width: 100%;
+    /* Adjust the size as needed */
+}
+
+.overlay-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.overlay-icon {
+    font-size: 50px;
+    /* Adjust the icon size */
+    margin-bottom: 10px;
+    /* Space between the icon and text */
+    color: #2a81b2 !important;
+}
+
+.overlay-text {
+    font-size: 16px;
+    color: #2a81b2 !important;
+    /* Adjust the text size */
+}
+
+
+
+
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+}
+
+.progress-circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.progress-circle svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.progress-circle circle {
+    fill: none;
+    stroke-width: 10;
+}
+
+.progress-circle .background {
+    stroke: #ffa920;
+}
+
+.progress-circle .foreground {
+    stroke: #2a81b2;
+    stroke-linecap: round;
+    stroke-dasharray: 0 100;
+    transition: stroke-dasharray 1s ease, stroke-dashoffset 1s ease;
+    transition-delay: 0.3s;
+}
+
+.progress-circle .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.missing-steps {
+    margin-left: 20px;
+}
+
+.missing-steps p {
+    font-size: 1em;
+}
+
+.missing-steps a {
+    display: block;
+    color: #2a81b2 !important;
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.missing-steps a:hover {
+    text-decoration: none !important;
+    color: #ff9700 !important;
+
+}
+
+.missing-steps a:hover {
+    text-decoration: underline;
+}
+
+.special_span {
+    margin-right: 50px;
+}

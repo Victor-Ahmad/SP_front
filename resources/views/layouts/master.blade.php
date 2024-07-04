@@ -6,6 +6,16 @@
     <title>@yield('title', 'Default Title')</title>
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="@yield('og_title', 'Default Title')" />
+    <meta property="og:description" content="@yield('og_description', 'A brief description of your page')" />
+    <meta property="og:image" content="@yield('og_image', asset('assets/images/default_image.jpg'))" />
+    <meta property="og:url" content="@yield('og_url', url()->current())" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Your Site Name" />
+    <meta property="og:locale" content="en_US" />
+
     <link rel="stylesheet"
         href="{{ asset('app/dist/font-awesome.css') }}?v={{ filemtime(public_path('app/dist/font-awesome.css')) }}">
     <link rel="stylesheet" href="{{ asset('app/dist/app.css') }}?v={{ filemtime(public_path('app/dist/app.css')) }}">
@@ -17,152 +27,8 @@
     <link rel="apple-touch-icon-precomposed"
         href="{{ asset('assets/images/logo/Favicon.png') }}?v={{ filemtime(public_path('assets/images/logo/Favicon.png')) }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .navigation li a {
-            color: #2a81b2 !important;
-        }
-
-        .navigation li a:hover {
-            color: #ff9700 !important;
-        }
-
-        .widget-logo-footer {
-            padding: 10px 0;
-        }
-
-
-        .language-switcher {
-            position: relative;
-            display: inline-block;
-        }
-
-        .auth_btn {
-            color: #2a81b2;
-        }
-
-        .menu-btn {
-            background-color: transparent !important;
-            color: #2a81b2;
-            padding: 5px 10px;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            border-radius: 3px;
-            text-transform: uppercase;
-            margin: 0 15px;
-        }
-
-        .menu-btn:hover,
-        .menu-btn:focus {
-            background-color: #1e6392;
-        }
-
-        .language-menu {
-            position: relative;
-            display: inline-block;
-        }
-
-        .menu-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 60px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 5px;
-        }
-
-        .menu-content .language-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-
-        }
-
-        .menu-content .language-list li {
-            padding: 8px 12px;
-            text-align: center;
-            display: block !important;
-        }
-
-        .menu-content .language-list li a {
-            color: #2a81b2;
-            text-decoration: none;
-            display: block;
-        }
-
-        .menu-content .language-list li a:hover {
-            background-color: #f1f1f1;
-            color: #1e6392;
-        }
-
-        .language-menu:hover .menu-content {
-            display: block;
-        }
-
-        .language-list .selected {
-            font-weight: bold;
-            color: #ff9700;
-        }
-
-        /* Large Devices (laptops/desktops, 992px to 1200px) */
-        @media (max-width: 1200px) {}
-
-        /* Medium Devices (landscape tablets, 768px to 992px) */
-        @media (max-width: 992px) {}
-
-
-        /* Small Devices (portrait tablets and large phones, 600px to 768px) */
-        @media (max-width: 768px) {}
-
-        /* Extra Small Devices (phones, 600px and down) */
-        @media (max-width: 600px) {}
-
-        .position-relative {
-            position: relative;
-        }
-
-        .badge {
-            position: absolute;
-            top: 10px;
-            right: -10px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 4px 7px;
-            font-size: 8px;
-            font-weight: bold;
-        }
-
-        .social-media-icons {
-            margin-left: 18vw;
-        }
-
-        .social-media-icons .social-icon {
-            margin-right: 10px;
-            color: #2a81b2;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-
-        .fa-facebook-f,
-        .fa-instagram {
-            font-size: 20px;
-            margin-right: 5px;
-        }
-
-        .social-media-icons .social-icon:hover {
-            color: #FF9700;
-        }
-
-        .main-menu .facebook_custom {
-            margin-left: 15vw;
-        }
-
-        .mobile-menu .facebook_custom {
-            margin-top: 15vw;
-        }
-    </style>
+    <link rel="stylesheet"
+        href="{{ asset('app/css/master.css') }}?v={{ filemtime(public_path('app/css/master.css')) }}">
 
 
     @yield('head_css')

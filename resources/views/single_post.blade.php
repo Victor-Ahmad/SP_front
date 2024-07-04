@@ -1,193 +1,20 @@
 @extends('layouts.master')
 
 @section('title', $post['owner_name'])
+
+@section('og_title', $post['owner_name'])
+@section('og_description', 'A brief description of your page') <!-- Adjust the description as needed -->
+@section('og_image', !empty($post['images']) ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path'] :
+    asset('assets/images/default_image.jpg'))
+@section('og_url', url()->current())
+
 @section('head_css')
     <link href="{{ asset('app/css/home.css') }}?v={{ filemtime(public_path('app/css/home.css')) }}" rel="stylesheet"
         type="text/css" media="all" />
-    <style>
-        #slider-wrap {
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-            height: 50vh;
-            display: flex;
-            align-items: center;
-        }
-
-        #slider {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            will-change: transform;
-        }
-
-        #slider img {
-            height: 50vh;
-            margin-right: 10px;
-            /* Adjust gap between images */
-            display: block;
-        }
-
-        .btns {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-            user-select: none;
-            z-index: 1;
-        }
-
-        #previous {
-            left: 0;
-        }
-
-        #next {
-            right: 0;
-        }
-
-        @media (max-width: 768px) {
-            #slider img {
-                height: 30vh;
-            }
-
-            .btns {
-                padding: 5px;
-            }
-        }
-
-        .btn.btn-chat.center-text {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .btn.btn-chat.center-text i {
-            margin-right: 5px;
-            /* Adjust spacing between icon and text */
-        }
-
-        .image-group {
-            position: relative;
-        }
-
-        .post_image_container {
-            position: relative;
-        }
-
-        .blurred {
-            filter: blur(20px);
-            /* Adjust the blur intensity */
-            width: 100%;
-            /* Adjust the size as needed */
-        }
-
-        .overlay-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-        }
-
-        .overlay-icon {
-            font-size: 50px;
-            /* Adjust the icon size */
-            margin-bottom: 10px;
-            /* Space between the icon and text */
-            color: #2a81b2 !important;
-        }
-
-        .overlay-text {
-            font-size: 16px;
-            color: #2a81b2 !important;
-            /* Adjust the text size */
-        }
-
-
-
-
-
-        .progress-container {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-
-        }
-
-        .progress-circle {
-            position: relative;
-            width: 150px;
-            height: 150px;
-        }
-
-        .progress-circle svg {
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-        }
-
-        .progress-circle circle {
-            fill: none;
-            stroke-width: 10;
-        }
-
-        .progress-circle .background {
-            stroke: #ffa920;
-        }
-
-        .progress-circle .foreground {
-            stroke: #2a81b2;
-            stroke-linecap: round;
-            stroke-dasharray: 0 100;
-            transition: stroke-dasharray 1s ease, stroke-dashoffset 1s ease;
-            transition-delay: 0.3s;
-        }
-
-        .progress-circle .progress-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.5em;
-            font-weight: bold;
-        }
-
-        .missing-steps {
-            margin-left: 20px;
-        }
-
-        .missing-steps p {
-            font-size: 1em;
-        }
-
-        .missing-steps a {
-            display: block;
-            color: #2a81b2 !important;
-            text-decoration: none;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 1em;
-        }
-
-        .missing-steps a:hover {
-            text-decoration: none !important;
-            color: #ff9700 !important;
-
-        }
-
-        .missing-steps a:hover {
-            text-decoration: underline;
-        }
-
-        .special_span {
-            margin-right: 50px;
-        }
-    </style>
+    <link href="{{ asset('app/css/home_ad.css') }}?v={{ filemtime(public_path('app/css/home_ad.css')) }}" rel="stylesheet"
+        type="text/css" media="all" />
 @endsection
+
 @php
     $type = 0;
     $progress = $post['progress'];
@@ -201,6 +28,7 @@
         $type = 1;
     }
 @endphp
+
 @section('content')
     <div id="unique_page" class="clearfix background_color" style="padding: 10vh 0">
         <section class="unique_flat_slider style">
@@ -260,9 +88,7 @@
                         <div class="missing-steps">
                             <P>@lang('lang.complete_your_account_to_get_better_house_exchange_matches') </P>
                             <a href="{{ route('profile.compelete.get', ['type' => $type]) }}">@lang('lang.go_profile')</a>
-                            {{-- @foreach ($progress['missing_steps'] as $step)
-                        <a href="{{ route('profile.get') }}">{{ $step }}</a>
-                    @endforeach --}}
+
                         </div>
                     </div>
 
@@ -272,38 +98,7 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="post">
-                            {{-- <div class="wrap-overview wrap-style">
-                                <div class="titles">
-                                    <h3>Overview</h3>
-                                </div>
-                                <div class="icon-wrap flex">
-                                    <div class="box-icon">
-                                        <div class="inner flex">
-                                            <div class="content">
-                                                <div class="font-2">@lang('lang.house type'):</div>
-                                                <div class="font-2 fw-7">{{ __('lang.' . $post['house_type']['type']) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="box-icon">
-                                        <div class="inner flex">
-                                            <div class="content">
-                                                <div class="font-2 ">@lang('lang.number of rooms'):</div>
-                                                <div class="font-2 fw-7">{{ $post['number_of_rooms'] }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="box-icon">
-                                        <div class="inner flex">
-                                            <div class="content">
-                                                <div class="font-2">@lang('lang.rent price'):</div>
-                                                <div class="font-2 fw-7">{{ $post['price'] }} (€)</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
+
                             <div class="wrap-overview wrap-style">
                                 <div class="titles">
                                     <h3>@lang('lang.location')</h3>
@@ -367,18 +162,7 @@
 
 
                                     </ul>
-                                    {{-- <ul>
-                                        <li class="flex"><span class="one fw-6">Beds</span><span
-                                                class="two">7.328</span></li>
-                                        <li class="flex"><span class="one fw-6">Year buit</span><span
-                                                class="two">2022</span></li>
-                                        <li class="flex"><span class="one fw-6">Type</span><span
-                                                class="two">Villa</span></li>
-                                        <li class="flex"><span class="one fw-6">Status</span><span class="two">For
-                                                sale</span></li>
-                                        <li class="flex"><span class="one fw-6">Garage</span><span class="two">1</span>
-                                        </li>
-                                    </ul> --}}
+
                                 </div>
                             </div>
 
