@@ -332,11 +332,11 @@ class HomeController extends Controller
 
     public function getPost($id)
     {
-        if (!Session::get('token')) {
-            return redirect()->route('login');
-        } else {
-            error_log(Session::get('token'));
-        }
+        // if (!Session::get('token')) {
+        //     return redirect()->route('login');
+        // } else {
+        //     error_log(Session::get('token'));
+        // }
         try {
             $response = $this->apiService->getPost($id);
 
@@ -345,7 +345,12 @@ class HomeController extends Controller
                 $post['intersts'] = $response['result']['house_owner']['wishes'];
                 $post['owner_name'] = $response['result']['house_owner']['first_name'] . ' ' . $response['result']['house_owner']['last_name'];
                 $post['showAll'] = Session::get('showAll') ?? 'false';
-                $post['progress'] =   $this->apiService->getProfileProgress()['result'];
+                if (Session::get('token')) {
+                    $post['progress'] =   $this->apiService->getProfileProgress()['result'];
+                } else {
+                    $post['progress']['progress'] = "100 %";
+                }
+
                 return view('single_post', compact('post'));
             } else {
                 return back()->withErrors(['password' => $response['message']]);
