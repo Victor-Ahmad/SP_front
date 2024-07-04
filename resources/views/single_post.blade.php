@@ -10,7 +10,7 @@
 
 @section('title', $title)
 
-@section('og_title', $title . ' - ' . $dsc)
+@section('og_title', $title)
 @section('og_description', $dsc)
 @section('og_image', $og_image)
 @section('og_url', url()->current())
