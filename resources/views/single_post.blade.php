@@ -1,7 +1,8 @@
 @extends('layouts.master')
 
 @php
-    $title = $post['location'] . ', ' . $post['street'];
+    $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
+    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $post['area'] . '(m²)';
 @endphp
 
 @section('title', $title)
