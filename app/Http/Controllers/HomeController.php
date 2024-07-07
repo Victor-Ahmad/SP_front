@@ -399,11 +399,20 @@ class HomeController extends Controller
         // Resample the image
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
 
+        // Crop the image if height is greater than width
+        if ($targetHeight > $targetWidth) {
+            $cropStartY = ($targetHeight - $targetWidth) / 2;
+            $dstCropped = imagecreatetruecolor($targetWidth, $targetWidth);
+            imagecopy($dstCropped, $dst, 0, 0, 0, $cropStartY, $targetWidth, $targetWidth);
+            imagedestroy($dst);
+            $dst = $dstCropped;
+        }
+
         // Define the path to save the resized image
         $fileInfo = pathinfo($sourcePath);
         $resizedImagePath = 'resized_images/' . $fileInfo['filename'] . '_resized.' . $fileInfo['extension'];
 
-        // Save the resized image
+        // Save the resized and cropped image
         imagejpeg($dst, public_path($resizedImagePath), 90);
 
         // Free up memory
