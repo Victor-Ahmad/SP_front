@@ -383,7 +383,39 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+    public function resizeImage($path)
+    {
+        // Define the target dimensions
+        $width = 1200;
+        $height = 630;
+        $aspectRatio = 1.91; // 1200 / 630 = 1.91
 
+        // Load the image
+        $image = Image::make($path);
+
+        // Resize the image maintaining the aspect ratio
+        $image->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
+
+        // Generate a unique name for the image
+        $uniqueName = Str::random(40) . '.jpg';
+
+        // Define the path to save the resized image in the public directory
+        $resizedPath = public_path('images/resized/' . $uniqueName);
+
+        // Ensure the directory exists
+        if (!file_exists(public_path('images/resized'))) {
+            mkdir(public_path('images/resized'), 0777, true);
+        }
+
+        // Save the resized image
+        $image->save($resizedPath);
+
+        // Return the URL to the resized image
+        return asset('images/resized/' . $uniqueName);
+    }
 
 
     // public function marketing()
