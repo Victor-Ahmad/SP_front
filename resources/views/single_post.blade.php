@@ -2,13 +2,9 @@
 
 @php
     $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
-    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $post['area'] . '(m²)';
-    // $og_image = !empty($post['images'])
-    //     ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
-    //     : asset('assets/images/default_image.jpg');
-    $imageController = new \App\Http\Controllers\HomeController();
+    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . (int) $post['area'] . '(m²)';
     $og_image = !empty($post['images'])
-        ? env('MEDIA_BASE_URL') . $imageController->resizeImage($post['images'][0]['image_path'])
+        ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
         : asset('assets/images/default_image.jpg');
 @endphp
 
