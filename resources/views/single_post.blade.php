@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @php
+    $area = interval($post['area']);
     $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
-    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . (int) $post['area'] . '(m²)';
+    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $area . '(m²)';
     $og_image = !empty($post['images'])
         ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
         : asset('assets/images/default_image.jpg');
