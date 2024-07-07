@@ -399,11 +399,22 @@ class HomeController extends Controller
             $constraint->upsize();
         });
 
+        // Generate a unique name for the image
+        $uniqueName = Str::random(40) . '.jpg';
+
+        // Define the path to save the resized image in the public directory
+        $resizedPath = public_path('images/resized/' . $uniqueName);
+
+        // Ensure the directory exists
+        if (!file_exists(public_path('images/resized'))) {
+            mkdir(public_path('images/resized'), 0777, true);
+        }
+
         // Save the resized image
-        $resizedPath = 'path/to/save/resized/image.jpg';
         $image->save($resizedPath);
 
-        return $resizedPath;
+        // Return the URL to the resized image
+        return asset('images/resized/' . $uniqueName);
     }
 
 
