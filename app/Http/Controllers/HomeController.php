@@ -383,7 +383,35 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
+    public function resizeImage($sourcePath, $targetWidth = 1200)
+    {
+        // Get original image dimensions
+        list($width, $height) = getimagesize($sourcePath);
+        $ratio = $height / $width;
+        $targetHeight = $targetWidth * $ratio;
 
+        // Create a new true color image
+        $dst = imagecreatetruecolor($targetWidth, $targetHeight);
+
+        // Create image from the source
+        $src = imagecreatefromjpeg($sourcePath);
+
+        // Resample the image
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
+
+        // Define the path to save the resized image
+        $fileInfo = pathinfo($sourcePath);
+        $resizedImagePath = 'resized_images/' . $fileInfo['filename'] . '_resized.' . $fileInfo['extension'];
+
+        // Save the resized image
+        imagejpeg($dst, public_path($resizedImagePath), 90);
+
+        // Free up memory
+        imagedestroy($src);
+        imagedestroy($dst);
+
+        return $resizedImagePath;
+    }
 
 
     // public function marketing()

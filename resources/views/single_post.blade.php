@@ -3,9 +3,16 @@
 @php
     $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
     $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $post['area'] . '(m²)';
-    $og_image = !empty($post['images'])
-        ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
-        : asset('assets/images/default_image.jpg');
+    // $og_image = !empty($post['images'])
+    //     ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
+    //     : asset('assets/images/default_image.jpg');
+    $og_image_path = !empty($post['images']) ? $post['images'][0]['image_path'] : 'assets/images/default_image.jpg';
+    $og_image = env('MEDIA_BASE_URL') . $og_image_path;
+
+    if (file_exists(public_path($og_image_path))) {
+        $resized_image_path = App\Http\Controllers\HomeController::resizeImage(public_path($og_image_path));
+        $og_image = env('MEDIA_BASE_URL') . $resized_image_path;
+    }
 @endphp
 
 @section('title', $title)
