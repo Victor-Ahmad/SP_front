@@ -1,22 +1,11 @@
 @extends('layouts.master')
 
 @php
-
     $title = $post['location'] . ', ' . $post['street'] . ', ' . $post['post_code'];
-    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . $post['area'] . '(m²)';
-    // $og_image = !empty($post['images'])
-    //     ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
-    //     : asset('assets/images/default_image.jpg');
-
-    $og_image_path = !empty($post['images']) ? $post['images'][0]['image_path'] : 'assets/images/default_image.jpg';
-    $og_image = env('MEDIA_BASE_URL') . $og_image_path;
-
-    // Call the resize and crop function if the image exists
-    if (file_exists(public_path($og_image_path))) {
-        $resized_image_path = App\Http\Controllers\HomeController::resizeAndCropImage(public_path($og_image_path));
-        $og_image = env('MEDIA_BASE_URL') . $resized_image_path;
-    }
-
+    $dsc = 'Kamers: ' . $post['number_of_rooms'] . ', Oppervlakte: ' . explode('.', $post['area'])[0] . '(m²)';
+    $og_image = !empty($post['images'])
+        ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
+        : asset('assets/images/default_image.jpg');
 @endphp
 
 @section('title', $title)
