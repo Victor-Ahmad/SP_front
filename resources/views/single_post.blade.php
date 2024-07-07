@@ -6,13 +6,10 @@
     // $og_image = !empty($post['images'])
     //     ? env('MEDIA_BASE_URL') . $post['images'][0]['image_path']
     //     : asset('assets/images/default_image.jpg');
-    $og_image_path = !empty($post['images']) ? $post['images'][0]['image_path'] : 'assets/images/default_image.jpg';
-    $og_image = env('MEDIA_BASE_URL') . $og_image_path;
-
-    if (file_exists(public_path($og_image_path))) {
-        $resized_image_path = App\Http\Controllers\HomeController::resizeImage(public_path($og_image_path));
-        $og_image = env('MEDIA_BASE_URL') . $resized_image_path;
-    }
+    $imageController = new \App\Http\Controllers\HomeController();
+    $og_image = !empty($post['images'])
+        ? env('MEDIA_BASE_URL') . $imageController->resizeImage($post['images'][0]['image_path'])
+        : asset('assets/images/default_image.jpg');
 @endphp
 
 @section('title', $title)

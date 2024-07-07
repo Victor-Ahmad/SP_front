@@ -383,43 +383,27 @@ class HomeController extends Controller
             return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
-    public function resizeImage($sourcePath, $targetWidth = 1200)
+    public function resizeImage($path)
     {
-        // Get original image dimensions
-        list($width, $height) = getimagesize($sourcePath);
-        $ratio = $height / $width;
-        $targetHeight = $targetWidth * $ratio;
+        // Define the target dimensions
+        $width = 1200;
+        $height = 630;
+        $aspectRatio = 1.91; // 1200 / 630 = 1.91
 
-        // Create a new true color image
-        $dst = imagecreatetruecolor($targetWidth, $targetHeight);
+        // Load the image
+        $image = Image::make($path);
 
-        // Create image from the source
-        $src = imagecreatefromjpeg($sourcePath);
+        // Resize the image maintaining the aspect ratio
+        $image->resize($width, $height, function ($constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        });
 
-        // Resample the image
-        imagecopyresampled($dst, $src, 0, 0, 0, 0, $targetWidth, $targetHeight, $width, $height);
+        // Save the resized image
+        $resizedPath = 'path/to/save/resized/image.jpg';
+        $image->save($resizedPath);
 
-        // Crop the image if height is greater than width
-        if ($targetHeight > $targetWidth) {
-            $cropStartY = ($targetHeight - $targetWidth) / 2;
-            $dstCropped = imagecreatetruecolor($targetWidth, $targetWidth);
-            imagecopy($dstCropped, $dst, 0, 0, 0, $cropStartY, $targetWidth, $targetWidth);
-            imagedestroy($dst);
-            $dst = $dstCropped;
-        }
-
-        // Define the path to save the resized image
-        $fileInfo = pathinfo($sourcePath);
-        $resizedImagePath = 'resized_images/' . $fileInfo['filename'] . '_resized.' . $fileInfo['extension'];
-
-        // Save the resized and cropped image
-        imagejpeg($dst, public_path($resizedImagePath), 90);
-
-        // Free up memory
-        imagedestroy($src);
-        imagedestroy($dst);
-
-        return $resizedImagePath;
+        return $resizedPath;
     }
 
 
