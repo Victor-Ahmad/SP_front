@@ -85,18 +85,6 @@
     color: #ff9700;
 }
 
-/* Large Devices (laptops/desktops, 992px to 1200px) */
-@media (max-width: 1200px) {}
-
-/* Medium Devices (landscape tablets, 768px to 992px) */
-@media (max-width: 992px) {}
-
-
-/* Small Devices (portrait tablets and large phones, 600px to 768px) */
-@media (max-width: 768px) {}
-
-/* Extra Small Devices (phones, 600px and down) */
-@media (max-width: 600px) {}
 
 .position-relative {
     position: relative;
@@ -136,9 +124,51 @@
 }
 
 .main-menu .facebook_custom {
-    margin-left: 15vw;
+    margin-left: 11vw;
 }
 
 .mobile-menu .facebook_custom {
     margin-top: 15vw;
 }
+
+
+/* Large Devices (laptops/desktops, 992px to 1200px) */
+@media (max-width: 1300px) {
+    .main-menu .facebook_custom {
+        margin-left: 3vw;
+    }
+}
+
+
+
+/* Large Devices (laptops/desktops, 992px to 1200px) */
+@media (max-width: 1200px) {
+    .main-menu .facebook_custom {
+        margin-left: 0vw;
+    }
+}
+
+
+/* Medium Devices (landscape tablets, 768px to 992px) */
+@media (max-width: 992px) {
+    .main-menu .facebook_custom {
+        margin-left: 0vw;
+    }
+}
+
+
+
+
+
+
+/* Small Devices (portrait tablets and large phones, 600px to 768px) */
+@media (max-width: 768px) {
+    .main-menu .facebook_custom {
+        margin-left: 0vw;
+    }
+}
+
+
+
+/* Extra Small Devices (phones, 600px and down) */
+@media (max-width: 600px) {}
