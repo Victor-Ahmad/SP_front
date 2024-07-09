@@ -215,7 +215,7 @@
                 const postCode = postCodeInput.value;
                 if (postCode) {
                     fetch(
-                            `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&key=${apiKey}`
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&language=ar&key=${apiKey}`
                         )
                         .then(response => response.json())
                         .then(data => {
@@ -262,7 +262,7 @@
 
                     // Step 1: Get the Coordinates
                     fetch(
-                            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}&language=ar`
                         )
                         .then(response => response.json())
                         .then(data => {
