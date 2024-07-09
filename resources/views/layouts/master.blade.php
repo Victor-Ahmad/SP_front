@@ -32,7 +32,9 @@
         href="{{ asset('app/css/master.css') }}?v={{ filemtime(public_path('app/css/master.css')) }}">
 
     @yield('head_css')
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&language=nl">
+    </script>
 </head>
 
 <body class="body">

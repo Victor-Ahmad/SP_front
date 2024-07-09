@@ -174,7 +174,7 @@
 
 @section('additional_scripts')
     <script async
-        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&loading=async&callback=initMap&language=nl">
     </script>
     <script>
         document.getElementById('post_code').addEventListener('input', function(e) {
@@ -215,7 +215,7 @@
                 const postCode = postCodeInput.value;
                 if (postCode) {
                     fetch(
-                            `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&language=ar&key=${apiKey}`
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&language=ar&key=${apiKey}&language=nl`
                         )
                         .then(response => response.json())
                         .then(data => {
@@ -262,7 +262,7 @@
 
                     // Step 1: Get the Coordinates
                     fetch(
-                            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}&language=ar`
+                            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}&language=nl`
                         )
                         .then(response => response.json())
                         .then(data => {

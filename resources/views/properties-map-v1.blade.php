@@ -1429,7 +1429,7 @@
     <script src="app/js/plugin.js"></script>
     <script src="app/js/shortcodes.js"></script>
     <script src="app/js/main.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFC3m2n0jBRFTMvUNZc0-6Y0Rzlcadzcw"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFC3m2n0jBRFTMvUNZc0-6Y0Rzlcadzcw&language=nl"></script>
     <script src="app/js/maps.js"></script>
     <script src="app/js/marker.js"></script>
     <script src="app/js/infobox.min.js"></script>

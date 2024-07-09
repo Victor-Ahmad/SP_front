@@ -871,7 +871,7 @@
 
 @section('additional_scripts')
     <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete&language=ar">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqpFnYM5ToiPcFtSC2SFMo55w3xNgViSQ&libraries=places&callback=initAutocomplete&language=nl">
     </script>
     <script>
         let selectedCities = [];
@@ -956,7 +956,7 @@
                 hideInvalidPostCode();
 
                 fetch(
-                        `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&key=${apiKey}&language=ar`
+                        `https://maps.googleapis.com/maps/api/geocode/json?address=${postCode}&components=country:NL&key=${apiKey}&language=nl`
                     )
                     .then(response => response.json())
                     .then(data => {
@@ -1007,7 +1007,7 @@
 
                 // Step 1: Get the Coordinates
                 fetch(
-                        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}&language=ar`
+                        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}&language=nl`
                     )
                     .then(response => response.json())
                     .then(data => {
