@@ -901,7 +901,7 @@
 
                 for (let i = 0; i < addressComponents.length; i++) {
                     let component = addressComponents[i];
-                    if (component.types.includes('sublocality') || component.types.includes('neighborhood')) {
+                    if (component.types.includes('neighborhood')) {
                         isDesiredType = true;
                         break;
                     }
