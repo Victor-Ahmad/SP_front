@@ -882,7 +882,7 @@
             const locationNamesInput = document.getElementById('locationNames');
 
             var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
-                types: ['(cities)'],
+                // types: ['(cities)'],
                 componentRestrictions: {
                     country: "NL",
 
