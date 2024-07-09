@@ -882,12 +882,13 @@
             const locationNamesInput = document.getElementById('locationNames');
 
             var interestsAutocomplete = new google.maps.places.Autocomplete(interestsAutocompleteInput, {
-                // types: ['(sublocality)'],
+                // types: ['(cities)'],
                 componentRestrictions: {
                     country: "NL",
 
                 }
             });
+
 
             interestsAutocomplete.addListener('place_changed', function() {
                 var place = interestsAutocomplete.getPlace();
@@ -895,7 +896,22 @@
                     alert("Please select a place from the dropdown list.");
                     return;
                 }
+                let addressComponents = place.address_components;
+                let isDesiredType = false;
 
+                for (let i = 0; i < addressComponents.length; i++) {
+                    let component = addressComponents[i];
+                    if (component.types.includes('sublocality') || component.types.includes('neighborhood')) {
+                        isDesiredType = true;
+                        break;
+                    }
+                }
+
+                if (!isDesiredType) {
+                    alert("Please select a sublocality or neighborhood.");
+                    interestsAutocompleteInput.value = '';
+                    return;
+                }
                 cityName = place.name;
 
                 if (!selectedCities.includes(cityName)) {
