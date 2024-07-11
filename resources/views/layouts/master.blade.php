@@ -16,6 +16,22 @@
     <meta property="og:site_name" content="ٍSnelwoningruil.nl" />
     <meta property="og:locale" content="nl_NL" />
 
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VNPBJV5FLJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VNPBJV5FLJ');
+    </script>
+
+
     <!-- Other meta tags and CSS links -->
     <link rel="stylesheet"
         href="{{ asset('app/dist/font-awesome.css') }}?v={{ filemtime(public_path('app/dist/font-awesome.css')) }}">

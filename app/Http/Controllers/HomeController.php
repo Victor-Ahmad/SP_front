@@ -53,7 +53,9 @@ class HomeController extends Controller
             });
 
             $response = $this->apiService->getPosts($data, $page);
+
             $posts = $response['result']['filtered_houses']['data'];
+
             $first_posts = [];
             $last_posts = [];
             $my_interest = Session::get('my_location') ?? '';
