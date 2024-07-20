@@ -133,25 +133,33 @@
                                 </div>
                                 <div class="box flex">
                                     <ul>
-                                        <li class="flex"><span
-                                                class="one fw-6 special_span">@lang('lang.house type'):</span><span
-                                                class="two">{{ __('lang.' . $post['house_type']['type']) }}</span>
+                                        <li class="flex"><span class="one fw-6 special_span">@lang('lang.house type'):</span>
+                                            @if (isset($post['house_type']) && isset($post['house_type']['type']))
+                                                <span class="two">{{ __('lang.' . $post['house_type']['type']) }}</span>
+                                            @endif
                                         </li>
-                                        <li class="flex"><span
-                                                class="one fw-6 special_span">@lang('lang.rooms'):</span><span
-                                                class="two">{{ $post['number_of_rooms'] }}</span></li>
-                                        <li class="flex"><span
-                                                class="one fw-6 special_span">@lang('lang.rent price'):</span><span
-                                                class="two">{{ $post['price'] }} (€)</span></li>
-                                        <li class="flex"><span
-                                                class="one fw-6 special_span">@lang('lang.area'):</span><span
-                                                class="two">{{ $post['area'] }} (m²)</span></li>
+                                        <li class="flex"><span class="one fw-6 special_span">@lang('lang.rooms'):</span>
+                                            @if (isset($post['number_of_rooms']) && $post['number_of_rooms'] !== '')
+                                                <span class="two">{{ $post['number_of_rooms'] }}</span>
+                                            @endif
+                                        </li>
+                                        <li class="flex"><span class="one fw-6 special_span">@lang('lang.rent price'):</span>
+                                            @if (isset($post['price']) && $post['price'] !== '')
+                                                <span class="two">{{ $post['price'] }} (€)</span>
+                                            @endif
+                                        </li>
+                                        <li class="flex"><span class="one fw-6 special_span">@lang('lang.area'):</span>
+                                            @if (isset($post['area']) && $post['area'] !== '')
+                                                <span class="two">{{ $post['area'] }} (m²)</span>
+                                            @endif
+                                        </li>
                                         <li class="flex"><span class="one fw-6 special_span">@lang('lang.house_description'):</span>
-                                            @if ($post['description'] != '')
+                                            @if (isset($post['description']) && $post['description'] !== '')
                                                 <span class="two">{{ $post['description'] }}</span>
                                             @endif
                                         </li>
                                     </ul>
+
                                 </div>
                             </div>
                             <div class="wrap-overview wrap-style">
