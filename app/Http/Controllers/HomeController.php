@@ -19,6 +19,7 @@ class HomeController extends Controller
 
     function landing()
     {
+        return view('coming_soon');
         if (Session::get('token')) {
             return redirect()->route('home');
         }
